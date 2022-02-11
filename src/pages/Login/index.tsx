@@ -1,7 +1,13 @@
 import React from 'react';
 
+import { Title, Teste2 } from './styles';
+
 const Login: React.FC = () => {
-  return <h1>Login</h1>;
+  return (
+    <Teste2>
+      <Title>Login</Title>
+    </Teste2>
+  );
 };
 
 export default Login;

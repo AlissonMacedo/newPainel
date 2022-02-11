@@ -24,6 +24,8 @@
     "prettier"
   ],
   "rules": {
+    "import/prefer-default-export": "off",
+    "react/jsx-no-constructed-context-values": "off",
     "react/function-component-definition": [
       2,
       {
