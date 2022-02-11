@@ -39,8 +39,11 @@
     "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
-    "git-commit-msg-linter": "^4.0.7"
+    "git-commit-msg-linter": "^4.0.7",
+    "prettier": "^2.5.1"
   }
 }
