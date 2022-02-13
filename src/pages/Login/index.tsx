@@ -1,12 +1,28 @@
 import React from 'react';
 
-import { Title, Teste2 } from './styles';
+import { FiLogIn } from 'react-icons/fi';
+import { Container, Content, Background } from './styles';
+import Logo from '../../assets/GoBarber.svg';
 
 const Login: React.FC = () => {
   return (
-    <Teste2>
-      <Title>Login</Title>
-    </Teste2>
+    <Container>
+      <Content>
+        <img src={Logo} alt="GoBarber" />
+        <form>
+          <h1>Faça seu login</h1>
+          <input placeholder="E-mail" />
+          <input placeholder="Senha" type="password" />
+          <button type="button">Entrar</button>
+          <a href="/">Esqueci minha senha</a>
+        </form>
+        <a href="/">
+          <FiLogIn />
+          Criar conta
+        </a>
+      </Content>
+      <Background />
+    </Container>
   );
 };
 
