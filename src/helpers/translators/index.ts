@@ -1,0 +1,1 @@
+export { translateDataProvider } from './loginProvider';

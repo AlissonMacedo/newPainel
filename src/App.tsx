@@ -3,14 +3,14 @@ import RoutesComponent from './routes';
 
 import GlabalStyle from './styles/global';
 
-import AuthContext from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
   return (
     <>
-      <AuthContext.Provider value={{ name: 'Diego' }}>
+      <AuthProvider>
         <RoutesComponent />
-      </AuthContext.Provider>
+      </AuthProvider>
       <GlabalStyle />
     </>
   );
