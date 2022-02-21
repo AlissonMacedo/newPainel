@@ -18,21 +18,6 @@ interface categories {
   priority: number;
 }
 
-interface cities {
-  code: number;
-  franchise: [];
-  id: number;
-  name: string;
-  state: number;
-  stateob: { id: number; name: string; state: number };
-  status: boolean;
-}
-
-interface franchises {
-  id: number;
-  name: string;
-}
-
 interface franchise {
   addkm: string;
   addpoint: string;
@@ -70,6 +55,21 @@ interface franchise {
     iframe: string;
   };
   franchiseUser: {};
+}
+
+interface cities {
+  code: number;
+  franchise: Array<franchise>;
+  id: number;
+  name: string;
+  state: number;
+  stateob: { id: number; name: string; state: number };
+  status: boolean;
+}
+
+interface franchises {
+  id: number;
+  name: string;
 }
 
 interface addresses {
