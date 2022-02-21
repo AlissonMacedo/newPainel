@@ -196,4 +196,5 @@ export type ResponseDataLogin = {
 export type returnTranslateProvider = {
   banks: Array<banks>;
   token: string;
+  user: string;
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
-import backgroundImage from '../../assets/barber_01.png';
+import backgroundImage from '../../assets/background-login.png';
 
 export const Container = styled.div`
   height: 100vh;

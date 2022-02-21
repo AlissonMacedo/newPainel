@@ -9,12 +9,10 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 
 const RoutesComponent: React.FC = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route path="/" exact component={Login} />
-      <Route path="/home" component={Home} />
-    </Switch>
-  </BrowserRouter>
+  <Switch>
+    <Route path="/" exact component={Login} />
+    <Route path="/home" component={Home} />
+  </Switch>
 );
 
 export default RoutesComponent;

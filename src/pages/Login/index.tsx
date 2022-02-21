@@ -1,10 +1,11 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 
 import { FiLogIn } from 'react-icons/fi';
 import { Container, Content, Background } from './styles';
-import Logo from '../../assets/GoBarber.svg';
+import Logo from '../../assets/logo-alfred.svg';
 
-import { AuthContext } from '../../context/AuthContext';
+// import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 interface SignInFormData {
   email: string;
@@ -12,14 +13,12 @@ interface SignInFormData {
 }
 
 const Login: React.FC = () => {
-  const { signIn } = useContext(AuthContext);
+  // const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(async (data: SignInFormData) => {
-    try {
-      signIn(data);
-    } catch (err) {
-      console.log('deu erro');
-    }
+    addToast({ type: 'success', description: 'Deu erro', title: 'Erro' });
+    console.log('deu data', data);
   }, []);
 
   return (
