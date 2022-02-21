@@ -2,7 +2,7 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import uuid from 'uuidv4';
 import { ToastContainer } from '../components/ToastCotnainer';
-import { ToastMessage } from '../helpers/types/toast';
+import { ToastMessage } from '../components/ToastCotnainer/Toast/types';
 
 interface ToastContextData {
   addToast(message: Omit<ToastMessage, 'id'>): void;

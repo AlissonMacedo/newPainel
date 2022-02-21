@@ -6,6 +6,7 @@ import { AnimationContainer, Container, Content, Background } from './styles';
 import Logo from '../../assets/logo-alfred.svg';
 
 import { useToast } from '../../hooks/toast';
+import { useAuth } from '../../hooks/auth';
 
 interface SignInFormData {
   email: string;
@@ -13,11 +14,20 @@ interface SignInFormData {
 }
 
 const Login: React.FC = () => {
-  // const { signIn } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(async (data: SignInFormData) => {
-    addToast({ type: 'success', description: 'Deu erro', title: 'Erro' });
+    try {
+      await signIn(data);
+      addToast({
+        type: 'success',
+        description: 'Tudo certo!',
+        title: 'success',
+      });
+    } catch (err) {
+      addToast({ type: 'error', description: 'Deu erro', title: 'Erro' });
+    }
     console.log('deu data', data);
   }, []);
 
