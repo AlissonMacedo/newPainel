@@ -18,7 +18,6 @@ export const AnimationContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   animation: ${appearFromLEft} 1s;
 
   img {
@@ -27,63 +26,30 @@ export const AnimationContainer = styled.div`
   }
 
   form {
-    margin: 80px 0;
+    margin: 10px 0px 30px;
     width: 340px;
     text-align: center;
 
     h1 {
       margin-bottom: 24px;
-    }
-    input {
-      background: #232129;
-      border-radius: 10px;
-      border: 2px solid #232129;
-      color: #f4ede8;
-
-      padding: 16px;
-      width: 100%;
-
-      &::placeholder {
-        color: #666360;
-      }
-
-      & + input {
-        margin-top: 8px;
-      }
-    }
-
-    button {
-      background: #ff9000;
-      height: 56px;
-      border-radius: 10px;
-      border: 0;
-      padding: 0 16px;
-      color: #312e38;
-      width: 100%;
-      font-weight: 500;
-      margin-top: 16px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: ${shade(0.2, '#ff9000')};
-      }
+      color: #273c64;
     }
 
     a {
-      color: #f4ede8;
+      color: #273c64;
       display: block;
       margin-top: 24px;
       text-decoration: none;
       transition: color 0.2s;
 
       &:hover {
-        color: ${shade(0.2, '#f4ede8')};
+        color: ${shade(0.2, '#83a0d6')};
       }
     }
   }
 
   > a {
-    color: #ff9000;
+    color: #00dedb;
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -97,17 +63,16 @@ export const AnimationContainer = styled.div`
     }
 
     &:hover {
-      color: ${shade(0.2, '#ff9000')};
+      color: ${shade(0.2, '#00dedb')};
     }
   }
 `;
 
 export const Container = styled.div`
   height: 100vh;
-
   display: flex;
   align-items: stretch;
-  background-color: #9999;
+  background-color: #ffffff;
 `;
 
 export const Content = styled.div`
