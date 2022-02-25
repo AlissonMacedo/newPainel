@@ -10,7 +10,7 @@ const buttonTypeVariantions = {
     background: #273c64;
     color: #ffffff;
     &:hover {
-      background: ${shade(0.2, '#273C64')};
+      background: ${shade(0.2, '#96add7')};
     }
   `,
   secondary: css`

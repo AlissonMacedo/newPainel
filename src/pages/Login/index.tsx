@@ -26,8 +26,9 @@ const Login: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
-      console.log('data', data);
       try {
+        formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
           email: Yup.string()
             .required('Digite um e-mail')
@@ -38,6 +39,7 @@ const Login: React.FC = () => {
         await schema.validate(data, { abortEarly: false });
 
         await signIn(data);
+
         addToast({
           type: 'success',
           description: 'Tudo certo!',
@@ -45,8 +47,9 @@ const Login: React.FC = () => {
         });
       } catch (err: any) {
         const errors = getValidationErrors(err);
+
         formRef.current?.setErrors(errors);
-        console.log('err', err);
+
         addToast({ type: 'error', description: 'Deu erro', title: 'Erro' });
       }
     },

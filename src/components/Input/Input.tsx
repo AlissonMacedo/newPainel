@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useField } from '@unform/core';
-import { Container } from './Input.styles';
+import { FiAlertCircle } from 'react-icons/fi';
+import { Container, Error } from './Input.styles';
 import { InputProps } from './Input.types';
 
 export const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
@@ -27,16 +28,20 @@ export const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   }, []);
 
   return (
-    <Container isFocus={isFocus} isFilled={isFilled}>
+    <Container isErrored={!!error} isFocus={isFocus} isFilled={isFilled}>
       {Icon && <Icon size={20} />}
       <input
+        ref={inputRef}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
-        ref={inputRef}
         {...rest}
       />
-      {error && <span>{error}</span>}
+      {error && (
+        <Error title={error}>
+          <FiAlertCircle color="#eb3f3f" size={20} />
+        </Error>
+      )}
     </Container>
   );
 };

@@ -83,11 +83,16 @@ export const Content = styled.div`
 
   place-content: center;
   width: 100%;
-  max-width: 700px;
 `;
 
 export const Background = styled.div`
-  flex: 1;
+  height: 100vh;
+  width: 100%;
+  max-width: 700px;
   background: url(${backgroundImage}) no-repeat center;
   background-size: cover;
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 `;
