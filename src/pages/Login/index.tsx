@@ -1,18 +1,20 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import * as Yup from 'yup';
+
+import { Oval } from 'react-loader-spinner';
 import { AnimationContainer, Container, Content, Background } from './styles';
 import Logo from '../../assets/logo-alfred.svg';
 
 import { Button, Input } from '../../components';
-import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 
 import getValidationErrors from '../../utils/getValidationErrors';
+import { schemaLogin } from '../../helpers/schemas';
+import { useToast } from '../../hooks/toast';
 
 interface SignInFormData {
   email: string;
@@ -22,39 +24,38 @@ interface SignInFormData {
 const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const { addToast } = useToast();
 
-  const handleSubmit = useCallback(
-    async (data: SignInFormData) => {
-      try {
-        formRef.current?.setErrors({});
+  const handleSubmit = useCallback(async (data: SignInFormData) => {
+    try {
+      setLoading(true);
+      formRef.current?.setErrors({});
 
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .required('Digite um e-mail')
-            .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'No mínimo seis digitos'),
-        });
+      await schemaLogin.validate(data, { abortEarly: false });
+      await signIn(data);
 
-        await schema.validate(data, { abortEarly: false });
+      addToast({
+        type: 'success',
+        description: 'Tudo certo!',
+        title: 'success',
+      });
 
-        await signIn(data);
+      history.push('/home');
+    } catch (err: any) {
+      addToast({
+        type: 'error',
+        description: 'Não foi possível realizar o login!',
+        title: 'Houve um erro',
+      });
 
-        addToast({
-          type: 'success',
-          description: 'Tudo certo!',
-          title: 'success',
-        });
-      } catch (err: any) {
-        const errors = getValidationErrors(err);
-
-        formRef.current?.setErrors(errors);
-
-        addToast({ type: 'error', description: 'Deu erro', title: 'Erro' });
-      }
-    },
-    [addToast, signIn],
-  );
+      const errors = getValidationErrors(err);
+      formRef.current?.setErrors(errors);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <Container>
@@ -70,7 +71,9 @@ const Login: React.FC = () => {
               type="password"
               placeholder="Senha"
             />
-            <Button type="submit">Entrar</Button>
+            <Button type="submit" text="Login">
+              {loading && <Oval color="#fff" height={15} width={15} />}
+            </Button>
             <Link to="/recovery">Esqueci minha senha</Link>
           </Form>
           <Link to="create">

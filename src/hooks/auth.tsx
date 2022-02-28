@@ -21,35 +21,44 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
+const heydrateLogin = () => {
+  const token = localStorage.getItem('@PainelAlfred:token');
+  const user = localStorage.getItem('@PainelAlfred:user');
+
+  if (token && user) {
+    return { token, user };
+  }
+  return {} as AuthState;
+};
+
 const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@PainelAlfred:token');
-    const user = localStorage.getItem('@PainelAlfred:user');
+  const [data, setData] = useState<AuthState>(heydrateLogin());
 
-    if (token && user) {
-      return { token, user };
-    }
-    return {} as AuthState;
-  });
+  const signIn = useCallback(
+    async ({ email, password }) => {
+      const response: ResponseDataLogin = await api.post('/login/auth', {
+        login: email,
+        password,
+      });
 
-  const signIn = React.useCallback(async ({ email, password }) => {
-    const response: ResponseDataLogin = await api.post('/login/auth', {
-      login: email,
-      password,
-    });
+      const newObjProvider = translateDataProvider(response);
+      const { token, user } = newObjProvider;
 
-    const newObjProvider = translateDataProvider(response);
-    const { token, user } = newObjProvider;
+      setData({ token, user });
 
-    setData({ token, user });
+      localStorage.setItem('@PainelAlfred:token', token);
+      localStorage.setItem('@PainelAlfred:user', user);
 
-    localStorage.setItem('@PainelAlfred:token', token);
-    localStorage.setItem('@PainelAlfred:user', user);
-  }, []);
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    },
+
+    [],
+  );
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@PainelAlfred:token');
     localStorage.removeItem('@PainelAlfred:user');
+    localStorage.removeItem('@PainelAlfred:theme');
     setData({} as AuthState);
   }, []);
 

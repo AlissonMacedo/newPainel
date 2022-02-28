@@ -190,6 +190,7 @@ export type ResponseDataLogin = {
         states: Array<states>;
       };
     };
+    error?: string;
   };
 };
 

@@ -7,7 +7,7 @@ interface Errors {
 export default function getValidationErrors(err: ValidationError): Errors {
   const validationErrors: Errors = {};
 
-  err.inner.map(item => {
+  err.inner?.map(item => {
     if (item.path) {
       validationErrors[item.path] = item.message;
     }

@@ -28,7 +28,12 @@ export const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   }, []);
 
   return (
-    <Container isErrored={!!error} isFocus={isFocus} isFilled={isFilled}>
+    <Container
+      isErrored={!!error}
+      isFocus={isFocus}
+      isFilled={isFilled}
+      data-testid="input-container"
+    >
       {Icon && <Icon size={20} />}
       <input
         ref={inputRef}

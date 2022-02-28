@@ -10,6 +10,7 @@
     "@types/node": "^16.11.24",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
+    "@types/testing-library__react": "^10.2.0",
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
     "axios": "^0.25.0",
@@ -17,6 +18,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-loader-spinner": "^6.0.0-0",
     "react-router-dom": "5.1.2",
     "react-scripts": "5.0.0",
     "react-spring": "8.0.27",
@@ -31,6 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll false",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -45,12 +48,22 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/*.tsx",
+      "!src/hooks/index.tsx"
+    ]
+  },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.22",
     "@types/yup": "^0.29.13",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "axios-mock-adapter": "^1.20.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -61,6 +74,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "git-commit-msg-linter": "^4.0.7",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "react-test-renderer": "^17.0.2"
   }
 }
