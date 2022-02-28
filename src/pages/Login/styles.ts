@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { shade } from 'polished';
+import { shade, lighten } from 'polished';
 import backgroundImage from '../../assets/background-login.png';
 
 const appearFromLEft = keyframes`
@@ -32,24 +32,24 @@ export const AnimationContainer = styled.div`
 
     h1 {
       margin-bottom: 24px;
-      color: #273c64;
+      color: ${props => props.theme.colors.cyan800};
     }
 
     a {
-      color: #273c64;
+      color: ${props => props.theme.colors.cyan800};
       display: block;
       margin-top: 24px;
       text-decoration: none;
       transition: color 0.2s;
 
       &:hover {
-        color: ${shade(0.2, '#83a0d6')};
+        color: ${props => lighten(0.3, `${props.theme.colors.cyan800}`)};
       }
     }
   }
 
   > a {
-    color: #00dedb;
+    color: ${props => props.theme.colors.cyan300};
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -63,7 +63,7 @@ export const AnimationContainer = styled.div`
     }
 
     &:hover {
-      color: ${shade(0.2, '#00dedb')};
+      color: ${props => shade(0.2, `${props.theme.colors.cyan300}`)};
     }
   }
 `;
@@ -72,7 +72,7 @@ export const Container = styled.div`
   height: 100vh;
   display: flex;
   align-items: stretch;
-  background-color: #ffffff;
+  background-color: ${props => props.theme.colors.white};
 `;
 
 export const Content = styled.div`

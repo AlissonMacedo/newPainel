@@ -19,7 +19,7 @@ const Home: React.FC = () => {
           height={20}
           width={40}
           handleDiameter={20}
-          offColor={shade(0.1, colors.cyan500)}
+          offColor={shade(0.1, colors.cyan800)}
         />
       </div>
       <h1>Home</h1>

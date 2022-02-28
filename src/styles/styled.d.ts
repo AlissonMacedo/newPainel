@@ -6,7 +6,15 @@ declare module 'styled-components' {
     colors: {
       white: string;
       black: string;
+      gray100: string;
+      gray200: string;
+      gray500: string;
+      gray800: string;
+      cyan50: string;
+      cyan300: string;
       cyan500: string;
+      cyan800: string;
+      red800: string;
     };
   }
 }

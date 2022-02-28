@@ -5,7 +5,15 @@ export default {
 
   colors: {
     white: '#1A202C',
-    black: '#000',
-    cyan500: '#61dafb',
+    black: '#666',
+    gray100: '#969696',
+    gray200: '#b2b2b2',
+    gray500: '#A0AEBF',
+    gray800: '#3e3e3e',
+    cyan50: '#a1a1b6',
+    cyan300: '#00dedb',
+    cyan500: '#3172b7',
+    cyan800: '#273c64',
+    red800: '#7c2424',
   },
 };

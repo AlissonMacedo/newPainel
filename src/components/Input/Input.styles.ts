@@ -9,12 +9,12 @@ interface inputProps {
 }
 
 export const Container = styled.div<inputProps>`
-  background: #ffff;
+  background: ${props => props.theme.colors.white};
   border-radius: 10px;
-  border: 2px solid #bbbbbb;
+  border: ${props => `2px solid ${props.theme.colors.gray200}`};
   padding: 16px;
   width: 100%;
-  color: #b2b2b2;
+  color: ${props => props.theme.colors.gray200};
 
   display: flex;
   align-items: center;
@@ -22,21 +22,21 @@ export const Container = styled.div<inputProps>`
   ${props =>
     props.isFocus &&
     css`
-      color: #00dedb;
-      border-color: #00dedb;
+      color: ${props.theme.colors.cyan300};
+      border-color: ${props.theme.colors.cyan300};
     `}
 
   ${props =>
     props.isFilled &&
     css`
-      color: #00dedb;
+      color: ${props.theme.colors.cyan300};
     `}
 
   ${props =>
     props.isErrored &&
     css`
-      color: #eb3f3f;
-      border-color: #eb3f3f;
+      color: ${props.theme.colors.red800};
+      border-color: ${props.theme.colors.red800};
     `}
 
   input {
@@ -45,7 +45,7 @@ export const Container = styled.div<inputProps>`
     border: 0px;
 
     &::placeholder {
-      color: #969696;
+      color: ${props => props.theme.colors.gray100};
     }
   }
 
@@ -71,11 +71,11 @@ export const Error = styled(Tooltip)`
   }
 
   span {
-    background: #c53030;
+    background: ${props => props.theme.colors.red800};
     color: #fff;
   }
 
   &::before {
-    border-color: #c53030 transparent;
+    border-color: ${props => `${props.theme.colors.red800} transparent`};
   }
 `;

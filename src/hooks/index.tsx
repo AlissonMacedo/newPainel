@@ -9,9 +9,9 @@ const AppProvider: React.FC = ({ children }) => {
 
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <ToastProvider>{children}</ToastProvider>
-      </AuthProvider>
+      <ToastProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </ToastProvider>
     </ThemeProvider>
   );
 };

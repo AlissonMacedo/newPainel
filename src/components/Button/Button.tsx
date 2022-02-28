@@ -6,13 +6,17 @@ import { ButtonProps } from './Buttton.types';
 export const Button: React.FC<ButtonProps> = ({
   children,
   name,
+  text,
   typeStyle,
   ...rest
 }) => {
   return (
     <Container typeStyle={typeStyle}>
       <button name={name} type="button" {...rest}>
-        {children}
+        <div>
+          {children}
+          {text && <strong>{text}</strong>}
+        </div>
       </button>
     </Container>
   );
