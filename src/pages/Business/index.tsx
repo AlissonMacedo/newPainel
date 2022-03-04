@@ -1,16 +1,18 @@
 import React from 'react';
 
-import { Container, Main } from './styles';
+import { Container, Main, MapContainer } from './styles';
 import Retangle256 from '../../components/Retangle256';
-import Map from '../../components/Map';
+import MapComponent from '../../components/Map';
 import Retangle255 from '../../components/Retangle255';
 
-const Business = () => {
+const Business: React.FC = () => {
   return (
     <Container>
       <Retangle255 />
       <Main>
-        <Map />
+        <MapContainer>
+          <MapComponent />
+        </MapContainer>
         <Retangle256 />
       </Main>
     </Container>

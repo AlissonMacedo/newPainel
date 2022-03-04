@@ -11,3 +11,8 @@ export const Main = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 `;
+
+export const MapContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;

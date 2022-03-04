@@ -19,6 +19,7 @@ export default {
   },
   text: {
     gray350: '#A3A3A3',
+    cyan300: '#00dedb',
     cyan950: '#292A2C',
   },
 };
