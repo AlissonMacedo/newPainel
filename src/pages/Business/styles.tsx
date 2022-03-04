@@ -17,9 +17,3 @@ export const Main = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 `;
-
-export const Map = styled.div`
-  display: flex;
-  flex: 1;
-  background: #cf1616;
-`;

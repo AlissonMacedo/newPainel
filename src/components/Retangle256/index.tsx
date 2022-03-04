@@ -3,7 +3,7 @@ import React from 'react';
 import { Container } from './styles';
 import { Button } from '../Button';
 
-const Retangle256 = () => {
+const Retangle256: React.FC = () => {
   return (
     <Container>
       <div className="prices">
