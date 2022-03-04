@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Container, Retangle255, Main } from './styles';
+import { Container, Main } from './styles';
 import Retangle256 from '../../components/Retangle256';
 import Map from '../../components/Map';
+import Retangle255 from '../../components/Retangle255';
 
 const Business = () => {
   return (
