@@ -12,7 +12,7 @@ import Logo from '../../assets/logo-alfred.svg';
 import { Button, Input } from '../../components';
 import { useAuth } from '../../hooks/auth';
 
-import getValidationErrors from '../../utils/getValidationErrors';
+import getValidationErrors from '../../helpers/getValidationErrors';
 import { schemaLogin } from '../../helpers/schemas';
 import { useToast } from '../../hooks/toast';
 

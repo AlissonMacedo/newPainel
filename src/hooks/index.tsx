@@ -4,13 +4,15 @@ import { AuthProvider } from './auth';
 import { ToastProvider } from './toast';
 import { ThemeProvider } from './theme';
 
-const AppProvider: React.FC = ({ children }) => {
-  // const [theme] = usePersistedState('theme', light);
+import Wrapper from '../pages/Wrapper';
 
+const AppProvider: React.FC = ({ children }) => {
   return (
     <ThemeProvider>
       <ToastProvider>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <Wrapper>{children}</Wrapper>
+        </AuthProvider>
       </ToastProvider>
     </ThemeProvider>
   );
