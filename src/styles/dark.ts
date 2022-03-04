@@ -17,4 +17,8 @@ export default {
     cyan800: '#273c64',
     red800: '#7c2424',
   },
+  text: {
+    gray350: '#A3A3A3',
+    cyan950: '#888888',
+  },
 };
