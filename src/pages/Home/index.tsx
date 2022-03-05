@@ -2,14 +2,23 @@ import React, { useContext } from 'react';
 import Switch from 'react-switch';
 import { ThemeContext } from 'styled-components';
 import { shade } from 'polished';
+import { Oval } from 'react-loader-spinner';
 import { useAuth } from '../../hooks/auth';
 import { useTheme } from '../../hooks/theme';
+
 import { Container } from './styles';
 
-const Home: React.FC = () => {
+import { Button } from '../../components/Button';
+
+import { HomeProvider, useHome } from './Context';
+
+const PageComponent: React.FC = () => {
   const { signOut } = useAuth();
+
+  const { loadFreight, load } = useHome();
   const { colors } = useContext(ThemeContext);
   const { changeTheme, currentThemeDarkorLight } = useTheme();
+
   return (
     <Container>
       <div>
@@ -23,10 +32,24 @@ const Home: React.FC = () => {
         />
       </div>
       <h1>Home</h1>
-      <button type="button" onClick={() => signOut()}>
+      <Button typeStyle="secondary" onClick={() => signOut()}>
         Sair
-      </button>
+      </Button>
+      <div>
+        <Button onClick={() => loadFreight()}>
+          {load && <Oval color="#fff" height={15} width={15} />}
+          Calcular
+        </Button>
+      </div>
     </Container>
+  );
+};
+
+const Home: React.FC = () => {
+  return (
+    <HomeProvider>
+      <PageComponent />
+    </HomeProvider>
   );
 };
 

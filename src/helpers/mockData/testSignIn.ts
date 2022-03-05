@@ -1,6 +1,6 @@
-import { ResponseDataLogin } from '../types/provider';
+import { ReturnPostLoginObj } from '../types/provider';
 
-const loginDataObject: ResponseDataLogin = {
+const loginDataObject: ReturnPostLoginObj = {
   data: {
     data: {
       token: '123',

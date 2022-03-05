@@ -2,8 +2,7 @@
 import React, { createContext, useState, useContext, useCallback } from 'react';
 import api from '../services/api';
 
-import { translateDataProvider } from '../helpers/translators';
-import { ResponseDataLogin } from '../helpers/types/provider';
+import Login from '../Dto/Login';
 
 interface SignInCreadentials {
   email: string;
@@ -26,6 +25,7 @@ const heydrateLogin = () => {
   const user = localStorage.getItem('@PainelAlfred:user');
 
   if (token && user) {
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
     return { token, user };
   }
   return {} as AuthState;
@@ -36,13 +36,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const signIn = useCallback(
     async ({ email, password }) => {
-      const response: ResponseDataLogin = await api.post('/login/auth', {
-        login: email,
-        password,
-      });
-
-      const newObjProvider = translateDataProvider(response);
-      const { token, user } = newObjProvider;
+      const { token, user } = await Login.postLogin({ email, password });
 
       setData({ token, user });
 

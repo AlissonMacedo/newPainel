@@ -175,7 +175,7 @@ interface states {
   state: number;
 }
 
-export type ResponseDataLogin = {
+export type ReturnPostLoginObj = {
   data: {
     data: {
       token: string;
@@ -192,10 +192,4 @@ export type ResponseDataLogin = {
     };
     error?: string;
   };
-};
-
-export type returnTranslateProvider = {
-  banks: Array<banks>;
-  token: string;
-  user: string;
 };
