@@ -1,18 +1,26 @@
 import React from 'react';
 
-import { Container, Main } from './styles';
+import { Authenticated, Main, NotAuthenticated } from './styles';
 import SideBar from '../../components/SideBar';
-import Header from '../../components/Header';
+import { Header } from '../../components';
+
+import { useAuth } from '../../hooks/auth';
 
 const Wrapper: React.FC = ({ children }) => {
-  return (
-    <Container>
-      <SideBar />
-      <Main>
-        <Header />
-        {children}
-      </Main>
-    </Container>
-  );
+  const { user } = useAuth();
+
+  if (user) {
+    return (
+      <Authenticated>
+        <SideBar />
+        <Main>
+          <Header />
+          {children}
+        </Main>
+      </Authenticated>
+    );
+  }
+
+  return <NotAuthenticated>{children}</NotAuthenticated>;
 };
 export default Wrapper;
