@@ -4,9 +4,18 @@ import uuid from 'uuidv4';
 import { ToastContainer } from '../components/ToastCotnainer';
 import { ToastMessage } from '../components/ToastCotnainer/Toast/types';
 
+interface Teste {
+  data: object | boolean | null;
+  msg: string;
+  error: {
+    type: 'success' | 'error' | 'info' | 'warning';
+    msg: string;
+  };
+}
 interface ToastContextData {
   addToast(message: Omit<ToastMessage, 'id'>): void;
   removeToast(id: string): void;
+  errorCather(data: Teste): void;
 }
 
 const ToastContext = createContext<ToastContextData>({} as ToastContextData);
@@ -30,8 +39,48 @@ const ToastProvider: React.FC = ({ children }) => {
     setMessages(prevState => prevState.filter(message => message.id !== id));
   }, []);
 
+  const errorCather = ({ data, msg, error }: Teste) => {
+    if (data) {
+      return addToast({
+        title: 'Tudo certo!',
+        type: 'success',
+        description: `${msg}`,
+      });
+    }
+
+    if (error.type === 'warning') {
+      return addToast({
+        title: 'Atenção!',
+        type: 'info',
+        description: `${error.msg}`,
+      });
+    }
+
+    if (error.type === 'error') {
+      return addToast({
+        title: 'Houve um erro!',
+        type: 'error',
+        description: `${error.msg}`,
+      });
+    }
+
+    if (error.type === 'info') {
+      return addToast({
+        title: 'Houve um erro!',
+        type: 'info',
+        description: `${error.msg}`,
+      });
+    }
+
+    return addToast({
+      title: 'Atenção',
+      type: 'info',
+      description: 'Não houve retorno',
+    });
+  };
+
   return (
-    <ToastContext.Provider value={{ addToast, removeToast }}>
+    <ToastContext.Provider value={{ addToast, removeToast, errorCather }}>
       {children}
       <ToastContainer messages={messages} />
     </ToastContext.Provider>

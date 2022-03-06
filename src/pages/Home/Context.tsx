@@ -12,7 +12,7 @@ const HomeContext = createContext<HomeContextData>({} as HomeContextData);
 
 const HomeProvider: React.FC = ({ children }) => {
   const [load, setLoad] = React.useState(false);
-  const { addToast } = useToast();
+  const { addToast, errorCather } = useToast();
 
   async function loadFreight() {
     const freight = {
@@ -30,10 +30,13 @@ const HomeProvider: React.FC = ({ children }) => {
     try {
       const { deliveryTax } = await Business.getFreight(freight);
 
-      addToast({
-        type: 'success',
-        description: `Valor do frete: R$${deliveryTax},00`,
-        title: 'Tudo certo!',
+      errorCather({
+        data: {},
+        msg: `O valor do frete é R$${deliveryTax}, 00`,
+        error: {
+          type: 'error',
+          msg: 'teste',
+        },
       });
     } catch (err) {
       addToast({

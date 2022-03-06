@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useRef,
-} from 'react';
-import { ValidationError } from 'yup';
+import React, { createContext, useContext, useState, useRef } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -51,7 +44,7 @@ const LoginProvider: React.FC = ({ children }) => {
       });
 
       history.push('/home');
-    } catch (err: ValidationError | any) {
+    } catch (err: any) {
       addToast({
         type: 'error',
         description: 'Não foi possível realizar o login!',
