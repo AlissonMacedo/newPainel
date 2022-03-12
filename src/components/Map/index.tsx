@@ -10,12 +10,9 @@ import {
 } from '@react-google-maps/api';
 import { Container, Context } from './styles';
 
-const Map: React.FC = () => {
-  // const { isLoaded } = useJsApiLoader({
-  //   id: 'google-map-script',
-  //   googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_API_KEY}`,
-  // });
+import { MapProvider } from './Context';
 
+const PageComponent: React.FC = () => {
   const [map, setMap] = useState<google.maps.Map>();
   const [searchBoxA, setSearchBoxA] =
     React.useState<google.maps.places.SearchBox>();
@@ -85,6 +82,7 @@ const Map: React.FC = () => {
     }
   };
 
+  console.log('searchBoxA', searchBoxA);
   const clearRoute = () => {
     setPointA(undefined);
     setPointB(undefined);
@@ -169,4 +167,13 @@ const Map: React.FC = () => {
     </LoadScript>
   );
 };
+
+const Map: React.FC = () => {
+  return (
+    <MapProvider>
+      <PageComponent />
+    </MapProvider>
+  );
+};
+
 export default Map;
