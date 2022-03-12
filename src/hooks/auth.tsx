@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext, useCallback } from 'react';
 import api from '../services/api';
 
 import Login from '../Dto/Login';
+import { SentrySetUser, SentryReset } from '../services/Sentry';
 
 interface SignInCreadentials {
   email: string;
@@ -26,6 +27,7 @@ const heydrateLogin = () => {
 
   if (token && user) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    SentrySetUser({ user, token });
     return { token, user };
   }
   return {} as AuthState;
@@ -34,26 +36,24 @@ const heydrateLogin = () => {
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(heydrateLogin());
 
-  const signIn = useCallback(
-    async ({ email, password }) => {
-      const { token, user } = await Login.postLogin({ email, password });
+  const signIn = useCallback(async ({ email, password }) => {
+    const { token, user } = await Login.postLogin({ email, password });
 
-      setData({ token, user });
+    setData({ token, user });
 
-      localStorage.setItem('@PainelAlfred:token', token);
-      localStorage.setItem('@PainelAlfred:user', user);
+    localStorage.setItem('@PainelAlfred:token', token);
+    localStorage.setItem('@PainelAlfred:user', user);
 
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-    },
-
-    [],
-  );
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    SentrySetUser({ user, token });
+  }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@PainelAlfred:token');
     localStorage.removeItem('@PainelAlfred:user');
     localStorage.removeItem('@PainelAlfred:theme');
     setData({} as AuthState);
+    SentryReset();
   }, []);
 
   return (

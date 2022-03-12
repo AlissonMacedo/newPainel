@@ -5,7 +5,11 @@ import RoutesComponent from './routes';
 import GlabalStyle from './styles/global';
 import AppProvider from './hooks';
 
+import { SentryInitialization } from './services/Sentry';
+
 const App: React.FC = () => {
+  SentryInitialization();
+
   return (
     <Router>
       <AppProvider>

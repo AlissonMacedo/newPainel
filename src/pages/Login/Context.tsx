@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useRef } from 'react';
 
 import { useHistory } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 
 import { FormHandles } from '@unform/core';
 import getValidationErrors from '../../helpers/getValidationErrors';
