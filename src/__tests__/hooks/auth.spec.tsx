@@ -11,6 +11,8 @@ describe('Auth hook', () => {
   it('should be able to sign in', async () => {
     apiMock.onPost('/login/auth').reply(200, loginDataObject);
 
+    const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+
     const { result, waitForNextUpdate } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
@@ -21,6 +23,16 @@ describe('Auth hook', () => {
     });
 
     await waitForNextUpdate();
+
+    expect(setItemSpy).toHaveBeenCalledWith(
+      '@PainelAlfred:token',
+      loginDataObject.data.token,
+    );
+    expect(setItemSpy).toHaveBeenCalledWith(
+      '@PainelAlfred:user',
+      JSON.stringify(loginDataObject.data.user),
+    );
+
     expect(result.current.user).toEqual('test@example.com');
   });
 });
