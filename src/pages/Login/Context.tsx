@@ -46,6 +46,7 @@ const LoginProvider: React.FC = ({ children }) => {
 
       history.push('/home');
     } catch (err: any) {
+      Sentry.captureException(err);
       addToast({
         type: 'error',
         description: 'Não foi possível realizar o login!',
