@@ -17,6 +17,7 @@ interface AuthContextData {
   user: string;
   signIn(credentials: SignInCreadentials): Promise<void>;
   signOut(): void;
+  updateUser(newData: AuthState): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -39,12 +40,12 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = useCallback(async ({ email, password }) => {
     const { token, user } = await Login.postLogin({ email, password });
 
-    setData({ token, user });
-
     localStorage.setItem('@PainelAlfred:token', token);
     localStorage.setItem('@PainelAlfred:user', user);
 
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+    setData({ token, user });
     SentrySetUser({ user, token });
   }, []);
 
@@ -52,25 +53,28 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@PainelAlfred:token');
     localStorage.removeItem('@PainelAlfred:user');
     localStorage.removeItem('@PainelAlfred:theme');
+
     setData({} as AuthState);
     SentryReset();
   }, []);
 
+  const updateUser = useCallback(newData => {
+    localStorage.setItem('@PainelAlfred:user', newData.user);
+
+    setData({ user: newData.user, token: newData.token });
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signOut, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
 function useAuth(): AuthContextData {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-
-  return context;
+  return useContext(AuthContext);
 }
 
 export { AuthProvider, useAuth };
