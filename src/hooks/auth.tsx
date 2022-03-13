@@ -2,7 +2,7 @@
 import React, { createContext, useState, useContext, useCallback } from 'react';
 import api from '../services/api';
 
-import Login from '../Dto/Login';
+import Login from '../dtos/Login';
 import { SentrySetUser, SentryReset } from '../services/Sentry';
 
 interface SignInCreadentials {

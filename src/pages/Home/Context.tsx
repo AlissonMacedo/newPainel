@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import Business from '../../Dto/Business';
+import Business from '../../dtos/Business';
 import { useToast } from '../../hooks/toast';
 
 interface HomeContextData {
