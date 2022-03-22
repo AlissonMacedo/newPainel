@@ -40,11 +40,20 @@ export const Container = styled.div`
         font-family: 'inter';
         color: ${props => props.theme.text.gray350};
       }
-      strong {
+
+      > button {
+        border: none;
+        background-color: inherit;
+        padding: 5px 0;
+
+        width: 30px;
+        cursor: pointer;
+        display: inline-block;
+
         font-weight: 400;
         font-size: 14px;
         line-height: 21px;
-        font-family: 'inter';
+
         color: ${props => props.theme.text.cyan300};
       }
     }
@@ -63,4 +72,16 @@ export const Container = styled.div`
       margin-top: 20px;
     }
   }
+`;
+
+export const Main = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+export const MapContainer = styled.div`
+  width: 100%;
+  height: 100%;
 `;

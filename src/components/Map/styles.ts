@@ -14,7 +14,6 @@ export const Container = styled.div`
 `;
 
 export const Context = styled.div`
-  position: absolute;
   left: 40%;
   box-sizing: border-box;
   border: 1px solid #ccc;

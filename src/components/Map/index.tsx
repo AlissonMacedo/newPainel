@@ -4,15 +4,16 @@ import {
   GoogleMap,
   Marker,
   LoadScript,
-  StandaloneSearchBox,
   DirectionsService,
   DirectionsRenderer,
 } from '@react-google-maps/api';
 import { Container, Context } from './styles';
 
-import { MapProvider } from './Context';
+import { useBusiness } from '../../pages/Business/Context';
 
-const PageComponent: React.FC = () => {
+const Map: React.FC = () => {
+  const { onMapLoad, clearRoute, traceRoute, markers, calculate } =
+    useBusiness();
   const [map, setMap] = useState<google.maps.Map>();
   const [searchBoxA, setSearchBoxA] =
     React.useState<google.maps.places.SearchBox>();
@@ -26,10 +27,9 @@ const PageComponent: React.FC = () => {
   const [destination, setDestination] =
     useState<google.maps.LatLngLiteral | null>();
 
+  const [latLng, setLatLng] = useState({ lat: -21.168434, lng: -47.751594 });
   const [response, setResponse] =
     useState<google.maps.DistanceMatrixResponse | null>();
-
-  const latLng = { lat: -21.168434, lng: -47.751594 };
 
   const onLoadA = (ref: google.maps.places.SearchBox) => {
     setSearchBoxA(ref);
@@ -37,10 +37,6 @@ const PageComponent: React.FC = () => {
 
   const onLoadB = (ref: google.maps.places.SearchBox) => {
     setSearchBoxB(ref);
-  };
-
-  const onMapLoad = (m: google.maps.Map) => {
-    setMap(m);
   };
 
   const onPlacesChangedA = () => {
@@ -75,22 +71,6 @@ const PageComponent: React.FC = () => {
     map?.panTo(location);
   };
 
-  const traceRoute = () => {
-    if (pointA && pointB) {
-      setOrigin(pointA);
-      setDestination(pointB);
-    }
-  };
-
-  console.log('searchBoxA', searchBoxA);
-  const clearRoute = () => {
-    setPointA(undefined);
-    setPointB(undefined);
-    setOrigin(null);
-    setDestination(null);
-    setResponse(null);
-  };
-
   const directionsServiceOptions =
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -118,30 +98,7 @@ const PageComponent: React.FC = () => {
   }, [response]);
 
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyBffb-JobxOiAyBbg39zvx_duIo8NOAmxg"
-      libraries={['places']}
-    >
-      <Context>
-        <StandaloneSearchBox
-          onLoad={onLoadA}
-          onPlacesChanged={onPlacesChangedA}
-        >
-          <input placeholder="Search" />
-        </StandaloneSearchBox>
-        <StandaloneSearchBox
-          onLoad={onLoadB}
-          onPlacesChanged={onPlacesChangedB}
-        >
-          <input placeholder="Search" />
-        </StandaloneSearchBox>
-        <button type="button" onClick={traceRoute}>
-          Traçar rota
-        </button>
-        <button type="button" onClick={clearRoute}>
-          Limpar
-        </button>
-      </Context>
+    <LoadScript googleMapsApiKey="AIzaSyBffb-JobxOiAyBbg39zvx_duIo8NOAmxg">
       <Container>
         <GoogleMap
           onLoad={onMapLoad}
@@ -149,10 +106,9 @@ const PageComponent: React.FC = () => {
           center={latLng}
           zoom={15}
         >
-          {!response && pointA && <Marker position={pointA} />}
-          {!response && pointB && <Marker position={pointB} />}
+          {!response && markers?.map(item => <Marker position={item} />)}
 
-          {origin && destination && (
+          {calculate && (
             <DirectionsService
               options={directionsServiceOptions}
               callback={directionsCallback}
@@ -165,14 +121,6 @@ const PageComponent: React.FC = () => {
         </GoogleMap>
       </Container>
     </LoadScript>
-  );
-};
-
-const Map: React.FC = () => {
-  return (
-    <MapProvider>
-      <PageComponent />
-    </MapProvider>
   );
 };
 
