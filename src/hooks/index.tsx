@@ -6,7 +6,6 @@ import { ToastProvider } from './toast';
 
 import { ThemeProvider } from './theme';
 import Wrapper from '../pages/Wrapper';
-import { analyticsEvent } from '../services/firebase/analytics';
 import firebase from '../services/firebase';
 
 const AppProvider: React.FC = ({ children }) => {
