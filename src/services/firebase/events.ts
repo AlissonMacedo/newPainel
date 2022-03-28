@@ -2,6 +2,7 @@ import firebase from '.';
 import { analyticsEvent } from './analytics';
 import { GetFreightObj } from '../../helpers/types/business';
 
+// Run when AuthContext is heydrateLogin
 export const setUserAnalytics = (user: string) => {
   firebase.analytics().setUserId(user);
 };
