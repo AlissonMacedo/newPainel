@@ -1,15 +1,6 @@
 import api from '../services/api';
 
-interface GetFreightObj {
-  city: string;
-  cityId: number;
-  providerId: number;
-  serviceType: number;
-  vehicleType: number;
-  qntPoints: number;
-  kmDelivery: number;
-  kmReturn: number;
-}
+import { GetFreightObj } from '../helpers/types/business';
 
 interface ReturnGetFreightObj {
   deliveryTax: number;

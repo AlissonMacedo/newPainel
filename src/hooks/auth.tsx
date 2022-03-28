@@ -4,6 +4,7 @@ import api from '../services/api';
 
 import Login from '../dtos/Login';
 import { SentrySetUser, SentryReset } from '../services/Sentry';
+import { setUserAnalytics } from '../services/firebase/events';
 
 interface SignInCreadentials {
   email: string;
@@ -29,6 +30,7 @@ const heydrateLogin = () => {
   if (token && user) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
     SentrySetUser({ user, token });
+    setUserAnalytics(user);
     return { token, user };
   }
   return {} as AuthState;

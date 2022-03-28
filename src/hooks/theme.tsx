@@ -3,6 +3,7 @@ import {
   ThemeProvider as ThemeStyledComponents,
   DefaultTheme,
 } from 'styled-components';
+
 import light from '../styles/light';
 import dark from '../styles/dark';
 
@@ -34,6 +35,7 @@ const ThemeProvider: React.FC = ({ children }) => {
       return setCurrentTheme(light);
     }
     localStorage.setItem('@PainelAlfred:theme', 'dark');
+
     return setCurrentTheme(dark);
   }, [currentTheme]);
 

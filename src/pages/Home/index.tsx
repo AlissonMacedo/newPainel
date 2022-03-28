@@ -3,6 +3,7 @@ import Switch from 'react-switch';
 import { ThemeContext } from 'styled-components';
 import { shade } from 'polished';
 import { Oval } from 'react-loader-spinner';
+
 import { useAuth } from '../../hooks/auth';
 import { useTheme } from '../../hooks/theme';
 
@@ -15,7 +16,7 @@ import { HomeProvider, useHome } from './Context';
 const PageComponent: React.FC = () => {
   const { signOut } = useAuth();
 
-  const { loadFreight, load } = useHome();
+  const { loadFreight, createOrder, load } = useHome();
   const { colors } = useContext(ThemeContext);
   const { changeTheme, currentThemeDarkorLight } = useTheme();
 
@@ -32,13 +33,20 @@ const PageComponent: React.FC = () => {
         />
       </div>
       <h1>Home</h1>
-      <Button typeStyle="secondary" onClick={() => signOut()}>
-        Sair
-      </Button>
-      <div>
+      <div className="space">
+        <Button typeStyle="secondary" onClick={() => signOut()}>
+          Sair
+        </Button>
+      </div>
+      <div className="space">
         <Button onClick={() => loadFreight()}>
           {load && <Oval color="#fff" height={15} width={15} />}
           Calcular
+        </Button>
+      </div>
+      <div className="space">
+        <Button typeStyle="secondary" onClick={() => createOrder()}>
+          Criar Pedido
         </Button>
       </div>
     </Container>
