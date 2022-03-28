@@ -22,13 +22,3 @@ export const gaCreateOrderError = () => {
 export const gaNotBalanceError = () => {
   return analyticsEvent('error_not_balance');
 };
-
-// Entrou na pagina
-
-// Calculou frete
-
-// Criou um pedido
-
-// Erros
-// Falta de saldo
-// Pedido não realizado
