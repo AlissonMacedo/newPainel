@@ -10,7 +10,7 @@ export const Content = styled.div`
   width: 494px;
   background: ${props => props.theme.colors.white};
   border-right: #dcddde solid 1px;
-  padding: 32px;
+  padding: 10px 32px 10px;
 
   > div {
     margin-top: 16px;
@@ -70,15 +70,13 @@ export const Content = styled.div`
   }
 `;
 
+export const ContentAdress = styled.div`
+  height: 40vh;
+`;
+
 export const Main = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
-  background: #7159c1;
-`;
-
-export const MapContainer = styled.div`
-  width: 100%;
-  height: 100%;
 `;

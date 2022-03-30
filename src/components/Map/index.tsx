@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -32,11 +32,15 @@ const MyComponent = ({ map, setMap, values }: any) => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={14}
         onLoad={onMapLoad}
       >
         {/* Child components, such as markers, info windows, etc. */}
-        <></>
+        {values.deliveries.map((delivery: any) => (
+          <Marker
+            position={{ lat: delivery.latitude, lng: delivery.longitude }}
+          />
+        ))}
       </GoogleMap>
     </>
   ) : (

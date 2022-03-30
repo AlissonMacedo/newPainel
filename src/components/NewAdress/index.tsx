@@ -87,7 +87,8 @@ const NewAdress: React.FC<newAdressData> = ({ submit }) => {
         return (
           <Container>
             <div className="inputs">
-              <h4 style={{ color: '#444' }}>Adicinando um novo endereço:</h4>
+              <h4 style={{ color: '#444' }}>Adicionando um novo endereço:</h4>
+              <button type="button">Fechar</button>
               <div className="column.Row">
                 <AutoComplete
                   label="Endereço"

@@ -1,12 +1,10 @@
 /* eslint-disable no-undef */
-import React, { useRef } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import { Button } from '../../components/Button';
 
-import { Container, Main, Content, MapContainer } from './styles';
+import { Container, Main, Content, ContentAdress } from './styles';
 import NewAdress from '../../components/NewAdress';
-
-import { Input } from '../../components/InputNew';
 import Map from '../../components/Map';
 
 type AppProps = {
@@ -121,30 +119,44 @@ const Business: React.FC = () => {
                 <div>
                   <h3>Rota de entrega</h3>
                 </div>
-                {values.deliveries.map((item, index) => (
-                  <div className="address">
-                    <div className="destiny">
-                      <h4>{`Destino ${index + 1}`}</h4>
+                <ContentAdress>
+                  {values.deliveries.map((item, index) => (
+                    <div className="address">
+                      <div className="destiny">
+                        <h4>{`Destino ${index + 1}`}</h4>
+                      </div>
+                      <div>
+                        <h4>{`${item.street}, ${item.number}`}</h4>
+                        <span>{`${item.city}, ${item.state} - Brasil`}</span>
+                        <button
+                          type="button"
+                          onClick={() => editDelivery(index)}
+                        >
+                          <strong>Editar</strong>
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <h4>{`${item.street}, ${item.number}`}</h4>
-                      <span>{`${item.city}, ${item.state} - Brasil`}</span>
-                      <button type="button" onClick={() => editDelivery(index)}>
-                        <strong>Editar</strong>
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </ContentAdress>
                 {values.addAdress ? (
                   <NewAdress submit={deliveries => teste(deliveries)} />
                 ) : (
-                  <Button
-                    typeStyle="primary"
-                    type="button"
-                    onClick={() => addAddres()}
-                  >
-                    Adicionar um endereço
-                  </Button>
+                  <>
+                    <Button
+                      typeStyle="primary"
+                      type="button"
+                      onClick={() => addAddres()}
+                    >
+                      Adicionar um endereço
+                    </Button>
+                    <Button
+                      typeStyle="info"
+                      type="button"
+                      onClick={() => addAddres()}
+                    >
+                      Calcular nova Rota
+                    </Button>
+                  </>
                 )}
               </form>
             </Content>
