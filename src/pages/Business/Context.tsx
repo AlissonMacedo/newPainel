@@ -5,6 +5,7 @@ import React, {
   useState,
   useMemo,
   useCallback,
+  useRef,
 } from 'react';
 
 interface BusinessContextData {
@@ -26,6 +27,7 @@ const BusinessContext = createContext<BusinessContextData>(
 );
 
 const BusinessProvider: React.FC = ({ children }) => {
+  const node = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map>();
   const [latLng, setLatLng] = useState({ lat: -21.168434, lng: -47.751594 });
 

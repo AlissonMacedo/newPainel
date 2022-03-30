@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-undef */
+import React, { useRef } from 'react';
 import { Formik } from 'formik';
 import { Button } from '../../components/Button';
 
@@ -6,7 +7,7 @@ import { Container, Main, Content, MapContainer } from './styles';
 import NewAdress from '../../components/NewAdress';
 
 import { Input } from '../../components/InputNew';
-import Map from '../../components/NewMap';
+import Map from '../../components/Map';
 
 type AppProps = {
   id: number;
@@ -24,6 +25,8 @@ type AppProps = {
 };
 
 const Business: React.FC = () => {
+  const [map, setMap] = React.useState<google.maps.Map>();
+
   return (
     <Formik
       initialValues={{
@@ -85,6 +88,7 @@ const Business: React.FC = () => {
         function teste(deliveries: AppProps) {
           setFieldValue('addAdress', false);
           setFieldValue('deliveries', [...values.deliveries, deliveries]);
+          map?.panTo({ lat: deliveries.latitude, lng: deliveries.longitude });
 
           setFieldValue('delivery', {
             id: Math.random(),
@@ -109,6 +113,7 @@ const Business: React.FC = () => {
         const addAddres = () => {
           setFieldValue('addAdress', true);
         };
+
         return (
           <Container>
             <Content>
@@ -144,7 +149,7 @@ const Business: React.FC = () => {
               </form>
             </Content>
             <Main>
-              <Map deliveries={values.deliveries} />
+              <Map map={map} setMap={setMap} values={values} />
             </Main>
           </Container>
         );

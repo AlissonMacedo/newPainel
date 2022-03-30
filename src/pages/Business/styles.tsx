@@ -72,10 +72,10 @@ export const Content = styled.div`
 
 export const Main = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex: 1;
   flex-direction: column;
   justify-content: flex-end;
+  background: #7159c1;
 `;
 
 export const MapContainer = styled.div`

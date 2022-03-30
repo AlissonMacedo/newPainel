@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@react-google-maps/api": "^2.4.1",
+    "@react-google-maps/api": "^2.7.0",
     "@sentry/react": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
     "@testing-library/jest-dom": "^5.16.2",
