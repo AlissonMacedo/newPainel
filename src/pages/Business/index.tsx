@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, isObject } from 'formik';
 import { Button } from '../../components/Button';
 
 import { Container, Main, Content, ContentAdress } from './styles';
 import NewAdress from '../../components/NewAdress';
 import Map from '../../components/Map';
+import Retangle256 from '../../components/Retangle256';
+import { BusinessProvider, useBusiness } from './Context';
 
 type AppProps = {
   id: number;
@@ -22,13 +24,26 @@ type AppProps = {
   payment: number;
 };
 
-const Business: React.FC = () => {
+const PageComponent: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
+  const { loadFreight } = useBusiness();
+
+  const newSubmit = React.useCallback(async data => {
+    console.log('data', data);
+  }, []);
 
   return (
     <Formik
       initialValues={{
+        calculed: false,
+        route: null,
         addAdress: true,
+        dataToDelivery: {
+          totaToPay: 0,
+          timeDelivery: 1,
+          distanceTotal: 1,
+          deliveriesTotal: 2,
+        },
         teste: '',
         teste2: '',
         teste3: '',
@@ -65,11 +80,9 @@ const Business: React.FC = () => {
           },
         ],
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+      onSubmit={async (values, { setSubmitting }) => {
+        await newSubmit(values);
+        setSubmitting(false);
       }}
     >
       {({
@@ -112,6 +125,39 @@ const Business: React.FC = () => {
           setFieldValue('addAdress', true);
         };
 
+        const calcFreight = async (route: any) => {
+          console.log('route', route);
+          const newFreight = {
+            city: 'Mâncio Lima',
+            cityId: 1200336,
+            providerId: 0,
+            qntPoints: 2,
+            kmDelivery: 767,
+            kmReturn: 0,
+            serviceType: null,
+            vehicleType: null,
+          };
+
+          const {
+            isError,
+            newReturn: { deliveryTax, returnTax },
+          } = await loadFreight(newFreight);
+          console.log('foi 2');
+          console.log('deliveryTax', !!deliveryTax);
+          console.log('returnTax', !!returnTax);
+
+          if (!isError && !!deliveryTax && !!returnTax) {
+            console.log('foi');
+            setFieldValue('dataToDelivery.totaToPay', deliveryTax + returnTax);
+          } else {
+            setFieldValue('dataToDelivery.totaToPay', deliveryTax);
+          }
+        };
+
+        const routing = async () => {
+          setFieldValue('calculed', true);
+        };
+
         return (
           <Container>
             <Content>
@@ -152,7 +198,7 @@ const Business: React.FC = () => {
                     <Button
                       typeStyle="info"
                       type="button"
-                      onClick={() => addAddres()}
+                      onClick={() => routing()}
                     >
                       Calcular nova Rota
                     </Button>
@@ -161,12 +207,27 @@ const Business: React.FC = () => {
               </form>
             </Content>
             <Main>
-              <Map map={map} setMap={setMap} values={values} />
+              <Map
+                map={map}
+                setMap={setMap}
+                values={values}
+                setFieldValue={setFieldValue}
+                calcFreight={calcFreight}
+              />
+              <Retangle256 values={values} />
             </Main>
           </Container>
         );
       }}
     </Formik>
+  );
+};
+
+const Business = () => {
+  return (
+    <BusinessProvider>
+      <PageComponent />
+    </BusinessProvider>
   );
 };
 

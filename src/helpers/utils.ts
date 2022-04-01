@@ -44,7 +44,7 @@ const formatPhone = (value: string) => {
 };
 
 const formatAmount = (val: number) => {
-  CurrencyFormatter.format(val / 100, {
+  return CurrencyFormatter.format(val, {
     decimal: ',',
     thousand: '.',
     precision: 2,

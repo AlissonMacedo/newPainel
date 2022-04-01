@@ -40,6 +40,14 @@ const ToastProvider: React.FC = ({ children }) => {
   }, []);
 
   const errorCather = ({ data, msg, error }: Teste) => {
+    // errorCather({
+    //   data: {},
+    //   msg: `O valor do frete é R$${deliveryTax}, 00`,
+    //   error: {
+    //     type: 'error',
+    //     msg: 'teste',
+    //   },
+    // });
     if (data) {
       return addToast({
         title: 'Tudo certo!',

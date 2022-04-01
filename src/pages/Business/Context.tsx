@@ -1,25 +1,23 @@
 /* eslint-disable no-undef */
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useMemo,
-  useCallback,
-  useRef,
-} from 'react';
+import React, { createContext, useContext } from 'react';
+import { GetFreightObj } from '../../helpers/types/business';
+import Business from '../../dtos/Business';
+
+import {
+  gaCalcFreight,
+  gaCreateOrderError,
+} from '../../services/firebase/events';
+import { useToast } from '../../hooks/toast';
+import { errorFreight, successFreight } from '../../helpers/objsToasts';
+
+interface returnFreightObj {
+  isError?: boolean;
+  newReturn: { deliveryTax?: number; returnTax?: number };
+}
 
 interface BusinessContextData {
-  data: object;
-  traceRoute(): void;
-  clearRoute(): void;
-  onMapLoad(e: google.maps.Map): void;
-  latLng: { lat: number; lng: number };
-  response: google.maps.DistanceMatrixResponse | null;
-  setResponse(a: google.maps.DistanceMatrixResponse | null): void;
-  markers: Array<google.maps.LatLngLiteral> | null;
-  destination: google.maps.LatLngLiteral | null;
-  setCalculate(value: boolean): void;
-  calculate: boolean;
+  loadFreight(value: GetFreightObj): Promise<returnFreightObj>;
+  load: boolean;
 }
 
 const BusinessContext = createContext<BusinessContextData>(
@@ -27,57 +25,33 @@ const BusinessContext = createContext<BusinessContextData>(
 );
 
 const BusinessProvider: React.FC = ({ children }) => {
-  const node = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<google.maps.Map>();
-  const [latLng, setLatLng] = useState({ lat: -21.168434, lng: -47.751594 });
+  const [load, setLoad] = React.useState(false);
+  const { addToast } = useToast();
 
-  const [pointA, setPointA] = useState<google.maps.LatLngLiteral>();
-  const [pointB, setPointB] = useState<google.maps.LatLngLiteral>();
+  async function loadFreight(value: GetFreightObj) {
+    setLoad(true);
+    let newReturn = {};
+    const isError = false;
 
-  const [origin, setOrigin] = useState<google.maps.LatLngLiteral | null>();
-  const [destination, setDestination] =
-    useState<google.maps.LatLngLiteral | null>(null);
-
-  const [response, setResponse] =
-    useState<google.maps.DistanceMatrixResponse | null>(null);
-
-  const clearRoute = () => {
-    setPointA(undefined);
-    setPointB(undefined);
-    setOrigin(null);
-    setDestination(null);
-    setResponse(null);
-  };
-
-  const traceRoute = () => {
-    if (pointA && pointB) {
-      setOrigin(pointA);
-      setDestination(pointB);
+    try {
+      const { deliveryTax, returnTax } = await Business.getFreight(value);
+      newReturn = { deliveryTax, returnTax };
+      gaCalcFreight();
+      addToast(successFreight(deliveryTax + returnTax));
+    } catch (err) {
+      addToast(errorFreight);
+      gaCreateOrderError();
+    } finally {
+      setLoad(false);
     }
-  };
-
-  const onMapLoad = (m: any) => {
-    setMap(m);
-  };
-
-  const [calculate, setCalculate] = useState<boolean>(false);
-  const [markers, setMarkers] =
-    useState<Array<google.maps.LatLngLiteral> | null>(null);
+    return { isError, newReturn };
+  }
 
   return (
     <BusinessContext.Provider
       value={{
-        data: {},
-        traceRoute,
-        clearRoute,
-        onMapLoad,
-        latLng,
-        response,
-        setResponse,
-        markers,
-        destination,
-        setCalculate,
-        calculate,
+        loadFreight,
+        load,
       }}
     >
       {children}

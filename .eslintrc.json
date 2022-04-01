@@ -25,6 +25,7 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/ban-ts-ignore": "off",
     "no-unused-vars": "off",
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
