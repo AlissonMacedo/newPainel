@@ -27,9 +27,10 @@ type AppProps = {
 
 type newAdressData = {
   submit: (value: AppProps) => void;
+  closeNewAdress: () => void;
 };
 
-const NewAdress: React.FC<newAdressData> = ({ submit }) => {
+const NewAdress: React.FC<newAdressData> = ({ submit, closeNewAdress }) => {
   const onSubmit = async (delivery: AppProps) => {
     // if the user is not select adress in autoComplete when
     // is necessary search adress for location lat and lng;
@@ -87,8 +88,12 @@ const NewAdress: React.FC<newAdressData> = ({ submit }) => {
         return (
           <Container>
             <div className="inputs">
-              <h4 style={{ color: '#444' }}>Adicionando um novo endereço:</h4>
-              <button type="button">Fechar</button>
+              <div className="titleform">
+                <h4 style={{ color: '#444' }}>Adicionando um novo endereço:</h4>
+                <button type="button" onClick={() => closeNewAdress()}>
+                  Fechar
+                </button>
+              </div>
               <div className="column.Row">
                 <AutoComplete
                   label="Endereço"

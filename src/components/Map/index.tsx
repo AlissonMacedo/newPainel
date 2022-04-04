@@ -12,6 +12,8 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api';
 
+import Directions from '../../services/Directions';
+
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -38,22 +40,7 @@ const MyComponent = ({ map, setMap, values, setFieldValue, calcFreight }: any) =
   const directionsServiceOptions =
     // @ts-ignore
     React.useMemo<google.maps.DirectionsRequest>(() => {
-      const origin = {
-        lat: values.deliveries[0].latitude,
-        lng: values.deliveries[0].longitude,
-      }
-
-      const destination = values.deliveries[1] ? {
-        lat: values.deliveries[1].latitude,
-        lng: values.deliveries[1].longitude,
-      } : null
-
-      return {
-        origin,
-        waypoints: undefined,
-        destination,
-        travelMode: 'DRIVING',
-      };
+      return Directions.directionsServiceOptions(values)
     }, [values.calculed]);
 
   const directionsCallback = React.useCallback(res => {

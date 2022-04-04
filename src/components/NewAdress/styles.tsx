@@ -9,6 +9,10 @@ export const Container = styled.div`
       display: flex;
       flex-direction: row;
     }
+
+    div.titleform {
+      justify-content: space-between;
+    }
   }
 
   div.divButton {

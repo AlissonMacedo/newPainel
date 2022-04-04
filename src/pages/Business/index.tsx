@@ -1,13 +1,14 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
 import React from 'react';
 import { Formik, isObject } from 'formik';
-import { Button } from '../../components/Button';
 
 import { Container, Main, Content, ContentAdress } from './styles';
 import NewAdress from '../../components/NewAdress';
 import Map from '../../components/Map';
 import Retangle256 from '../../components/Retangle256';
 import { BusinessProvider, useBusiness } from './Context';
+import ActionForm from '../../components/ActionForm';
 
 type AppProps = {
   id: number;
@@ -24,6 +25,12 @@ type AppProps = {
   payment: number;
 };
 
+type objDelivery = {
+  qntPoints: number;
+  kmDelivery: number;
+  kmReturn: number;
+};
+
 const PageComponent: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
   const { loadFreight } = useBusiness();
@@ -38,16 +45,17 @@ const PageComponent: React.FC = () => {
         calculed: false,
         route: null,
         addAdress: true,
+        deliveryRetorn: false,
+        travelMode: 'DRIVING',
+        optimizeWaypoints: true,
+        vehicleType: 0,
+        serviceType: 0,
         dataToDelivery: {
           totaToPay: 0,
           timeDelivery: 1,
           distanceTotal: 1,
           deliveriesTotal: 2,
         },
-        teste: '',
-        teste2: '',
-        teste3: '',
-        teste4: '',
         address: '',
         delivery: {
           id: Math.random(),
@@ -121,47 +129,84 @@ const PageComponent: React.FC = () => {
           setFieldValue('delivery', values.deliveries[index]);
         }
 
-        const addAddres = () => {
-          setFieldValue('addAdress', true);
-        };
-
         const calcFreight = async (route: any) => {
-          console.log('route', route);
+          let leng = 0;
+          let dur = 0;
+          if (
+            typeof route.routes[0] === 'object' &&
+            typeof route.routes[0].legs === 'object'
+          ) {
+            for (let rt = 0; rt < route.routes[0].legs.length; rt++) {
+              leng += route.routes[0].legs[rt].distance.value;
+              dur += route.routes[0].legs[rt].duration.value;
+            }
+          }
+
+          setFieldValue(
+            'dataToDelivery.distanceTotal',
+            (leng / 1000).toFixed(1),
+          );
+          setFieldValue('dataToDelivery.timeDelivery', Math.round(dur / 60));
+
+          let newObj: {
+            qntPoints: number;
+            kmDelivery: number;
+            kmReturn: number;
+          };
+
+          if (values.deliveryRetorn) {
+            newObj = {
+              qntPoints: route.routes[0].legs.length,
+              kmDelivery:
+                leng -
+                route.routes[0].legs[route.routes[0].legs.length - 1].distance
+                  .value,
+              kmReturn:
+                route.routes[0].legs[route.routes[0].legs.length - 1].distance
+                  .value,
+            };
+          } else {
+            newObj = {
+              qntPoints: route.routes[0].legs.length + 1,
+              kmDelivery: leng,
+              kmReturn: 0,
+            };
+          }
+
           const newFreight = {
             city: 'Mâncio Lima',
             cityId: 1200336,
-            providerId: 0,
-            qntPoints: 2,
-            kmDelivery: 767,
-            kmReturn: 0,
-            serviceType: null,
-            vehicleType: null,
+            qntPoints: newObj.qntPoints,
+            kmDelivery: newObj.kmDelivery,
+            kmReturn: newObj.kmReturn,
+            vehicleType: values.vehicleType,
           };
 
           const {
             isError,
             newReturn: { deliveryTax, returnTax },
           } = await loadFreight(newFreight);
-          console.log('foi 2');
-          console.log('deliveryTax', !!deliveryTax);
-          console.log('returnTax', !!returnTax);
 
-          if (!isError && !!deliveryTax && !!returnTax) {
-            console.log('foi');
-            setFieldValue('dataToDelivery.totaToPay', deliveryTax + returnTax);
-          } else {
-            setFieldValue('dataToDelivery.totaToPay', deliveryTax);
+          if (!isError) {
+            if (!!deliveryTax && !!returnTax) {
+              setFieldValue(
+                'dataToDelivery.totaToPay',
+                deliveryTax + returnTax,
+              );
+            } else {
+              setFieldValue('dataToDelivery.totaToPay', deliveryTax);
+            }
           }
         };
 
-        const routing = async () => {
-          setFieldValue('calculed', true);
+        const closeNewAdress = () => {
+          setFieldValue('addAdress', false);
         };
 
         return (
           <Container>
-            <Content>
-              <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
+              <Content>
                 <div>
                   <h3>Rota de entrega</h3>
                 </div>
@@ -185,27 +230,15 @@ const PageComponent: React.FC = () => {
                   ))}
                 </ContentAdress>
                 {values.addAdress ? (
-                  <NewAdress submit={deliveries => teste(deliveries)} />
+                  <NewAdress
+                    submit={deliveries => teste(deliveries)}
+                    closeNewAdress={closeNewAdress}
+                  />
                 ) : (
-                  <>
-                    <Button
-                      typeStyle="primary"
-                      type="button"
-                      onClick={() => addAddres()}
-                    >
-                      Adicionar um endereço
-                    </Button>
-                    <Button
-                      typeStyle="info"
-                      type="button"
-                      onClick={() => routing()}
-                    >
-                      Calcular nova Rota
-                    </Button>
-                  </>
+                  <ActionForm setFieldValue={setFieldValue} />
                 )}
-              </form>
-            </Content>
+              </Content>
+            </form>
             <Main>
               <Map
                 map={map}

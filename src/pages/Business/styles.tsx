@@ -7,29 +7,31 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 494px;
-  background: ${props => props.theme.colors.white};
+  width: 400px;
+  background: #fff;
+  display: flex;
+  height: 100%;
+
+  flex-direction: column;
+  align-items: flex-start;
   border-right: #dcddde solid 1px;
-  padding: 10px 32px 10px;
+  padding: 5px 32px 5px;
+`;
 
-  > div {
-    margin-top: 16px;
+export const ContentAdress = styled.div`
+  height: 40vh;
+  width: 100%;
+  margin-top: 14px;
 
-    h3 {
-      font-weight: 500;
-      font-size: 27px;
-      line-height: 40px;
-      font-family: 'inter';
-      color: ${props => props.theme.text.cyan950};
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   div.address {
-    margin-top: 30px;
-
     > div {
       display: flex;
       flex-direction: column;
+      padding: 0;
 
       h4 {
         font-weight: 500;
@@ -65,13 +67,9 @@ export const Content = styled.div`
     }
 
     div.destiny {
-      margin-top: 34px;
+      margin-top: 10px;
     }
   }
-`;
-
-export const ContentAdress = styled.div`
-  height: 40vh;
 `;
 
 export const Main = styled.div`
