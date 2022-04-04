@@ -235,7 +235,7 @@ const PageComponent: React.FC = () => {
                     closeNewAdress={closeNewAdress}
                   />
                 ) : (
-                  <ActionForm setFieldValue={setFieldValue} />
+                  <ActionForm values={values} setFieldValue={setFieldValue} />
                 )}
               </Content>
             </form>
