@@ -20,9 +20,18 @@ const ActionForm: React.FC<actionFormData> = ({ values, setFieldValue }) => {
     setFieldValue('calculed', true);
   };
 
+  const optimizeOnoff = () => {
+    setFieldValue('calculed', false);
+    setFieldValue('route', null);
+  };
+
   return (
     <Container>
-      <OptionsForm values={values} setFieldValue={setFieldValue} />
+      <OptionsForm
+        values={values}
+        setFieldValue={setFieldValue}
+        optimizeOnoff={optimizeOnoff}
+      />
       <Button typeStyle="primary" type="button" onClick={() => addAddres()}>
         Adicionar um endereço
       </Button>

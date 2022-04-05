@@ -46,10 +46,11 @@ const Label = styled('label', {
 
 interface switchData {
   setFieldValue: (type: string, value: any) => void;
+  optimizeOnoff: () => void;
   values: any;
 }
 
-const SwitchDemo = ({ values, setFieldValue }: switchData) => {
+const SwitchDemo = ({ values, setFieldValue, optimizeOnoff }: switchData) => {
   const verifyCheck = (value: boolean) => {
     if (value === true) {
       return 'Sim';
@@ -63,11 +64,13 @@ const SwitchDemo = ({ values, setFieldValue }: switchData) => {
           Otimizar: {verifyCheck(values.optimizeWaypoints)}
         </Label>
         <Switch
+          defaultChecked={values.optimizeWaypoints}
           value={values.optimizeWaypoints}
           id="s1"
-          onCheckedChange={e =>
-            setFieldValue('optimizeWaypoints', !values.optimizeWaypoints)
-          }
+          onCheckedChange={e => {
+            optimizeOnoff();
+            setFieldValue('optimizeWaypoints', !values.optimizeWaypoints);
+          }}
         >
           <SwitchThumb />
         </Switch>
@@ -77,6 +80,7 @@ const SwitchDemo = ({ values, setFieldValue }: switchData) => {
           Retornar: {verifyCheck(values.deliveryRetorn)}
         </Label>
         <Switch
+          defaultChecked={values.deliveryRetorn}
           value={values.deliveryRetorn}
           id="s1"
           onCheckedChange={e =>
