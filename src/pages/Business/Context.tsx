@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { createContext, useContext } from 'react';
 import { GetFreightObj } from '../../helpers/types/business';
-import Business from '../../dtos/Business';
+import Business from '../../services/Business';
 
 import {
   gaCalcFreight,

@@ -1,4 +1,4 @@
-import api from '../services/api';
+import api from './api';
 
 import { GetFreightObj } from '../helpers/types/business';
 

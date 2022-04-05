@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import Business from '../../dtos/Business';
+import Business from '../../services/Business';
 import { useToast } from '../../hooks/toast';
 
 import { GetFreightObj } from '../../helpers/types/business';
