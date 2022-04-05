@@ -52,9 +52,9 @@ const PageComponent: React.FC = () => {
         serviceType: 0,
         dataToDelivery: {
           totaToPay: 0,
-          timeDelivery: 1,
-          distanceTotal: 1,
-          deliveriesTotal: 2,
+          timeDelivery: 0,
+          distanceTotal: 0,
+          deliveriesTotal: 0,
         },
         address: '',
         delivery: {
@@ -104,8 +104,11 @@ const PageComponent: React.FC = () => {
         setFieldValue,
         /* and other goodies */
       }) => {
-        function teste(deliveries: AppProps) {
+        function saveNewAddress(deliveries: AppProps) {
           setFieldValue('addAdress', false);
+          setFieldValue('calculed', false);
+          setFieldValue('route', null);
+
           setFieldValue('deliveries', [...values.deliveries, deliveries]);
           map?.panTo({ lat: deliveries.latitude, lng: deliveries.longitude });
 
@@ -147,6 +150,10 @@ const PageComponent: React.FC = () => {
             (leng / 1000).toFixed(1),
           );
           setFieldValue('dataToDelivery.timeDelivery', Math.round(dur / 60));
+          setFieldValue(
+            'dataToDelivery.deliveriesTotal',
+            route.routes[0].legs.length,
+          );
 
           let newObj: {
             qntPoints: number;
@@ -201,6 +208,8 @@ const PageComponent: React.FC = () => {
 
         const closeNewAdress = () => {
           setFieldValue('addAdress', false);
+          setFieldValue('calculed', false);
+          setFieldValue('route', null);
         };
 
         return (
@@ -231,7 +240,7 @@ const PageComponent: React.FC = () => {
                 </ContentAdress>
                 {values.addAdress ? (
                   <NewAdress
-                    submit={deliveries => teste(deliveries)}
+                    submit={deliveries => saveNewAddress(deliveries)}
                     closeNewAdress={closeNewAdress}
                   />
                 ) : (

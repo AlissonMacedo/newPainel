@@ -12,6 +12,8 @@ type actionFormData = {
 const ActionForm: React.FC<actionFormData> = ({ values, setFieldValue }) => {
   const addAddres = () => {
     setFieldValue('addAdress', true);
+    setFieldValue('calculed', false);
+    setFieldValue('route', null);
   };
 
   const routing = async () => {
@@ -30,4 +32,5 @@ const ActionForm: React.FC<actionFormData> = ({ values, setFieldValue }) => {
     </Container>
   );
 };
+
 export default ActionForm;

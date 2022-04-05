@@ -79,7 +79,7 @@ const MyComponent = ({ map, setMap, values, setFieldValue, calcFreight }: any) =
             position={{ lat: delivery.latitude, lng: delivery.longitude }}
           />
         ))}
-        {values.route && (
+        {values.calculed && values.route && (
           <DirectionsRenderer options={directionsRendererOptions} />
         )}
       </GoogleMap>
