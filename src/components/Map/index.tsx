@@ -40,7 +40,7 @@ const MyComponent = ({ map, setMap, values, setFieldValue, calcFreight }: any) =
   const directionsServiceOptions =
     // @ts-ignore
     React.useMemo<google.maps.DirectionsRequest>(() => {
-      return Directions.directionsServiceOptions(values)
+      return Directions.directionsServiceOptions(values);
     }, [values.calculed]);
 
   const directionsCallback = React.useCallback(res => {

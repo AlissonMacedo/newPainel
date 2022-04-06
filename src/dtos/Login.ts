@@ -15,6 +15,10 @@ interface returnTranslateProvider {
   banks: Array<banks>;
   token: string;
   user: string;
+  providerId: number;
+  providerAlias: string;
+  city: string;
+  state: string;
 }
 
 export default class Login {
@@ -22,15 +26,25 @@ export default class Login {
     const { email: login, password } = obj;
     const {
       data: { data },
-    }: ReturnPostLoginObj = await api.post('/login/auth', {
+    }: any = await api.post('/login/auth', {
       login,
       password,
     });
+
+    const { id, name } = data.user.data.provider[0];
+    const {
+      name: nameCity,
+      stateob: { name: nameState },
+    } = data.user.cities[0];
 
     const newObj: returnTranslateProvider = {
       banks: data.banks,
       token: data.token,
       user: data.user.data.email,
+      providerId: id,
+      providerAlias: name,
+      city: nameCity,
+      state: nameState,
     };
 
     return newObj;

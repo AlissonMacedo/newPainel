@@ -3,12 +3,15 @@ import React from 'react';
 import { Container } from './styles';
 import { Button } from '../Button';
 import { formatAmount } from '../../helpers/utils';
+import { useBusiness } from '../../pages/Business/Context';
 
 interface RetangleDate {
   values: any;
 }
 
 const Retangle256: React.FC<RetangleDate> = ({ values }) => {
+  const { createBusiness } = useBusiness();
+
   return (
     <Container>
       <div className="prices">
@@ -29,7 +32,12 @@ const Retangle256: React.FC<RetangleDate> = ({ values }) => {
           <span>{`${values.dataToDelivery.deliveriesTotal} destinos`}</span>
         </div>
       </div>
-      <Button>Concluir Solicitação</Button>
+      <Button
+        disabled={!values.calculed}
+        onClick={() => createBusiness(values)}
+      >
+        Concluir Solicitação
+      </Button>
     </Container>
   );
 };

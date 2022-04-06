@@ -20,10 +20,6 @@ export const Input: React.FC<InputProps> = ({
   }, []);
 
   const handleInputBlur = useCallback(() => {
-    console.log(
-      'formik.getFieldProps(name).value',
-      formik.getFieldProps(name).value,
-    );
     setIsFocus(false);
     setIsFilled(!!formik.getFieldProps(name).value);
   }, []);

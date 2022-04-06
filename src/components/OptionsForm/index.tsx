@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@stitches/react';
 import { violet, mauve, blackA, whiteA } from '@radix-ui/colors';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
+import { useFormikContext } from 'formik';
 
 import { Container } from './styles';
 
@@ -45,12 +46,14 @@ const Label = styled('label', {
 });
 
 interface switchData {
-  setFieldValue: (type: string, value: any) => void;
   optimizeOnoff: () => void;
+  returnDelivery: () => void;
   values: any;
 }
 
-const SwitchDemo = ({ values, setFieldValue, optimizeOnoff }: switchData) => {
+const SwitchDemo = ({ values, optimizeOnoff, returnDelivery }: switchData) => {
+  const formik: any = useFormikContext();
+
   const verifyCheck = (value: boolean) => {
     if (value === true) {
       return 'Sim';
@@ -69,7 +72,10 @@ const SwitchDemo = ({ values, setFieldValue, optimizeOnoff }: switchData) => {
           id="s1"
           onCheckedChange={e => {
             optimizeOnoff();
-            setFieldValue('optimizeWaypoints', !values.optimizeWaypoints);
+            formik.setFieldValue(
+              'optimizeWaypoints',
+              !values.optimizeWaypoints,
+            );
           }}
         >
           <SwitchThumb />
@@ -83,9 +89,10 @@ const SwitchDemo = ({ values, setFieldValue, optimizeOnoff }: switchData) => {
           defaultChecked={values.deliveryRetorn}
           value={values.deliveryRetorn}
           id="s1"
-          onCheckedChange={e =>
-            setFieldValue('deliveryRetorn', !values.deliveryRetorn)
-          }
+          onCheckedChange={e => {
+            returnDelivery();
+            formik.setFieldValue('deliveryRetorn', !values.deliveryRetorn);
+          }}
         >
           <SwitchThumb />
         </Switch>

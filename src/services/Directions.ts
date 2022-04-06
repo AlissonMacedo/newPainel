@@ -22,7 +22,9 @@ export default class Directions {
     }))
 
     // if return add address of origin for destiny
-    if (values.deliveryRetorn) return waypoints.push(waypoints[0])
+    if (values.deliveryRetorn) {
+      waypoints.push(waypoints[0])
+    }
 
     // remove first and last waytpoint
     const origin = waypoints.shift()?.location;

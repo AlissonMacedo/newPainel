@@ -1,5 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from 'react';
 import api from '../services/api';
 
 import Login from '../dtos/Login';
@@ -10,12 +16,28 @@ interface SignInCreadentials {
   email: string;
   password: string;
 }
+
+interface dataData {
+  id: number;
+  name: string;
+}
+
 interface AuthState {
+  banks: Array<dataData>;
   token: string;
   user: string;
+  providerId: number;
+  providerAlias: string;
+  city: string;
+  state: string;
 }
 interface AuthContextData {
-  user: string;
+  user?: string;
+  token?: string;
+  providerId?: number;
+  providerAlias?: string;
+  city?: string;
+  state?: string;
   signIn(credentials: SignInCreadentials): Promise<void>;
   signOut(): void;
   updateUser(newData: AuthState): void;
@@ -23,31 +45,47 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const heydrateLogin = () => {
-  const token = localStorage.getItem('@PainelAlfred:token');
-  const user = localStorage.getItem('@PainelAlfred:user');
-
-  if (token && user) {
-    api.defaults.headers.common.Authorization = `Bearer ${token}`;
-    SentrySetUser({ user, token });
-    setUserAnalytics(user);
-    return { token, user };
-  }
-  return {} as AuthState;
-};
-
 const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>(heydrateLogin());
+  const [data, setData] = useState<AuthState>(() => {
+    const token = localStorage.getItem('@PainelAlfred:token');
+    const newUser = JSON.parse(
+      localStorage.getItem('@PainelAlfred:user') || '',
+    );
+    const { user, providerId, banks, providerAlias, city, state } = newUser;
+
+    if (token && user) {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      SentrySetUser({ user, token });
+      setUserAnalytics(user);
+      return { token, user, providerId, banks, providerAlias, city, state };
+    }
+    return {} as AuthState;
+  });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const { token, user } = await Login.postLogin({ email, password });
+    const { token, user, providerId, banks, providerAlias, city, state } =
+      await Login.postLogin({
+        email,
+        password,
+      });
 
     localStorage.setItem('@PainelAlfred:token', token);
-    localStorage.setItem('@PainelAlfred:user', user);
+    localStorage.setItem(
+      '@PainelAlfred:user',
+      JSON.stringify({
+        token,
+        user,
+        providerId,
+        banks,
+        providerAlias,
+        city,
+        state,
+      }),
+    );
 
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-    setData({ token, user });
+    setData({ token, user, banks, providerId, providerAlias, city, state });
     SentrySetUser({ user, token });
   }, []);
 
@@ -61,14 +99,25 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const updateUser = useCallback(newData => {
-    localStorage.setItem('@PainelAlfred:user', newData.user);
+    console.log('teste');
+    // localStorage.setItem('@PainelAlfred:user', newData.user);
 
-    setData({ user: newData.user, token: newData.token });
+    // setData({ , user: newData.user, token: newData.token });
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser }}
+      value={{
+        user: data?.user,
+        token: data?.token,
+        providerId: data?.providerId,
+        providerAlias: data?.providerAlias,
+        city: data?.city,
+        state: data?.state,
+        signIn,
+        signOut,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

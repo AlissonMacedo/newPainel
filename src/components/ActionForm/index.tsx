@@ -1,36 +1,43 @@
 import React from 'react';
 
+import { useFormikContext } from 'formik';
 import { Button } from '../Button';
 import { Container } from './styles';
 import OptionsForm from '../OptionsForm';
 
 type actionFormData = {
   values: any;
-  setFieldValue: (type: string, value: any) => void;
 };
 
-const ActionForm: React.FC<actionFormData> = ({ values, setFieldValue }) => {
+const ActionForm: React.FC<actionFormData> = ({ values }) => {
+  const formik: any = useFormikContext();
+
   const addAddres = () => {
-    setFieldValue('addAdress', true);
-    setFieldValue('calculed', false);
-    setFieldValue('route', null);
+    formik.setFieldValue('addAdress', true);
+    formik.setFieldValue('calculed', false);
+    formik.setFieldValue('route', null);
   };
 
   const routing = async () => {
-    setFieldValue('calculed', true);
+    formik.setFieldValue('calculed', true);
   };
 
   const optimizeOnoff = () => {
-    setFieldValue('calculed', false);
-    setFieldValue('route', null);
+    formik.setFieldValue('calculed', false);
+    formik.setFieldValue('route', null);
+  };
+
+  const returnDelivery = () => {
+    formik.setFieldValue('calculed', false);
+    formik.setFieldValue('route', null);
   };
 
   return (
     <Container>
       <OptionsForm
         values={values}
-        setFieldValue={setFieldValue}
         optimizeOnoff={optimizeOnoff}
+        returnDelivery={returnDelivery}
       />
       <Button typeStyle="primary" type="button" onClick={() => addAddres()}>
         Adicionar um endereço

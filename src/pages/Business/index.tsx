@@ -10,6 +10,8 @@ import Retangle256 from '../../components/Retangle256';
 import { BusinessProvider, useBusiness } from './Context';
 import ActionForm from '../../components/ActionForm';
 
+import Address from '../../components/Address';
+
 type AppProps = {
   id: number;
   street: string;
@@ -74,17 +76,16 @@ const PageComponent: React.FC = () => {
         deliveries: [
           {
             id: Math.random(),
-            street: 'José Milena',
-            number: '211',
+            street: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
+            number: '80',
             complement: '',
             neighborhood: 'centro',
-            city: 'Ribeirão Preto',
-            state: 'São Paulo',
-            longitude: -47.751594,
-            latitude: -21.168434,
+            city: 'Mâncio Lima',
+            state: 'Acre',
+            longitude: -72.906094,
+            latitude: -7.61368,
             obs: '',
-            address: 'Jose Milena, 211 - Ribeirão Preto, São Paulo - Brasil',
-            payment: 0,
+            address: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
           },
         ],
       }}
@@ -126,10 +127,6 @@ const PageComponent: React.FC = () => {
             address: '',
             payment: 0,
           });
-        }
-
-        function editDelivery(index: any) {
-          setFieldValue('delivery', values.deliveries[index]);
         }
 
         const calcFreight = async (route: any) => {
@@ -221,22 +218,16 @@ const PageComponent: React.FC = () => {
                 </div>
                 <ContentAdress>
                   {values.deliveries.map((item, index) => (
-                    <div className="address">
-                      <div className="destiny">
-                        <h4>{`Destino ${index + 1}`}</h4>
-                      </div>
-                      <div>
-                        <h4>{`${item.street}, ${item.number}`}</h4>
-                        <span>{`${item.city}, ${item.state} - Brasil`}</span>
-                        <button
-                          type="button"
-                          onClick={() => editDelivery(index)}
-                        >
-                          <strong>Editar</strong>
-                        </button>
-                      </div>
-                    </div>
+                    <Address index={index} item={item} values={values} />
                   ))}
+                  {/* is return show address of origin */}
+                  {values.deliveryRetorn && (
+                    <Address
+                      index={values.deliveries.length}
+                      item={values.deliveries[0]}
+                      values={values}
+                    />
+                  )}
                 </ContentAdress>
                 {values.addAdress ? (
                   <NewAdress
@@ -244,7 +235,7 @@ const PageComponent: React.FC = () => {
                     closeNewAdress={closeNewAdress}
                   />
                 ) : (
-                  <ActionForm values={values} setFieldValue={setFieldValue} />
+                  <ActionForm values={values} />
                 )}
               </Content>
             </form>
