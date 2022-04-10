@@ -175,21 +175,57 @@ interface states {
   state: number;
 }
 
+// export type ReturnPostLoginObj = {
+//   data: {
+//     data: {
+//       token: string;
+//       banks: Array<banks>;
+//       payBlock: boolean;
+//       payments: Array<payments>;
+//       providercategories: Array<categories>;
+//       user: {
+//         cities: Array<cities>;
+//         data: data;
+//         franchises: Array<franchises>;
+//         states: Array<states>;
+//       };
+//     };
+//     error?: string;
+//   };
+// };
+
 export type ReturnPostLoginObj = {
   data: {
     data: {
-      token: string;
-      banks: Array<banks>;
-      payBlock: boolean;
-      payments: Array<payments>;
-      providercategories: Array<categories>;
       user: {
-        cities: Array<cities>;
-        data: data;
-        franchises: Array<franchises>;
-        states: Array<states>;
+        data: {
+          email: string;
+          provider: [
+            {
+              id: number;
+              name: string;
+            },
+          ];
+        };
+        cities: [
+          {
+            name: string;
+            stateob: { name: string };
+          },
+        ];
       };
+      banks: [];
+      token: string;
     };
-    error?: string;
   };
+};
+
+export type returnTranslateProvider = {
+  banks: Array<banks>;
+  token: string;
+  user: string;
+  providerId: number;
+  providerAlias: string;
+  city: string;
+  state: string;
 };

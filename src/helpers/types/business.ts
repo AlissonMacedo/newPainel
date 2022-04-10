@@ -30,3 +30,23 @@ export type objectBusiness = {
   deliveries: delivery[];
   vehicle: number;
 };
+
+export type returnFreightObj = {
+  isError?: boolean;
+  newReturn: { deliveryTax?: number; returnTax?: number };
+};
+
+export type AppProps = {
+  id: number;
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  longitude: number;
+  latitude: number;
+  obs: string;
+  address: string;
+  payment: number;
+};

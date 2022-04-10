@@ -19,7 +19,7 @@ function SentryInitialization() {
 }
 
 function SentrySetUser({ user, token }: InitializationData) {
-  Sentry.configureScope(function (scope) {
+  Sentry.configureScope(scope => {
     scope.setTag('profile', 'provider');
     scope.setUser({
       email: `${user}`,

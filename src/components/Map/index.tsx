@@ -19,7 +19,7 @@ const containerStyle = {
   height: '100%',
 };
 
-const MyComponent = ({ map, setMap, values, setFieldValue, calcFreight }: any) => {
+const MyComponent = ({ map, setMap, values, setFieldValue, calcFreight, loadFreight }: any) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyBffb-JobxOiAyBbg39zvx_duIo8NOAmxg',
@@ -46,7 +46,12 @@ const MyComponent = ({ map, setMap, values, setFieldValue, calcFreight }: any) =
   const directionsCallback = React.useCallback(res => {
     if (res !== null && res.status === 'OK') {
       setFieldValue('route', res);
-      calcFreight(res);
+      calcFreight(
+        setFieldValue,
+        loadFreight,
+        res,
+        values,
+      );
     } else {
       // ToDo: colocar erro no sentry
       console.log(res);

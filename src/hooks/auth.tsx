@@ -1,14 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-  useEffect,
-} from 'react';
+import React, { createContext, useState, useContext, useCallback } from 'react';
 import api from '../services/api';
 
-import Login from '../dtos/Login';
+import Login from '../services/Authentication';
 import { SentrySetUser, SentryReset } from '../services/Sentry';
 import { setUserAnalytics } from '../services/firebase/events';
 
@@ -49,15 +43,18 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@PainelAlfred:token');
     const newUser = JSON.parse(
-      localStorage.getItem('@PainelAlfred:user') || '',
+      localStorage.getItem('@PainelAlfred:user') || '{}',
     );
-    const { user, providerId, banks, providerAlias, city, state } = newUser;
 
-    if (token && user) {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      SentrySetUser({ user, token });
-      setUserAnalytics(user);
-      return { token, user, providerId, banks, providerAlias, city, state };
+    if (newUser) {
+      const { user, providerId, banks, providerAlias, city, state } = newUser;
+
+      if (token && user) {
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        SentrySetUser({ user, token });
+        setUserAnalytics(user);
+        return { token, user, providerId, banks, providerAlias, city, state };
+      }
     }
     return {} as AuthState;
   });

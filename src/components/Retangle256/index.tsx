@@ -1,4 +1,5 @@
 import React from 'react';
+import { Oval } from 'react-loader-spinner';
 
 import { Container } from './styles';
 import { Button } from '../Button';
@@ -7,10 +8,14 @@ import { useBusiness } from '../../pages/Business/Context';
 
 interface RetangleDate {
   values: any;
+  handleCreateBusiness: () => void;
 }
 
-const Retangle256: React.FC<RetangleDate> = ({ values }) => {
-  const { createBusiness } = useBusiness();
+const Retangle256: React.FC<RetangleDate> = ({
+  values,
+  handleCreateBusiness,
+}) => {
+  const { loadCreateBusiness } = useBusiness();
 
   return (
     <Container>
@@ -34,8 +39,9 @@ const Retangle256: React.FC<RetangleDate> = ({ values }) => {
       </div>
       <Button
         disabled={!values.calculed}
-        onClick={() => createBusiness(values)}
+        onClick={() => handleCreateBusiness()}
       >
+        {loadCreateBusiness && <Oval color="#fff" height={15} width={15} />}
         Concluir Solicitação
       </Button>
     </Container>

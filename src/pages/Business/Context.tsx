@@ -1,6 +1,10 @@
 /* eslint-disable no-undef */
 import React, { createContext, useContext } from 'react';
-import { GetFreightObj, objectBusiness } from '../../helpers/types/business';
+import {
+  GetFreightObj,
+  objectBusiness,
+  returnFreightObj,
+} from '../../helpers/types/business';
 import Business from '../../services/Business';
 
 import {
@@ -8,13 +12,13 @@ import {
   gaCreateOrderError,
 } from '../../services/firebase/events';
 import { useToast } from '../../hooks/toast';
-import { errorFreight, successFreight } from '../../helpers/objsToasts';
+import {
+  errorFreight,
+  successFreight,
+  successBusiness,
+  errorBusiness,
+} from '../../helpers/objsToasts';
 import { useAuth } from '../../hooks/auth';
-
-interface returnFreightObj {
-  isError?: boolean;
-  newReturn: { deliveryTax?: number; returnTax?: number };
-}
 
 interface returnCreateBusiness {
   isError: boolean;
@@ -23,6 +27,7 @@ interface BusinessContextData {
   loadFreight(value: GetFreightObj): Promise<returnFreightObj>;
   createBusiness(values: any): Promise<returnCreateBusiness>;
   load: boolean;
+  loadCreateBusiness: boolean;
 }
 // value: objectBusiness
 const BusinessContext = createContext<BusinessContextData>(
@@ -32,6 +37,7 @@ const BusinessContext = createContext<BusinessContextData>(
 const BusinessProvider: React.FC = ({ children }) => {
   const { token, providerId, providerAlias, city, state } = useAuth();
   const [load, setLoad] = React.useState(false);
+  const [loadCreateBusiness, setLoadCreateBusiness] = React.useState(false);
   const { addToast } = useToast();
 
   async function loadFreight(value: GetFreightObj) {
@@ -54,6 +60,36 @@ const BusinessProvider: React.FC = ({ children }) => {
   }
 
   async function createBusiness(values: any) {
+    setLoadCreateBusiness(true);
+
+    let deliveries = [];
+
+    // verifica se tem mais de um ponto de entrega e
+    // verifica se o usuário quer que otimize
+    if (values.deliveries.length > 1 && values.optimizeWaypoints) {
+      const newArr = values.route.routes[0].waypoint_order.map(
+        (item: any) => values.deliveries[item + 1],
+      );
+      deliveries = [...newArr];
+
+      // adiciona o endereco do startDelivery como retorno
+      if (values.deliveryRetorn === false) {
+        deliveries = [
+          ...newArr,
+          values.deliveries[values.deliveries.length - 1],
+        ];
+        console.log('deliveries', deliveries);
+      }
+    } else {
+      deliveries = values.deliveries;
+    }
+
+    deliveries = [values.deliveries[0], ...deliveries];
+
+    if (values.deliveryRetorn) {
+      deliveries.push(values.deliveries[0]);
+    }
+
     const obj = {
       providerId,
       providerAlias,
@@ -62,62 +98,24 @@ const BusinessProvider: React.FC = ({ children }) => {
       deliveryTax: values.dataToDelivery.totaToPay,
       city,
       state,
-      deliveries: values.deliveries,
+      deliveries,
       vehicle: 0,
     };
-
     // state esta numero precisa ser o nome escrito
-
     console.log('obj', obj);
     // TODO falta adicionar o retorno no deliveries e fazer a otimização da
     // rota no objecto de criacao do pedido.
-
     let isError = false;
-    // const teste = {
-    //   providerId: 7253,
-    //   providerAlias: 'Lanchonete do Gabriel',
-    //   distance: 0.908,
-    //   duration: 174,
-    //   deliveryTax: 7.9,
-    //   city: 'Mâncio Lima',
-    //   state: 'Acre',
-    //   deliveries: [
-    //     {
-    //       street: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
-    //       number: '80',
-    //       neighborhood: 'Centro',
-    //       complement: '',
-    //       observation: '',
-    //       city: 'Mâncio Lima',
-    //       state: 'Acre',
-    //       longitude: -72.9047222,
-    //       latitude: -7.613805800000001,
-    //       address: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
-    //     },
-    //     {
-    //       street: 'Rua Mimosa Sá',
-    //       number: '',
-    //       neighborhood: 'Centro',
-    //       complement: '',
-    //       observation: '',
-    //       city: 'Mâncio Lima',
-    //       state: 'Brasil',
-    //       latitude: -7.6109263,
-    //       longitude: -72.9091075,
-    //       address: 'R. Mimosa Sá, Mâncio Lima - AC, 69990-000, Brasil',
-    //       payment: 0,
-    //     },
-    //   ],
-    //   vehicle: 0,
-    // };
     try {
       const data = { token, obj };
       await Business.postBusiness(data);
+      addToast(successBusiness());
     } catch (err) {
       isError = true;
-      console.log(err);
+      addToast(errorBusiness());
+    } finally {
+      setLoadCreateBusiness(false);
     }
-
     return { isError };
   }
 
@@ -127,6 +125,7 @@ const BusinessProvider: React.FC = ({ children }) => {
         createBusiness,
         loadFreight,
         load,
+        loadCreateBusiness,
       }}
     >
       {children}

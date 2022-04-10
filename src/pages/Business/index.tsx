@@ -11,21 +11,13 @@ import { BusinessProvider, useBusiness } from './Context';
 import ActionForm from '../../components/ActionForm';
 
 import Address from '../../components/Address';
-
-type AppProps = {
-  id: number;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  longitude: number;
-  latitude: number;
-  obs: string;
-  address: string;
-  payment: number;
-};
+import {
+  handleCreateBusiness,
+  closeNewAdress,
+  calcFreight,
+  saveNewAddress,
+  initial,
+} from './helpers';
 
 type objDelivery = {
   qntPoints: number;
@@ -35,7 +27,7 @@ type objDelivery = {
 
 const PageComponent: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
-  const { loadFreight } = useBusiness();
+  const { loadFreight, createBusiness } = useBusiness();
 
   const newSubmit = React.useCallback(async data => {
     console.log('data', data);
@@ -43,52 +35,7 @@ const PageComponent: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{
-        calculed: false,
-        route: null,
-        addAdress: true,
-        deliveryRetorn: false,
-        travelMode: 'DRIVING',
-        optimizeWaypoints: true,
-        vehicleType: 0,
-        serviceType: 0,
-        dataToDelivery: {
-          totaToPay: 0,
-          timeDelivery: 0,
-          distanceTotal: 0,
-          deliveriesTotal: 0,
-        },
-        address: '',
-        delivery: {
-          id: Math.random(),
-          street: '',
-          number: 0,
-          complement: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          longitude: 0,
-          latitude: 0,
-          obs: '',
-          address: '',
-          payment: 0,
-        },
-        deliveries: [
-          {
-            id: Math.random(),
-            street: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
-            number: '80',
-            complement: '',
-            neighborhood: 'centro',
-            city: 'Mâncio Lima',
-            state: 'Acre',
-            longitude: -72.906094,
-            latitude: -7.61368,
-            obs: '',
-            address: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
-          },
-        ],
-      }}
+      initialValues={initial}
       onSubmit={async (values, { setSubmitting }) => {
         await newSubmit(values);
         setSubmitting(false);
@@ -105,110 +52,6 @@ const PageComponent: React.FC = () => {
         setFieldValue,
         /* and other goodies */
       }) => {
-        function saveNewAddress(deliveries: AppProps) {
-          setFieldValue('addAdress', false);
-          setFieldValue('calculed', false);
-          setFieldValue('route', null);
-
-          setFieldValue('deliveries', [...values.deliveries, deliveries]);
-          map?.panTo({ lat: deliveries.latitude, lng: deliveries.longitude });
-
-          setFieldValue('delivery', {
-            id: Math.random(),
-            street: '',
-            number: '',
-            complement: '',
-            neighborhood: '',
-            city: '',
-            state: '',
-            longitude: '',
-            latitude: '',
-            obs: '',
-            address: '',
-            payment: 0,
-          });
-        }
-
-        const calcFreight = async (route: any) => {
-          let leng = 0;
-          let dur = 0;
-          if (
-            typeof route.routes[0] === 'object' &&
-            typeof route.routes[0].legs === 'object'
-          ) {
-            for (let rt = 0; rt < route.routes[0].legs.length; rt++) {
-              leng += route.routes[0].legs[rt].distance.value;
-              dur += route.routes[0].legs[rt].duration.value;
-            }
-          }
-
-          setFieldValue(
-            'dataToDelivery.distanceTotal',
-            (leng / 1000).toFixed(1),
-          );
-          setFieldValue('dataToDelivery.timeDelivery', Math.round(dur / 60));
-          setFieldValue(
-            'dataToDelivery.deliveriesTotal',
-            route.routes[0].legs.length,
-          );
-
-          let newObj: {
-            qntPoints: number;
-            kmDelivery: number;
-            kmReturn: number;
-          };
-
-          if (values.deliveryRetorn) {
-            newObj = {
-              qntPoints: route.routes[0].legs.length,
-              kmDelivery:
-                leng -
-                route.routes[0].legs[route.routes[0].legs.length - 1].distance
-                  .value,
-              kmReturn:
-                route.routes[0].legs[route.routes[0].legs.length - 1].distance
-                  .value,
-            };
-          } else {
-            newObj = {
-              qntPoints: route.routes[0].legs.length + 1,
-              kmDelivery: leng,
-              kmReturn: 0,
-            };
-          }
-
-          const newFreight = {
-            city: 'Mâncio Lima',
-            cityId: 1200336,
-            qntPoints: newObj.qntPoints,
-            kmDelivery: newObj.kmDelivery,
-            kmReturn: newObj.kmReturn,
-            vehicleType: values.vehicleType,
-          };
-
-          const {
-            isError,
-            newReturn: { deliveryTax, returnTax },
-          } = await loadFreight(newFreight);
-
-          if (!isError) {
-            if (!!deliveryTax && !!returnTax) {
-              setFieldValue(
-                'dataToDelivery.totaToPay',
-                deliveryTax + returnTax,
-              );
-            } else {
-              setFieldValue('dataToDelivery.totaToPay', deliveryTax);
-            }
-          }
-        };
-
-        const closeNewAdress = () => {
-          setFieldValue('addAdress', false);
-          setFieldValue('calculed', false);
-          setFieldValue('route', null);
-        };
-
         return (
           <Container>
             <form onSubmit={handleSubmit}>
@@ -231,8 +74,10 @@ const PageComponent: React.FC = () => {
                 </ContentAdress>
                 {values.addAdress ? (
                   <NewAdress
-                    submit={deliveries => saveNewAddress(deliveries)}
-                    closeNewAdress={closeNewAdress}
+                    submit={deliveries =>
+                      saveNewAddress(setFieldValue, deliveries, values, map)
+                    }
+                    closeNewAdress={() => closeNewAdress(setFieldValue)}
                   />
                 ) : (
                   <ActionForm values={values} />
@@ -246,8 +91,19 @@ const PageComponent: React.FC = () => {
                 values={values}
                 setFieldValue={setFieldValue}
                 calcFreight={calcFreight}
+                loadFreight={loadFreight}
               />
-              <Retangle256 values={values} />
+              <Retangle256
+                values={values}
+                handleCreateBusiness={() =>
+                  handleCreateBusiness(
+                    createBusiness,
+                    setFieldValue,
+                    values,
+                    map,
+                  )
+                }
+              />
             </Main>
           </Container>
         );
