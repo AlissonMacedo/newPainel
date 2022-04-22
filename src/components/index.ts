@@ -1,4 +1,4 @@
-export { Button } from './Button';
-export { Input } from './Input';
-export { Header } from './Header';
-export { AutoComplete } from './AutoComplete';
+export { Button } from './atoms/Button';
+export { Input } from './atoms/Input';
+export { Header } from './organisms/Header';
+export { AutoComplete } from './molecules/AutoComplete';

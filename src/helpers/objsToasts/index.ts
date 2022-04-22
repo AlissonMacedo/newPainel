@@ -1,4 +1,4 @@
-import { ToastMessage } from '../../components/ToastCotnainer/Toast/types';
+import { ToastMessage } from '../../components/atoms/Toast/types';
 import { formatAmount } from '../utils';
 
 // freight

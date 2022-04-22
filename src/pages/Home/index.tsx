@@ -9,7 +9,7 @@ import { useTheme } from '../../hooks/theme';
 
 import { Container } from './styles';
 
-import { Button } from '../../components/Button';
+import { Button } from '../../components/atoms/Button';
 
 import { HomeProvider, useHome } from './Context';
 

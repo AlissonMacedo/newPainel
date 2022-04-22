@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Authenticated, Main, NotAuthenticated } from './styles';
-import SideBar from '../../components/SideBar';
+import SideBar from '../../components/organisms/SideBar';
 import { Button, Header } from '../../components';
 
 import { useAuth } from '../../hooks/auth';

@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import uuid from 'uuidv4';
-import { ToastContainer } from '../components/ToastCotnainer';
-import { ToastMessage } from '../components/ToastCotnainer/Toast/types';
+import { ToastContainer } from '../components/organisms/ToastCotnainer';
+import { ToastMessage } from '../components/atoms/Toast/types';
 
 interface Teste {
   data: object | boolean | null;
