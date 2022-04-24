@@ -16,6 +16,7 @@ export default {
     cyan500: '#3172b7',
     cyan800: '#273c64',
     red800: '#d74747',
+    sideBar: '#f8f8f8',
   },
   text: {
     gray350: '#A3A3A3',

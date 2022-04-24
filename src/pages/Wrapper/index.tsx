@@ -17,7 +17,7 @@ const Wrapper: React.FC = ({ children }) => {
       <Authenticated>
         <SideBar isOpen={isOpen} />
         <Main>
-          <Header />
+          <Header isOpen={isOpen} setIsOpen={setIsOpen} />
           {/* <Button onClick={toggleDrawer}>Abre/Fecha</Button> */}
           {children}
         </Main>

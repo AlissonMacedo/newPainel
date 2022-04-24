@@ -16,6 +16,7 @@ declare module 'styled-components' {
       cyan500: string;
       cyan800: string;
       red800: string;
+      sideBar: string;
     };
     text: {
       gray350: string;
