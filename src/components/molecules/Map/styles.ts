@@ -11,6 +11,11 @@ export const Container = styled.div`
     border-radius: 5px;
     border: 1px solid #ccc;
   }
+
+  #map-canvas {
+    height: 400px;
+    width: 500px;
+  }
 `;
 
 export const Context = styled.div`

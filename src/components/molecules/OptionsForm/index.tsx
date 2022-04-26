@@ -47,11 +47,10 @@ const Label = styled('label', {
 
 interface switchData {
   optimizeOnoff: () => void;
-  returnDelivery: () => void;
   values: any;
 }
 
-const SwitchDemo = ({ values, optimizeOnoff, returnDelivery }: switchData) => {
+const SwitchDemo = ({ values, optimizeOnoff }: switchData) => {
   const formik: any = useFormikContext();
 
   const verifyCheck = (value: boolean) => {
@@ -90,7 +89,8 @@ const SwitchDemo = ({ values, optimizeOnoff, returnDelivery }: switchData) => {
           value={values.deliveryRetorn}
           id="s1"
           onCheckedChange={e => {
-            returnDelivery();
+            formik.setFieldValue('calculed', false);
+            formik.setFieldValue('route', null);
             formik.setFieldValue('deliveryRetorn', !values.deliveryRetorn);
           }}
         >

@@ -40,8 +40,6 @@ export const AutoComplete = ({
   const handleSelectSuggest = (
     geocodedPrediction: google.maps.GeocoderResult,
   ) => {
-    console.log('geocodedPrediction', geocodedPrediction) // eslint-disable-line
-
     const location = {
       lat: geocodedPrediction?.geometry?.location?.lat() || 0,
       lng: geocodedPrediction?.geometry?.location?.lng() || 0,

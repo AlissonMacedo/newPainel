@@ -21,7 +21,6 @@ const Address = ({ index, item, values }: addressData) => {
     formik.setFieldValue('delivery', item);
   };
 
-  console.log('item', item);
   return (
     <Container>
       <div className="destiny">

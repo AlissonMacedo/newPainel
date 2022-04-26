@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 
 
@@ -13,9 +14,18 @@ interface dataWaypoints {
   longitude: number;
 }
 
-export default class Directions {
-  static directionsServiceOptions(values: dataDirections) {
 
+type getDirectionsData = {
+  origin: google.maps.LatLng;
+  destination: google.maps.LatLng;
+  waypoints: google.maps.DirectionsWaypoint[];
+  travelMode: google.maps.TravelMode;
+  optimizeWaypoints: boolean;
+}
+
+export default class Directions {
+
+  static directionsServiceOptions(values: dataDirections) {
     const waypoints = values.deliveries.map(item => ({
       location: { lat: item.latitude, lng: item.longitude },
       stopover: true,
@@ -42,15 +52,38 @@ export default class Directions {
     };
   }
 
-  // static async getDirectionsWithReturn() {
-  //   try {
-  //     const res = await fetch(
-  //       `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${key}`,
-  //     );
-  //     const data = await res.json();
-  //     return data;
-  //   } catch (err) {
-  //     return false;
-  //   }
-  // }
+  static async getDirectionsWithReturn(values: any) {
+    console.log('values', values);
+    const directionsService = new google.maps.DirectionsService();
+
+    const waypoints = values.deliveries.map((item: dataWaypoints) => ({
+      location: { lat: item.latitude, lng: item.longitude },
+      stopover: true,
+    }))
+
+    // if return add address of origin for destiny
+    if (values.deliveryRetorn) {
+      waypoints.push(waypoints[0])
+    }
+
+    // remove first and last waytpoint
+    const origin = waypoints.shift()?.location;
+    const destination = waypoints.pop()?.location;
+
+    // type of vehicle for delivery
+    const { travelMode, optimizeWaypoints } = values
+
+    const teste: getDirectionsData = {
+      origin,
+      waypoints,
+      destination,
+      travelMode,
+      optimizeWaypoints
+    };
+
+    console.log('newDirections', teste);
+    const response = await directionsService.route(teste)
+    console.log('response3', response);
+    return response;
+  };
 }

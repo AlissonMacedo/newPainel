@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useRef } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 
 import { useHistory } from 'react-router-dom';
 import * as Sentry from '@sentry/react';

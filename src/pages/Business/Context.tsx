@@ -19,6 +19,7 @@ import {
   errorBusiness,
 } from '../../helpers/objsToasts';
 import { useAuth } from '../../hooks/auth';
+import Directions from '../../services/Directions';
 
 interface returnCreateBusiness {
   isError: boolean;
@@ -78,7 +79,6 @@ const BusinessProvider: React.FC = ({ children }) => {
           ...newArr,
           values.deliveries[values.deliveries.length - 1],
         ];
-        console.log('deliveries', deliveries);
       }
     } else {
       deliveries = values.deliveries;
@@ -102,7 +102,7 @@ const BusinessProvider: React.FC = ({ children }) => {
       vehicle: 0,
     };
     // state esta numero precisa ser o nome escrito
-    console.log('obj', obj);
+
     // TODO falta adicionar o retorno no deliveries e fazer a otimização da
     // rota no objecto de criacao do pedido.
     let isError = false;

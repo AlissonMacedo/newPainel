@@ -83,14 +83,7 @@ const Business: React.FC = () => {
               </Content>
             </form>
             <Main>
-              <Map
-                map={map}
-                setMap={setMap}
-                values={values}
-                setFieldValue={setFieldValue}
-                calcFreight={calcFreight}
-                loadFreight={loadFreight}
-              />
+              <Map setMap={setMap} values={values} />
               <ValuesOrder
                 values={values}
                 handleCreateBusiness={() =>
