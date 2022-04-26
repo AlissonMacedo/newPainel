@@ -62,7 +62,7 @@ const NewAdress: React.FC<newAdressData> = ({
         const newArr = newValues.deliveries
         const deliveryItem = newArr.findIndex((o: { id: number; }) => o.id === newDelivery.id);
         newArr.splice(deliveryItem, 1, newDelivery)
-        console.log('newArr', newArr);
+
         newSetFieldValue('deliveries', newArr);
         newSetFieldValue('editing', false);
         newSetFieldValue('deliveries', newArr);

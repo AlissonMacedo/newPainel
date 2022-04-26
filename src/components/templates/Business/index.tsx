@@ -59,14 +59,6 @@ const Business: React.FC = () => {
                   {values.deliveries.map((item, index) => (
                     <Address index={index} item={item} values={values} />
                   ))}
-                  {/* is return show address of origin */}
-                  {values.deliveryRetorn && (
-                    <Address
-                      index={values.deliveries.length}
-                      item={values.deliveries[0]}
-                      values={values}
-                    />
-                  )}
                 </ContentAdress>
                 {values.addAdress || values.editing ? (
                   <NewAdress

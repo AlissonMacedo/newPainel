@@ -32,32 +32,21 @@ const ActionForm: React.FC<actionFormData> = ({ values }) => {
       let deliveries = [];
       // verifica se tem mais de um ponto de entrega e
       // verifica se o usuário quer que otimize
-      if (values.deliveries.length > 1 && values.optimizeWaypoints) {
+      if (values.deliveries.length > 2 && values.optimizeWaypoints) {
         const newArr = response.routes[0].waypoint_order.map(
           (item: any) => values.deliveries[item + 1],
         );
-        deliveries = [...newArr];
+        deliveries = [values.deliveries[0], ...newArr];
 
-        // adiciona o endereco do startDelivery como retorno
-        if (values.deliveryRetorn === false) {
-          deliveries = [
-            ...newArr,
-            values.deliveries[values.deliveries.length - 1],
-          ];
+        if (values.deliveryRetorn) {
+          deliveries.push(values.deliveries[0]);
         }
-      } else {
-        deliveries = values.deliveries;
-      }
 
-      deliveries = [values.deliveries[0], ...deliveries];
-
-      if (values.deliveryRetorn) {
-        deliveries.push(values.deliveries[0]);
+        formik.setFieldValue('deliveries', deliveries);
       }
 
       formik.setFieldValue('calculed', true);
       formik.setFieldValue('route', response);
-      formik.setFieldValue('deliveries', deliveries);
 
       await calcFreight(formik.setFieldValue, loadFreight, response, values);
     } else {

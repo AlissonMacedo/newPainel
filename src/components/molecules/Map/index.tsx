@@ -15,6 +15,7 @@ import pina from '../../../assets/pina.png';
 import pinb from '../../../assets/pinb.png';
 import pinc from '../../../assets/pinc.png';
 import pind from '../../../assets/pind.png';
+import pinfim from '../../../assets/pinfim.png';
 
 const containerStyle = {
   width: '100%',
@@ -51,7 +52,7 @@ const MyComponent = ({ setMap, values }: any) => {
       case 3:
         return pind;
       default:
-        return pina
+        return pinfim
     }
   }
 
@@ -136,6 +137,28 @@ const MyComponent = ({ setMap, values }: any) => {
     anchor: new google.maps.Point(10, 25),
   };
 
+  const svgMarker2 = {
+    path: pinfim,
+    scale: .7,
+    strokeColor: 'white',
+    strokeWeight: .10,
+    fillOpacity: 1,
+    fillColor: '#404040',
+    offset: '5%',
+    rotation: curRot,
+    anchor: new google.maps.Point(10, 25),
+  };
+
+
+  const test = (index: number) => {
+    if (values.deliveryRetorn === true && index + 1 === values.deliveries.length) {
+      return {
+        url: pinfim,
+        opacity: 0,
+      };
+    }
+    return testePin(index)
+  }
 
 
   return isLoaded ? (
@@ -148,11 +171,26 @@ const MyComponent = ({ setMap, values }: any) => {
       >
         {values.deliveries.map((delivery: any, index: number) => (
           <>
-            <Marker
-              position={{ lat: delivery.latitude, lng: delivery.longitude }}
-              animation={google.maps.Animation.DROP}
-              icon={testePin(index)}
-            />
+            {
+              values.deliveryRetorn === false && (
+                <Marker
+                  position={{ lat: delivery.latitude, lng: delivery.longitude }}
+                  animation={google.maps.Animation.DROP}
+                  icon={test(index)}
+                />
+              )
+            }
+
+            {
+              values.deliveryRetorn === true && index + 1 < values.deliveries.length && (
+                <Marker
+                  position={{ lat: delivery.latitude, lng: delivery.longitude }}
+                  animation={google.maps.Animation.DROP}
+                  icon={test(index)}
+                />
+              )
+            }
+
             <Marker
               title='My Marker'
               // eslint-disable-next-line no-return-assign
@@ -163,9 +201,20 @@ const MyComponent = ({ setMap, values }: any) => {
             />
           </>
         ))}
+        {values.deliveryRetorn &&
+          <Marker
+            position={{ lat: values.deliveries[0].latitude, lng: values.deliveries[0].longitude }}
+            animation={google.maps.Animation.DROP}
+            opacity={0.9}
+            icon={{
+              url: pinfim,
+              anchor: new google.maps.Point(25, 58),
+            }}
+
+          />
+        }
         {values.calculed && values.route && (
           <DirectionsRenderer options={directionsRendererOptions}
-
           />
         )}
       </GoogleMap>

@@ -59,6 +59,19 @@ const SwitchDemo = ({ values, optimizeOnoff }: switchData) => {
     }
     return 'Não';
   };
+
+  const actionReturn = () => {
+    const newDeliveries = values.deliveries;
+    if (values.deliveryRetorn) {
+      formik.setFieldValue('deliveries', newDeliveries.slice(0, -1));
+    } else {
+      const newArr = [...newDeliveries, values.deliveries[0]];
+      formik.setFieldValue('deliveries', newArr);
+    }
+    formik.setFieldValue('calculed', false);
+    formik.setFieldValue('route', null);
+    formik.setFieldValue('deliveryRetorn', !values.deliveryRetorn);
+  };
   return (
     <Container>
       <Flex css={{ alignItems: 'center' }}>
@@ -88,11 +101,7 @@ const SwitchDemo = ({ values, optimizeOnoff }: switchData) => {
           defaultChecked={values.deliveryRetorn}
           value={values.deliveryRetorn}
           id="s1"
-          onCheckedChange={e => {
-            formik.setFieldValue('calculed', false);
-            formik.setFieldValue('route', null);
-            formik.setFieldValue('deliveryRetorn', !values.deliveryRetorn);
-          }}
+          onCheckedChange={actionReturn}
         >
           <SwitchThumb />
         </Switch>

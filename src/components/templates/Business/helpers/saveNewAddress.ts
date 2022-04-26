@@ -10,7 +10,15 @@ export function saveNewAddress(
   setFieldValue('calculed', false);
   setFieldValue('route', null);
 
-  setFieldValue('deliveries', [...values.deliveries, deliveries]);
+  if (values.deliveryRetorn) {
+    const newDeliveries = values.deliveries;
+    const lastAddress = newDeliveries.pop();
+
+    setFieldValue('deliveries', [...newDeliveries, deliveries, lastAddress]);
+  } else {
+    setFieldValue('deliveries', [...values.deliveries, deliveries]);
+  }
+
   map?.panTo({ lat: deliveries.latitude, lng: deliveries.longitude });
 
   setFieldValue('delivery', {

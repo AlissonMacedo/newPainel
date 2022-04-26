@@ -31,10 +31,7 @@ export default class Directions {
       stopover: true,
     }))
 
-    // if return add address of origin for destiny
-    if (values.deliveryRetorn) {
-      waypoints.push(waypoints[0])
-    }
+
 
     // remove first and last waytpoint
     const origin = waypoints.shift()?.location;
@@ -53,18 +50,12 @@ export default class Directions {
   }
 
   static async getDirectionsWithReturn(values: any) {
-    console.log('values', values);
     const directionsService = new google.maps.DirectionsService();
 
     const waypoints = values.deliveries.map((item: dataWaypoints) => ({
       location: { lat: item.latitude, lng: item.longitude },
       stopover: true,
     }))
-
-    // if return add address of origin for destiny
-    if (values.deliveryRetorn) {
-      waypoints.push(waypoints[0])
-    }
 
     // remove first and last waytpoint
     const origin = waypoints.shift()?.location;
@@ -81,9 +72,8 @@ export default class Directions {
       optimizeWaypoints
     };
 
-    console.log('newDirections', teste);
-    const response = await directionsService.route(teste)
-    console.log('response3', response);
+    const response = await directionsService.route(teste);
+
     return response;
   };
 }
