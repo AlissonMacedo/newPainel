@@ -1,21 +1,19 @@
 import React from 'react';
 
 import { useFormikContext } from 'formik';
+import { Oval } from 'react-loader-spinner';
 import { Button } from '../../atoms/Button';
 
 import { Container } from './styles';
 import OptionsForm from '../OptionsForm';
-import Directions from '../../../services/Directions';
 import { useBusiness } from '../../../pages/Business/Context';
-
-import { calcFreight } from '../../templates/Business/helpers';
 
 type actionFormData = {
   values: any;
 };
 
 const ActionForm: React.FC<actionFormData> = ({ values }) => {
-  const { loadFreight } = useBusiness();
+  const { calcFreight, loadFreight } = useBusiness();
 
   const formik: any = useFormikContext();
 
@@ -25,37 +23,6 @@ const ActionForm: React.FC<actionFormData> = ({ values }) => {
     formik.setFieldValue('route', null);
   };
 
-  const routing = async () => {
-    const response = await Directions.getDirectionsWithReturn(values);
-
-    if (response !== null && response.routes) {
-      let deliveries = [];
-      // verifica se tem mais de um ponto de entrega e
-      // verifica se o usuário quer que otimize
-      if (values.deliveries.length > 2 && values.optimizeWaypoints) {
-        const newArr = response.routes[0].waypoint_order.map(
-          (item: any) => values.deliveries[item + 1],
-        );
-        deliveries = [values.deliveries[0], ...newArr];
-
-        if (values.deliveryRetorn) {
-          deliveries.push(values.deliveries[0]);
-        }
-
-        formik.setFieldValue('deliveries', deliveries);
-      }
-
-      formik.setFieldValue('calculed', true);
-      formik.setFieldValue('route', response);
-
-      await calcFreight(formik.setFieldValue, loadFreight, response, values);
-    } else {
-      // TODO: tratar erro
-      // send to sentry error
-      // show toastfy error
-      formik.setFieldValue('calculed', false);
-    }
-  };
   // enable/disable the button of optimization
   const optimizeOnoff = () => {
     formik.setFieldValue('calculed', false);
@@ -69,7 +36,12 @@ const ActionForm: React.FC<actionFormData> = ({ values }) => {
       <Button typeStyle="primary" type="button" onClick={() => addAddres()}>
         Adicionar um endereço
       </Button>
-      <Button typeStyle="info" type="button" onClick={() => routing()}>
+      <Button
+        typeStyle="info"
+        type="button"
+        onClick={() => calcFreight(formik, values)}
+      >
+        {loadFreight && <Oval color="#fff" height={15} width={15} />}
         Calcular nova Rota
       </Button>
     </Container>

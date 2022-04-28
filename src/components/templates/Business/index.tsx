@@ -17,19 +17,14 @@ import ValuesOrder from '../../organisms/ValuesOrder';
 import {
   handleCreateBusiness,
   closeNewAdress,
-  calcFreight,
   saveNewAddress,
   initial,
 } from './helpers';
 
 const Business: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
-  const {
-    loadFreight,
-    createBusiness,
-    modalOrderSuccess,
-    setModalOrderSuccess,
-  } = useBusiness();
+  const { createBusiness, modalOrderSuccess, setModalOrderSuccess } =
+    useBusiness();
 
   const newSubmit = React.useCallback(async data => {
     console.log('data', data);

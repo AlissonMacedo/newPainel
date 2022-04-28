@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
-
-
 interface dataDirections {
   deliveries: dataWaypoints[];
   deliveryRetorn: boolean;
@@ -24,31 +22,6 @@ type getDirectionsData = {
 }
 
 export default class Directions {
-
-  static directionsServiceOptions(values: dataDirections) {
-    const waypoints = values.deliveries.map(item => ({
-      location: { lat: item.latitude, lng: item.longitude },
-      stopover: true,
-    }))
-
-
-
-    // remove first and last waytpoint
-    const origin = waypoints.shift()?.location;
-    const destination = waypoints.pop()?.location;
-
-    // type of vehicle for delivery
-    const { travelMode, optimizeWaypoints } = values
-
-    return {
-      origin,
-      waypoints,
-      destination,
-      travelMode,
-      optimizeWaypoints
-    };
-  }
-
   static async getDirectionsWithReturn(values: any) {
     const directionsService = new google.maps.DirectionsService();
 
