@@ -8,6 +8,5 @@ export const Container = styled.div`
   justify-content: center;
 
   border-top: 1px solid #dcddde;
-  background: #4eee;
   padding: 0 32px;
 `;

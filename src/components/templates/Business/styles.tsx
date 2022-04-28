@@ -32,8 +32,7 @@ export const ContentAdress = styled.div`
 
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  background: #7159c1;
+  overflow-y: auto;
 `;
 
 export const Main = styled.div`
