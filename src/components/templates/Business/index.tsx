@@ -52,31 +52,29 @@ const Business: React.FC = () => {
           <Container>
             <form onSubmit={handleSubmit}>
               <Content>
-                <div>
-                  <h3>Rota de entrega</h3>
-                </div>
+                <h3>Rota de entrega:</h3>
                 <ContentAdress>
                   {values.deliveries.map((item, index) => (
                     <Address index={index} item={item} values={values} />
                   ))}
                 </ContentAdress>
-                {values.addAdress || values.editing ? (
-                  <NewAdress
-                    submit={deliveries =>
-                      saveNewAddress(setFieldValue, deliveries, values, map)
-                    }
-                    closeNewAdress={() => closeNewAdress(setFieldValue)}
-                    newValues={values}
-                    newSetFieldValue={setFieldValue}
-                  />
-                ) : (
-                  <ActionForm values={values} />
-                )}
+                {/* {values.addAdress || values.editing ? ( */}
+
+                <ActionForm values={values} />
               </Content>
             </form>
             <Main>
               <Map setMap={setMap} values={values} />
-              <ValuesOrder
+              <NewAdress
+                show={values.addAdress}
+                submit={deliveries =>
+                  saveNewAddress(setFieldValue, deliveries, values, map)
+                }
+                closeNewAdress={() => closeNewAdress(setFieldValue)}
+                newValues={values}
+                newSetFieldValue={setFieldValue}
+              />
+              {/* <ValuesOrder
                 values={values}
                 handleCreateBusiness={() =>
                   handleCreateBusiness(
@@ -86,7 +84,7 @@ const Business: React.FC = () => {
                     map,
                   )
                 }
-              />
+              /> */}
             </Main>
           </Container>
         );

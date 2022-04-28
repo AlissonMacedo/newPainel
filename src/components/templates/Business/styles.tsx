@@ -8,24 +8,31 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 400px;
-  background: ${props => props.theme.colors.white};
-  display: flex;
   height: 100%;
 
+  background: ${props => props.theme.colors.white};
+  display: flex;
   flex-direction: column;
+
   align-items: flex-start;
   border-right: #dcddde solid 1px;
-  padding: 5px 32px 5px;
+
+  h3 {
+    color: #333;
+    margin-left: 30px;
+    margin-top: 20px;
+  }
 `;
 
 export const ContentAdress = styled.div`
-  height: 40vh;
   width: 100%;
-  margin-top: 14px;
+  height: calc(100% - 273px);
+  padding: 0px 32px;
 
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow-x: scroll;
+  background: #7159c1;
 `;
 
 export const Main = styled.div`

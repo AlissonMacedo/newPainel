@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useRef } from 'react';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 
 import { object } from 'yup/lib/locale';
 import { AutoComplete } from '../AutoComplete';
@@ -31,6 +31,7 @@ type newAdressData = {
   closeNewAdress: () => void;
   newValues: any;
   newSetFieldValue: (field: string, value: any) => void;
+  show: boolean;
 };
 
 const NewAdress: React.FC<newAdressData> = ({
@@ -38,8 +39,9 @@ const NewAdress: React.FC<newAdressData> = ({
   closeNewAdress,
   newValues,
   newSetFieldValue,
+  show,
 }) => {
-  const formikRef = useRef(null);
+  const formRef = useRef<FormikProps<any>>(null);
   const onSubmit = async (delivery: AppProps) => {
     // if the user is not select adress in autoComplete when
     // is necessary search adress for location lat and lng;
@@ -72,7 +74,7 @@ const NewAdress: React.FC<newAdressData> = ({
       }
 
       submit(newDelivery);
-      console.log('response', response);
+      formRef.current?.resetForm();
     }
   };
 
@@ -81,6 +83,8 @@ const NewAdress: React.FC<newAdressData> = ({
 
   return (
     <Formik
+      // eslint-disable-next-line no-return-assign
+      innerRef={formRef}
       initialValues={newValues.editing ? { delivery: newValues.delivery } : {
         delivery: {
           id: Math.random(),
@@ -119,8 +123,10 @@ const NewAdress: React.FC<newAdressData> = ({
           closeNewAdress();
         };
 
+        console.log('teste hide', `${!show && 'hide'}`)
+
         return (
-          <Container>
+          <Container show={show}>
             <div className="inputs">
               <div className="titleform">
                 <h4 style={{ color: '#444' }}>Adicionando um novo endereço:</h4>
@@ -156,7 +162,10 @@ const NewAdress: React.FC<newAdressData> = ({
               <Button
                 typeStyle="secondary"
                 type="button"
-                onClick={() => handleSubmit()}
+                onClick={() => {
+                  handleSubmit()
+
+                }}
               >
                 {
                   newValues.editing ?
@@ -168,7 +177,7 @@ const NewAdress: React.FC<newAdressData> = ({
           </Container>
         );
       }}
-    </Formik>
+    </Formik >
   );
 };
 
