@@ -19,8 +19,6 @@ import {
   initial,
 } from './helpers';
 
-import ValuesOrder from '../../organisms/ValuesOrder';
-
 const Business: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
   const { loadFreight, createBusiness } = useBusiness();
@@ -53,7 +51,7 @@ const Business: React.FC = () => {
             <form onSubmit={handleSubmit}>
               <Content>
                 <h3>Rota de entrega:</h3>
-                <ContentAdress>
+                <ContentAdress className="scroll">
                   {values.deliveries.map((item, index) => (
                     <Address index={index} item={item} values={values} />
                   ))}
@@ -74,6 +72,7 @@ const Business: React.FC = () => {
                 newValues={values}
                 newSetFieldValue={setFieldValue}
               />
+              {/* <ModalOrderSuccess /> */}
               {/* <ValuesOrder
                 values={values}
                 handleCreateBusiness={() =>

@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 350px;
   width: 100%;
+  height: 235px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   border-top: 1px solid #dcddde;
+  background: #4eee;
+  padding: 0 32px;
 `;

@@ -28,24 +28,25 @@ const appearFromLEft2 = keyframes`
 
 export const Container = styled.div<ContainerData>`
   position: absolute;
-  right: 20px;
   bottom: 10px;
+
   z-index: 999;
   background: #fff;
   min-width: 400px;
+
   width: calc(100vw - 670px);
   padding: 5px 20px 15px;
-
   border-radius: 4px;
-  border: 1px solid #ccc;
 
+  border: 1px solid #ccc;
   display: inline-block;
+
   visibility: ${props => (!props.show ? 'hidden' : 'visible')};
   animation: ${props => (!props.show ? appearFromLEft2 : appearFromLEft)} 0.5s
     linear;
   transition: visibility 0.5s linear;
 
-  /* display: ${props => (props.show ? 'block' : 'none')}; */
+  margin: 20px;
 
   div.inputs {
     > div {

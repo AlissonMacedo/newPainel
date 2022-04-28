@@ -25,19 +25,27 @@ export const Content = styled.div`
 `;
 
 export const ContentAdress = styled.div`
-  width: 100%;
-  height: calc(100% - 273px);
+  position: relative;
+  width: 400px;
+  height: 650px;
   padding: 0px 32px;
 
   display: flex;
   flex-direction: column;
-  overflow-x: scroll;
+  overflow-y: scroll;
   background: #7159c1;
 `;
 
 export const Main = styled.div`
+  position: absolute;
+  right: 0;
+  top: 48px;
+
+  bottom: 0;
+  overflow: hidden;
+  width: calc(100vw - 630px);
+
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: flex-end;
 `;
