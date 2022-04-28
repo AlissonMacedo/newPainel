@@ -27,7 +27,7 @@ export const Content = styled.div`
 export const ContentAdress = styled.div`
   position: relative;
   width: 400px;
-  height: 650px;
+  height: calc(100vh - 325px);
   padding: 0px 32px;
 
   display: flex;
