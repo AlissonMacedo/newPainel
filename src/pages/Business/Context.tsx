@@ -29,6 +29,8 @@ interface BusinessContextData {
   createBusiness(values: any): Promise<returnCreateBusiness>;
   load: boolean;
   loadCreateBusiness: boolean;
+  modalOrderSuccess: boolean;
+  setModalOrderSuccess: (value: boolean) => void;
 }
 // value: objectBusiness
 const BusinessContext = createContext<BusinessContextData>(
@@ -39,6 +41,7 @@ const BusinessProvider: React.FC = ({ children }) => {
   const { token, providerId, providerAlias, city, state } = useAuth();
   const [load, setLoad] = React.useState(false);
   const [loadCreateBusiness, setLoadCreateBusiness] = React.useState(false);
+  const [modalOrderSuccess, setModalOrderSuccess] = React.useState(true);
   const { addToast } = useToast();
 
   async function loadFreight(value: GetFreightObj) {
@@ -110,6 +113,7 @@ const BusinessProvider: React.FC = ({ children }) => {
       const data = { token, obj };
       await Business.postBusiness(data);
       addToast(successBusiness());
+      setModalOrderSuccess(true);
     } catch (err) {
       isError = true;
       addToast(errorBusiness());
@@ -126,6 +130,8 @@ const BusinessProvider: React.FC = ({ children }) => {
         loadFreight,
         load,
         loadCreateBusiness,
+        modalOrderSuccess,
+        setModalOrderSuccess,
       }}
     >
       {children}

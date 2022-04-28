@@ -3,13 +3,23 @@ import React from 'react';
 import { Container } from './styles';
 import { Button } from '../../atoms/Button';
 
-const ModalOrderSuccess = () => {
+type ModalOrderSuccessData = {
+  close: (value: boolean) => void;
+  show: boolean;
+};
+
+const ModalOrderSuccess = ({ close, show }: ModalOrderSuccessData) => {
   return (
-    <Container show>
+    <Container show={show}>
       <div>
         <div className="order">
-          <span>Pedido:</span>
-          <span className="spotlight">#102030</span>
+          <div>
+            <span>Pedido:</span>
+            <span className="spotlight">#102030</span>
+          </div>
+          <button type="button" onClick={() => close(!show)}>
+            Fechar
+          </button>
         </div>
         <div className="image" />
         <div className="div-text-success">

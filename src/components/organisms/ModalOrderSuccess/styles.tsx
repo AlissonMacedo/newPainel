@@ -61,18 +61,25 @@ export const Container = styled.div<ContainerData>`
   }
 
   .order {
+    width: 100%;
+
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
 
-    span {
-      font-size: 14px;
-      color: #444;
-    }
+    align-items: center;
+    justify-content: space-between;
 
-    span.spotlight {
-      font-weight: bold;
-      color: #7159c1;
+    > div {
+      span {
+        font-size: 14px;
+        color: #444;
+      }
+
+      span.spotlight {
+        font-weight: bold;
+        color: #7159c1;
+      }
     }
   }
 

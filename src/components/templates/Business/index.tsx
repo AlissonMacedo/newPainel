@@ -11,6 +11,9 @@ import { useBusiness } from '../../../pages/Business/Context';
 import ActionForm from '../../molecules/ActionForm';
 
 import Address from '../../molecules/Address';
+import ModalOrderSuccess from '../../organisms/ModalOrderSuccess';
+import ValuesOrder from '../../organisms/ValuesOrder';
+
 import {
   handleCreateBusiness,
   closeNewAdress,
@@ -21,7 +24,12 @@ import {
 
 const Business: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
-  const { loadFreight, createBusiness } = useBusiness();
+  const {
+    loadFreight,
+    createBusiness,
+    modalOrderSuccess,
+    setModalOrderSuccess,
+  } = useBusiness();
 
   const newSubmit = React.useCallback(async data => {
     console.log('data', data);
@@ -56,15 +64,15 @@ const Business: React.FC = () => {
                     <Address index={index} item={item} values={values} />
                   ))}
                 </ContentAdress>
-                {/* {values.addAdress || values.editing ? ( */}
-
                 <ActionForm values={values} />
               </Content>
             </form>
+
             <Main>
               <Map setMap={setMap} values={values} />
+
               <NewAdress
-                show={values.addAdress}
+                show={values.addAdress || values.editing}
                 submit={deliveries =>
                   saveNewAddress(setFieldValue, deliveries, values, map)
                 }
@@ -72,8 +80,12 @@ const Business: React.FC = () => {
                 newValues={values}
                 newSetFieldValue={setFieldValue}
               />
-              {/* <ModalOrderSuccess /> */}
-              {/* <ValuesOrder
+
+              <ModalOrderSuccess
+                show={modalOrderSuccess}
+                close={setModalOrderSuccess}
+              />
+              <ValuesOrder
                 values={values}
                 handleCreateBusiness={() =>
                   handleCreateBusiness(
@@ -83,7 +95,7 @@ const Business: React.FC = () => {
                     map,
                   )
                 }
-              /> */}
+              />
             </Main>
           </Container>
         );
