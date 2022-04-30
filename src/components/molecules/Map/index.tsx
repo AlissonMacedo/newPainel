@@ -9,6 +9,7 @@ import {
   useJsApiLoader,
   Marker,
   DirectionsRenderer,
+  InfoWindow,
 } from '@react-google-maps/api';
 
 import pina from '../../../assets/pina.png';
@@ -19,7 +20,7 @@ import pinfim from '../../../assets/pinfim.png';
 
 const containerStyle = {
   width: '100%',
-  height: '100%',
+  height: '70%',
 };
 
 const MyComponent = ({ setMap, values }: any) => {
@@ -65,7 +66,8 @@ const MyComponent = ({ setMap, values }: any) => {
         strokeOpacity: 1,
         strokeWeight: 5,
         clickable: false
-      }
+      },
+
     };
   }, [values.route]);
 
@@ -160,6 +162,8 @@ const MyComponent = ({ setMap, values }: any) => {
   }
 
 
+
+
   return isLoaded ? (
     <>
       <GoogleMap
@@ -167,6 +171,8 @@ const MyComponent = ({ setMap, values }: any) => {
         center={center}
         zoom={14}
         onLoad={onMapLoad}
+
+
       >
         {values.deliveries.map((delivery: any, index: number) => (
           <>
@@ -186,16 +192,28 @@ const MyComponent = ({ setMap, values }: any) => {
                   position={{ lat: delivery.latitude, lng: delivery.longitude }}
                   animation={google.maps.Animation.DROP}
                   icon={test(index)}
+
                 />
+
+
               )
             }
-
+            <InfoWindow
+              anchor={marker.current?.marker}
+              position={{ lat: delivery.latitude, lng: delivery.longitude }}
+              options={{ pixelOffset: new google.maps.Size(0, -90) }}
+            >
+              <div style={{ background: "white" }}>
+                {"custom Infobox: "}
+              </div>
+            </InfoWindow>
             <Marker
               title='My Marker'
               // eslint-disable-next-line no-return-assign
               ref={(el: any) => (marker.current = el)}
               position={coordinate}
               animation={google.maps.Animation.DROP}
+
               icon={svgMarker}
             />
           </>

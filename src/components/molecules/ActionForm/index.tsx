@@ -10,17 +10,16 @@ import { useBusiness } from '../../../pages/Business/Context';
 
 type actionFormData = {
   values: any;
+  map: any;
 };
 
-const ActionForm: React.FC<actionFormData> = ({ values }) => {
+const ActionForm: React.FC<actionFormData> = ({ values, map }) => {
   const { calcFreight, loadFreight } = useBusiness();
 
   const formik: any = useFormikContext();
 
   const addAddres = () => {
     formik.setFieldValue('addAdress', true);
-    formik.setFieldValue('calculed', false);
-    formik.setFieldValue('route', null);
   };
 
   // enable/disable the button of optimization
@@ -39,7 +38,7 @@ const ActionForm: React.FC<actionFormData> = ({ values }) => {
       <Button
         typeStyle="info"
         type="button"
-        onClick={() => calcFreight(formik, values)}
+        onClick={() => calcFreight(map, formik, values)}
       >
         {loadFreight && <Oval color="#fff" height={15} width={15} />}
         Calcular nova Rota

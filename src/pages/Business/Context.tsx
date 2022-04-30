@@ -20,11 +20,12 @@ interface returnCreateBusiness {
   isError: boolean;
 }
 interface BusinessContextData {
-  createBusiness(values: any): Promise<returnCreateBusiness>;
-  calcFreight: (formik: any, value: any) => void;
+  createBusiness(formik: any, values: any, map: any): void;
+  calcFreight: (map: any, formik: any, value: any) => void;
   loadFreight: boolean;
   loadCreateBusiness: boolean;
   modalOrderSuccess: boolean;
+  modalValuesOrder: boolean;
   setModalOrderSuccess: (value: boolean) => void;
 }
 // value: objectBusiness
@@ -34,13 +35,16 @@ const BusinessContext = createContext<BusinessContextData>(
 
 const BusinessProvider: React.FC = ({ children }) => {
   const { token, providerId, providerAlias, city, state } = useAuth();
-  const [modalOrderSuccess, setModalOrderSuccess] = React.useState(true);
+  const [modalOrderSuccess, setModalOrderSuccess] = React.useState(false);
   const { addToast } = useToast();
 
   const [loadFreight, setLoadFreight] = React.useState(false);
   const [loadCreateBusiness, setLoadCreateBusiness] = React.useState(false);
 
-  async function createBusiness(values: any) {
+  // controla o modal de valores de frete
+  const [modalValuesOrder, setModalValuesOrder] = React.useState(false);
+
+  async function createBusiness(setFieldValue: any, values: any, map: any) {
     setLoadCreateBusiness(true);
 
     const obj = {
@@ -55,26 +59,38 @@ const BusinessProvider: React.FC = ({ children }) => {
       vehicle: 0,
     };
 
-    // TODO falta adicionar o retorno no deliveries e fazer a otimização da
-    // rota no objecto de criacao do pedido.
-    let isError = false;
     try {
-      const data = { token, obj };
-      await Business.postBusiness(data);
+      await Business.postBusiness({ token, obj });
       addToast(successBusiness());
       setModalOrderSuccess(true);
+
+      setFieldValue('route', null);
+      setFieldValue('calculed', false);
+      setFieldValue('deliveries', [values.deliveries[0]]);
+
+      setFieldValue('dataToDelivery.distanceTotal', 0);
+      setFieldValue('dataToDelivery.timeDelivery', 0);
+      setFieldValue('dataToDelivery.deliveriesTotal', 0);
+
+      setModalValuesOrder(false);
+
+      map?.panTo({
+        lat: values.deliveries[0].latitude,
+        lng: values.deliveries[0].longitude,
+      });
+      // map?.setZoom(14);
+      map.panBy(-50, 0);
     } catch (err) {
-      isError = true;
       addToast(errorBusiness());
     } finally {
       setLoadCreateBusiness(false);
     }
-    return { isError };
   }
 
-  async function calcFreight(formik: any, values: any) {
+  async function calcFreight(map: any, formik: any, values: any) {
     // controle load
     setLoadFreight(true);
+    setModalValuesOrder(true);
     // calcula a rota
     const route = await Directions.getDirectionsWithReturn(values);
 
@@ -168,6 +184,8 @@ const BusinessProvider: React.FC = ({ children }) => {
         const { deliveryTax, returnTax } = await Business.getFreight(
           newFreight,
         );
+        map.panBy(-50, 200);
+        map.setZoom(14);
         gaCalcFreight();
         // addToast(successFreight(deliveryTax + returnTax));
         formik.setFieldValue(
@@ -192,6 +210,7 @@ const BusinessProvider: React.FC = ({ children }) => {
         loadFreight,
         loadCreateBusiness,
         modalOrderSuccess,
+        modalValuesOrder,
         setModalOrderSuccess,
       }}
     >

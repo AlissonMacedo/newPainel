@@ -8,22 +8,20 @@ import ValuesOrderButton from '../../molecules/ValuesOrderButton';
 
 interface ValueOrderD {
   values: any;
-  handleCreateBusiness: () => void;
+  submiting: () => void;
 }
 
-const ValuesOrder: React.FC<ValueOrderD> = ({
-  values,
-  handleCreateBusiness,
-}) => {
-  const { loadCreateBusiness } = useBusiness();
+const ValuesOrder: React.FC<ValueOrderD> = ({ values, submiting }) => {
+  const { loadCreateBusiness, loadFreight, modalValuesOrder } = useBusiness();
 
   return (
-    <Container>
-      <ValuesOrderText values={values} />
+    <Container show={modalValuesOrder}>
+      <ValuesOrderText values={values} loadFreight={loadFreight} />
       <ValuesOrderButton
         values={values}
         loadCreateBusiness={loadCreateBusiness}
-        handleCreateBusiness={handleCreateBusiness}
+        loadFreight={loadFreight}
+        submiting={submiting}
       />
     </Container>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
 import React from 'react';
-import { Formik, isObject } from 'formik';
+import { Formik } from 'formik';
 
 import { Container, Main, Content, ContentAdress } from './styles';
 import NewAdress from '../../molecules/NewAdress';
@@ -14,15 +14,11 @@ import Address from '../../molecules/Address';
 import ModalOrderSuccess from '../../organisms/ModalOrderSuccess';
 import ValuesOrder from '../../organisms/ValuesOrder';
 
-import {
-  handleCreateBusiness,
-  closeNewAdress,
-  saveNewAddress,
-  initial,
-} from './helpers';
+import { closeNewAdress, saveNewAddress, initial } from './helpers';
 
 const Business: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
+
   const { createBusiness, modalOrderSuccess, setModalOrderSuccess } =
     useBusiness();
 
@@ -59,7 +55,7 @@ const Business: React.FC = () => {
                     <Address index={index} item={item} values={values} />
                   ))}
                 </ContentAdress>
-                <ActionForm values={values} />
+                <ActionForm values={values} map={map} />
               </Content>
             </form>
 
@@ -82,14 +78,7 @@ const Business: React.FC = () => {
               />
               <ValuesOrder
                 values={values}
-                handleCreateBusiness={() =>
-                  handleCreateBusiness(
-                    createBusiness,
-                    setFieldValue,
-                    values,
-                    map,
-                  )
-                }
+                submiting={() => createBusiness(setFieldValue, values, map)}
               />
             </Main>
           </Container>
