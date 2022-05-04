@@ -20,8 +20,8 @@ interface returnCreateBusiness {
   isError: boolean;
 }
 interface BusinessContextData {
-  createBusiness(formik: any, values: any, map: any): void;
-  calcFreight: (map: any, formik: any, value: any) => void;
+  createBusiness(setFieldValue: any, values: any, map: any): void;
+  calcFreight: (map: any, setFieldValue: any, value: any) => void;
   loadFreight: boolean;
   loadCreateBusiness: boolean;
   modalOrderSuccess: boolean;
@@ -87,7 +87,7 @@ const BusinessProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function calcFreight(map: any, formik: any, values: any) {
+  async function calcFreight(map: any, setFieldValue: any, values: any) {
     // controle load
     setLoadFreight(true);
     setModalValuesOrder(true);
@@ -111,11 +111,11 @@ const BusinessProvider: React.FC = ({ children }) => {
           deliveries.push(values.deliveries[0]);
         }
 
-        formik.setFieldValue('deliveries', deliveries);
+        setFieldValue('deliveries', deliveries);
       }
 
       // seta a rota
-      formik.setFieldValue('route', route);
+      setFieldValue('route', route);
 
       // conta os pontos
       // valida se tem retorno
@@ -132,12 +132,9 @@ const BusinessProvider: React.FC = ({ children }) => {
         }
       }
 
-      formik.setFieldValue(
-        'dataToDelivery.distanceTotal',
-        (leng / 1000).toFixed(1),
-      );
-      formik.setFieldValue('dataToDelivery.timeDelivery', Math.round(dur / 60));
-      formik.setFieldValue(
+      setFieldValue('dataToDelivery.distanceTotal', (leng / 1000).toFixed(1));
+      setFieldValue('dataToDelivery.timeDelivery', Math.round(dur / 60));
+      setFieldValue(
         'dataToDelivery.deliveriesTotal',
         route.routes[0].legs.length,
       );
@@ -184,18 +181,15 @@ const BusinessProvider: React.FC = ({ children }) => {
         const { deliveryTax, returnTax } = await Business.getFreight(
           newFreight,
         );
-        map.panBy(-50, 200);
-        map.setZoom(14);
+        // map.panBy(-50, 200);
+        // map.setZoom(14);
         gaCalcFreight();
         // addToast(successFreight(deliveryTax + returnTax));
-        formik.setFieldValue(
-          'dataToDelivery.totaToPay',
-          deliveryTax + returnTax,
-        );
-        formik.setFieldValue('calculed', true);
+        setFieldValue('dataToDelivery.totaToPay', deliveryTax + returnTax);
+        setFieldValue('calculed', true);
       } catch (err) {
         gaCreateOrderError();
-        formik.setFieldValue('calculed', false);
+        setFieldValue('calculed', false);
       } finally {
         setLoadFreight(false);
       }

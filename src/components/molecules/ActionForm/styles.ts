@@ -10,9 +10,3 @@ export const Container = styled.div`
   border-top: 1px solid #dcddde;
   padding: 0 32px;
 `;
-
-export const GroupButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;

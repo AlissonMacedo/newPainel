@@ -1,27 +1,38 @@
 /* eslint-disable prettier/prettier */
 import React, { useRef } from 'react';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikProps, useFormikContext } from 'formik';
 
 import { object } from 'yup/lib/locale';
 import { FaMotorcycle, FaShuttleVan, FaTruck } from 'react-icons/fa';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai'
-import { MdOutlineDeliveryDining } from 'react-icons/md';
+import { MdOutlineDeliveryDining, MdSchedule } from 'react-icons/md';
 import { AutoComplete } from '../AutoComplete';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 
 
 import { Container } from './styles';
+import { useBusiness } from '../../../pages/Business/Context';
 
 type newOrderData = {
   setFieldValue: (field: string, value: any) => void;
   setShowModalOrder: (value: boolean) => void;
   show: boolean;
+  values: any;
+  map: any;
 };
 
 const ConfigOrder: React.FC<newOrderData> = ({
   setFieldValue, setShowModalOrder,
-  show }) => {
+  values,
+  map,
+  show }, ...props) => {
+  const formik: any = useFormikContext();
+  const { calcFreight } = useBusiness();
+
+
+  const [itemSelected, setItemSelected] = React.useState(1);
+  const [itemSelected2, setItemSelected2] = React.useState(1);
   return (
     <Container show={show}>
       <div className="titleClose">
@@ -31,62 +42,70 @@ const ConfigOrder: React.FC<newOrderData> = ({
         </button>
       </div>
       <div className="selectVehicleDelivery">
-        <div className="vehicleDelivery">
+        <button type="button" className={`${itemSelected === 1 ? 'vehicleDelivery active' : 'vehicleDelivery'}`}
+          onClick={() => setItemSelected(1)}  >
           <div>
             <FaMotorcycle size={18} color='#777' />
-            <AiFillCheckCircle size={18} color="#7159c1" />
+            <AiFillCheckCircle size={18} color={`${itemSelected === 1 ? '#00dedb' : '#bba6a6'}`} />
+
           </div>
           <span>Motocicleta</span>
-        </div>
-        <div className="vehicleDelivery">
+        </button>
+        <button type="button" className={`${itemSelected === 2 ? 'vehicleDelivery active' : 'vehicleDelivery'}`}
+          onClick={() => setItemSelected(2)}>
           <div>
             <FaShuttleVan size={18} color='#777' />
-            <AiFillCheckCircle size={18} color="#7159c1" />
+            <AiFillCheckCircle size={18} color={`${itemSelected === 2 ? '#00dedb' : '#eee'}`} />
           </div>
           <span>Van</span>
-        </div>
-        <div className="vehicleDelivery">
+        </button>
+        <button type="button" className={`${itemSelected === 3 ? 'vehicleDelivery active' : 'vehicleDelivery'}`}
+          onClick={() => setItemSelected(3)}  >
           <div>
             <FaTruck size={18} color='#777' />
-            <AiFillCheckCircle size={18} color="#7159c1" />
+            <AiFillCheckCircle size={18} color={`${itemSelected === 3 ? '#00dedb' : '#eee'}`} />
           </div>
           <span>Caminhão</span>
-        </div>
+        </button>
       </div>
       <div style={{ marginTop: 20 }}>
         <span style={{ color: '#333', }} >Tipo de entrega</span>
         <div className="deliveryTypes">
-          <div className="deliveryType">
+          <button type="button" className={`${itemSelected2 === 1 ? 'deliveryType active' : 'deliveryType'}`}
+            onClick={() => setItemSelected2(1)}  >
             <div className="deliveryBody">
               <MdOutlineDeliveryDining color="#444" size={23} />
               <div className="deliveryTexts">
                 <span className="deliveryTitle">Entrega Normal</span>
                 <span className="deliveryDescription">A entrega normal é realizada no mesmo dia da solicitação</span>
               </div>
-              <span className="price">
+              {/* <span className="price">
                 R$ 0,00
-              </span>
-              <AiFillCheckCircle size={18} color="#7159c1" />
+              </span> */}
+              <AiFillCheckCircle size={18} color={`${itemSelected2 === 1 ? '#00dedb' : '#eee'}`} />
             </div>
-          </div>
+          </button>
 
-          <div className="deliveryType">
+          <button type="button" className={`${itemSelected2 === 2 ? 'deliveryType active' : 'deliveryType'}`} onClick={() => setItemSelected2(2)}  >
             <div className="deliveryBody">
-              <MdOutlineDeliveryDining color="#444" size={23} />
+              <MdSchedule color="#444" size={23} />
               <div className="deliveryTexts">
                 <span className="deliveryTitle">Entrega Expressa</span>
                 <span className="deliveryDescription">A entrega expressa é realizada em até 1 hora após a solicitação</span>
               </div>
-              <span className="price">
+              {/* <span className="price">
                 R$ 0,00
-              </span>
-              <AiFillCheckCircle size={18} color="#7159c1" />
+              </span> */}
+              <AiFillCheckCircle size={18} color={`${itemSelected2 === 2 ? '#00dedb' : '#eee'}`} />
             </div>
-          </div>
+          </button>
         </div>
-        <Button>Confirmar</Button>
+        <Button onClick={() => {
+          calcFreight(map, setFieldValue, values)
+          setShowModalOrder(false);
+        }}>Confirmar</Button>
       </div>
-    </Container>
+    </Container >
   );
 };
 

@@ -60,7 +60,6 @@ const Business: React.FC = () => {
                 </ContentAdress>
                 <ActionForm
                   values={values}
-                  map={map}
                   setShowModalOrder={setShowModalOrder}
                 />
               </Content>
@@ -88,6 +87,8 @@ const Business: React.FC = () => {
                 show={showModalOrder}
                 setFieldValue={setFieldValue}
                 setShowModalOrder={setShowModalOrder}
+                map={map}
+                values={values}
               />
             </Main>
           </Container>

@@ -8,6 +8,7 @@ export default {
     black: '#666',
     gray50: '#959595',
     gray100: '#969696',
+    gray150: '#ddd',
     gray200: '#b2b2b2',
     gray500: '#A0AEBF',
     gray800: '#3e3e3e',

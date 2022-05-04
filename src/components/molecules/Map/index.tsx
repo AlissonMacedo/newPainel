@@ -73,6 +73,8 @@ const MyComponent = ({ setMap, values }: any) => {
 
 
   const marker = useRef<Marker | null>();
+  const [infoWindow, setInfoWindow] = useState(false);
+
   const [coordinate, setCoordinate] = useState({ lat: -7.611054, lng: -72.909161 });
 
   const positions = [
@@ -161,9 +163,6 @@ const MyComponent = ({ setMap, values }: any) => {
     return testePin(index)
   }
 
-
-
-
   return isLoaded ? (
     <>
       <GoogleMap
@@ -192,21 +191,21 @@ const MyComponent = ({ setMap, values }: any) => {
                   position={{ lat: delivery.latitude, lng: delivery.longitude }}
                   animation={google.maps.Animation.DROP}
                   icon={test(index)}
-
                 />
-
-
               )
             }
-            <InfoWindow
-              anchor={marker.current?.marker}
-              position={{ lat: delivery.latitude, lng: delivery.longitude }}
-              options={{ pixelOffset: new google.maps.Size(0, -90) }}
-            >
-              <div style={{ background: "white" }}>
-                {"custom Infobox: "}
-              </div>
-            </InfoWindow>
+            {infoWindow &&
+              <InfoWindow
+
+                anchor={marker.current?.marker}
+                position={{ lat: delivery.latitude, lng: delivery.longitude }}
+                options={{ pixelOffset: new google.maps.Size(0, -90) }}
+              >
+                <div style={{ background: "white", color: '#444' }}>
+                  {"custom Infobox: "}
+                </div>
+              </InfoWindow>
+            }
             <Marker
               title='My Marker'
               // eslint-disable-next-line no-return-assign
@@ -220,6 +219,7 @@ const MyComponent = ({ setMap, values }: any) => {
         ))}
         {values.deliveryRetorn &&
           <Marker
+            onClick={() => setInfoWindow(true)}
             position={{ lat: values.deliveries[0].latitude, lng: values.deliveries[0].longitude }}
             animation={google.maps.Animation.DROP}
             opacity={0.9}
