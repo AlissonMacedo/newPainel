@@ -31,22 +31,23 @@ const appearFromLEft2 = keyframes`
 `;
 
 export const Container = styled.div<ContainerData>`
-  position: absolute;
+  /* position: absolute;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 0); */
 
-  height: 170px;
+  /* height: 170px; */
   min-width: 500px;
-  width: calc(100vw - 770px);
+  /* width: calc(100vw - 770px); */
+  width: 100%;
   background: ${props => props.theme.colors.white};
-  padding: 20px 0px;
+  padding: 40px 20px;
 
   border: 1px solid #ccc;
   border-radius: 4px;
   bottom: 26px;
 
-  visibility: ${props => (!props.show ? 'hidden' : 'visible')};
+  /* visibility: ${props => (!props.show ? 'hidden' : 'visible')};
   animation: ${props => (!props.show ? appearFromLEft2 : appearFromLEft)} 0.5s
     linear;
-  transition: visibility 0.5s linear;
+  transition: visibility 0.5s linear; */
 `;

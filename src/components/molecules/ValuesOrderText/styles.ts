@@ -6,6 +6,7 @@ export const Container = styled.div`
   justify-content: space-around;
   width: 100%;
   background: ${props => props.theme.colors.white};
+  margin-top: 12px;
   margin-bottom: 10px;
 
   > div {

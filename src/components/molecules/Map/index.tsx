@@ -20,7 +20,7 @@ import pinfim from '../../../assets/pinfim.png';
 
 const containerStyle = {
   width: '100%',
-  height: '70%',
+  height: '600px',
 };
 
 const MyComponent = ({ setMap, values }: any) => {

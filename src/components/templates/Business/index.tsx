@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 
 import { Container, Main, Content, ContentAdress } from './styles';
@@ -15,6 +15,7 @@ import ModalOrderSuccess from '../../organisms/ModalOrderSuccess';
 import ValuesOrder from '../../organisms/ValuesOrder';
 
 import { closeNewAdress, saveNewAddress, initial } from './helpers';
+import ConfigOrder from '../../molecules/ConfigOrder';
 
 const Business: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
@@ -25,6 +26,8 @@ const Business: React.FC = () => {
   const newSubmit = React.useCallback(async data => {
     console.log('data', data);
   }, []);
+
+  const [showModalOrder, setShowModalOrder] = useState(true);
 
   return (
     <Formik
@@ -55,13 +58,15 @@ const Business: React.FC = () => {
                     <Address index={index} item={item} values={values} />
                   ))}
                 </ContentAdress>
-                <ActionForm values={values} map={map} />
+                <ActionForm
+                  values={values}
+                  map={map}
+                  setShowModalOrder={setShowModalOrder}
+                />
               </Content>
             </form>
-
             <Main>
               <Map setMap={setMap} values={values} />
-
               <NewAdress
                 show={values.addAdress || values.editing}
                 submit={deliveries =>
@@ -71,7 +76,6 @@ const Business: React.FC = () => {
                 newValues={values}
                 newSetFieldValue={setFieldValue}
               />
-
               <ModalOrderSuccess
                 show={modalOrderSuccess}
                 close={setModalOrderSuccess}
@@ -79,6 +83,11 @@ const Business: React.FC = () => {
               <ValuesOrder
                 values={values}
                 submiting={() => createBusiness(setFieldValue, values, map)}
+              />
+              <ConfigOrder
+                show={showModalOrder}
+                setFieldValue={setFieldValue}
+                setShowModalOrder={setShowModalOrder}
               />
             </Main>
           </Container>
