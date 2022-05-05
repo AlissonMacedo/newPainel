@@ -14,6 +14,16 @@ interface ValueOrderD {
 const ValuesOrder: React.FC<ValueOrderD> = ({ values, submiting }) => {
   const { loadCreateBusiness, loadFreight, modalValuesOrder } = useBusiness();
 
+  if (!values.calculed) {
+    return (
+      <Container show={modalValuesOrder}>
+        <div className="spaceTextCalcRoute">
+          <span>Clique em calcular nova rota</span>
+        </div>
+      </Container>
+    );
+  }
+
   return (
     <Container show={modalValuesOrder}>
       <ValuesOrderText values={values} loadFreight={loadFreight} />

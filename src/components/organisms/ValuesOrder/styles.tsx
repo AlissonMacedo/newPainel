@@ -35,19 +35,32 @@ export const Container = styled.div<ContainerData>`
   left: 50%;
   transform: translate(-50%, 0); */
 
-  /* height: 170px; */
+  height: 265px;
   min-width: 500px;
   /* width: calc(100vw - 770px); */
   width: 100%;
   background: ${props => props.theme.colors.white};
   padding: 40px 20px;
 
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-top: 1px solid #ccc;
+  /* border-radius: 4px; */
   bottom: 26px;
 
   /* visibility: ${props => (!props.show ? 'hidden' : 'visible')};
   animation: ${props => (!props.show ? appearFromLEft2 : appearFromLEft)} 0.5s
     linear;
   transition: visibility 0.5s linear; */
+  div.spaceTextCalcRoute {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    span {
+      font-size: 18px;
+      color: ${props => props.theme.colors.gray500};
+    }
+  }
 `;
