@@ -2,7 +2,7 @@ export const initial = {
   editing: false,
   calculed: false,
   route: null,
-  addAdress: true,
+  addAdress: false,
   deliveryRetorn: false,
   travelMode: 'DRIVING',
   optimizeWaypoints: true,

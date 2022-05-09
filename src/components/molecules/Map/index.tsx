@@ -17,6 +17,8 @@ import pinb from '../../../assets/pinb.png';
 import pinc from '../../../assets/pinc.png';
 import pind from '../../../assets/pind.png';
 import pinfim from '../../../assets/pinfim.png';
+import motocycle from '../../../assets/motocycle.png';
+import afinish from '../../../assets/afinish.png';
 
 const containerStyle = {
   width: '100%',
@@ -154,9 +156,9 @@ const MyComponent = ({ setMap, values }: any) => {
 
 
   const test = (index: number) => {
-    if (values.deliveryRetorn === true && index + 1 === values.deliveries.length) {
+    if (values.deliveryRetorn === true && index === 0) {
       return {
-        url: pinfim,
+        url: afinish,
         opacity: 0,
       };
     }
@@ -170,8 +172,6 @@ const MyComponent = ({ setMap, values }: any) => {
         center={center}
         zoom={14}
         onLoad={onMapLoad}
-
-
       >
         {values.deliveries.map((delivery: any, index: number) => (
           <>
@@ -184,7 +184,6 @@ const MyComponent = ({ setMap, values }: any) => {
                 />
               )
             }
-
             {
               values.deliveryRetorn === true && index + 1 < values.deliveries.length && (
                 <Marker
@@ -194,9 +193,8 @@ const MyComponent = ({ setMap, values }: any) => {
                 />
               )
             }
-            {infoWindow &&
+            {/* {infoWindow &&
               <InfoWindow
-
                 anchor={marker.current?.marker}
                 position={{ lat: delivery.latitude, lng: delivery.longitude }}
                 options={{ pixelOffset: new google.maps.Size(0, -90) }}
@@ -213,23 +211,10 @@ const MyComponent = ({ setMap, values }: any) => {
               position={coordinate}
               animation={google.maps.Animation.DROP}
 
-              icon={svgMarker}
-            />
+              icon={motocycle}
+            /> */}
           </>
         ))}
-        {values.deliveryRetorn &&
-          <Marker
-            onClick={() => setInfoWindow(true)}
-            position={{ lat: values.deliveries[0].latitude, lng: values.deliveries[0].longitude }}
-            animation={google.maps.Animation.DROP}
-            opacity={0.9}
-            icon={{
-              url: pinfim,
-              anchor: new google.maps.Point(25, 58),
-            }}
-
-          />
-        }
         {values.calculed && values.route && (
           <DirectionsRenderer options={directionsRendererOptions}
           />

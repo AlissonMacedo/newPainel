@@ -1,7 +1,8 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { Formik } from 'formik';
+import FlipMove from 'react-flip-move';
 
 import { Container, Main, Content, ContentAdress } from './styles';
 import NewAdress from '../../molecules/NewAdress';
@@ -27,7 +28,12 @@ const Business: React.FC = () => {
     console.log('data', data);
   }, []);
 
-  const [showModalOrder, setShowModalOrder] = useState(true);
+  const [showModalOrder, setShowModalOrder] = useState(false);
+
+  const ticketNotVisibleState = {
+    transform: 'translateX(-100%)',
+    opacity: 0.1,
+  };
 
   return (
     <Formik
@@ -54,9 +60,11 @@ const Business: React.FC = () => {
               <Content>
                 <h3>Rota de entrega:</h3>
                 <ContentAdress className="scroll">
-                  {values.deliveries.map((item, index) => (
-                    <Address index={index} item={item} values={values} />
-                  ))}
+                  <FlipMove>
+                    {values.deliveries.map((item, index) => (
+                      <Address key={item.id} index={index} item={item} />
+                    ))}
+                  </FlipMove>
                 </ContentAdress>
                 <ActionForm
                   values={values}

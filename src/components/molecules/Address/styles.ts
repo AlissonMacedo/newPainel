@@ -42,4 +42,17 @@ export const Container = styled.div`
   div.destiny {
     margin-top: 10px;
   }
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      display: flex;
+      background: none;
+      border: none;
+    }
+  }
 `;

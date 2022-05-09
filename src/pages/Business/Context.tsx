@@ -78,8 +78,7 @@ const BusinessProvider: React.FC = ({ children }) => {
         lat: values.deliveries[0].latitude,
         lng: values.deliveries[0].longitude,
       });
-      // map?.setZoom(14);
-      map.panBy(-50, 0);
+      map?.setZoom(14);
     } catch (err) {
       addToast(errorBusiness());
     } finally {
@@ -101,15 +100,15 @@ const BusinessProvider: React.FC = ({ children }) => {
       // verifica se tem mais de um ponto de entrega e
       // verifica se o usuário quer que otimize
       // otimiza a rota
-      if (values.deliveries.length > 2 && values.optimizeWaypoints) {
+      if (values.deliveries.length > 3 && values.optimizeWaypoints) {
         const newArr = route.routes[0].waypoint_order.map(
           (item: any) => values.deliveries[item + 1],
         );
-        deliveries = [values.deliveries[0], ...newArr];
-
-        if (values.deliveryRetorn) {
-          deliveries.push(values.deliveries[0]);
-        }
+        deliveries = [
+          values.deliveries[0],
+          ...newArr,
+          values.deliveries[values.deliveries.length - 1],
+        ];
 
         setFieldValue('deliveries', deliveries);
       }
