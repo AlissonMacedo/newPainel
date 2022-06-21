@@ -71,6 +71,8 @@ const Business: React.FC = () => {
                         index={index}
                         item={item}
                         removeItem={removeItem}
+                        deliveries={values.deliveries}
+                        deliveryReturn={values.deliveryRetorn}
                       />
                     ))}
                   </FlipMove>

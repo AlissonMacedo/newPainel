@@ -14,6 +14,8 @@ type AddressData = {
     street: string;
   };
   removeItem: (item: number) => void;
+  deliveries: Array<any>;
+  deliveryReturn: boolean;
 };
 
 const Address = React.forwardRef<any, AddressData>((props, ref) => {
@@ -24,8 +26,21 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
     formik.setFieldValue('delivery', props.item);
   };
 
-  const renderButtonRemove = (conditional: boolean) => {
-    if (conditional) {
+  const renderButtonRemove = (index: number) => {
+    if (
+      props.deliveryReturn &&
+      props.index > 0 &&
+      props.index < props.deliveries.length - 1
+    ) {
+      return (
+        <TooltipMessage title="Excluir">
+          <button type="button" onClick={() => props.removeItem(props.item.id)}>
+            <AiFillCloseCircle color="#777" size={18} />
+          </button>
+        </TooltipMessage>
+      );
+    }
+    if (props.index > 0 && !props.deliveryReturn) {
       return (
         <TooltipMessage title="Excluir">
           <button type="button" onClick={() => props.removeItem(props.item.id)}>
@@ -42,7 +57,7 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
       <div className="destiny">
         <div className="title">
           <h4>{`Destino ${props.index + 1}`}</h4>
-          {renderButtonRemove(props.index > 0)}
+          {renderButtonRemove(props.index)}
         </div>
       </div>
       <div>
