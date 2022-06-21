@@ -33,7 +33,7 @@ type newAdressData = {
   show: boolean;
 };
 
-const NewAdress: React.FC<newAdressData> = ({
+const NewAddress: React.FC<newAdressData> = ({
   submit,
   closeNewAdress,
   newValues,
@@ -172,4 +172,4 @@ const NewAdress: React.FC<newAdressData> = ({
   );
 };
 
-export default NewAdress;
+export default NewAddress;

@@ -24,7 +24,7 @@ export const Content = styled.div`
   }
 `;
 
-export const ContentAdress = styled.div`
+export const ContentAddress = styled.div`
   position: relative;
   width: 400px;
   height: calc(100vh - 325px);

@@ -4,8 +4,8 @@ import React, { useState, forwardRef } from 'react';
 import { Formik } from 'formik';
 import FlipMove from 'react-flip-move';
 
-import { Container, Main, Content, ContentAdress } from './styles';
-import NewAdress from '../../molecules/NewAdress';
+import { Container, Main, Content, ContentAddress } from './styles';
+import NewAddress from '../../molecules/NewAddress';
 import Map from '../../molecules/Map';
 
 import { useBusiness } from '../../../pages/Business/Context';
@@ -63,7 +63,7 @@ const Business: React.FC = () => {
             <form onSubmit={handleSubmit}>
               <Content>
                 <h3>Rota de entrega:</h3>
-                <ContentAdress className="scroll">
+                <ContentAddress className="scroll">
                   <FlipMove>
                     {values.deliveries.map((item, index) => (
                       <Address
@@ -74,7 +74,7 @@ const Business: React.FC = () => {
                       />
                     ))}
                   </FlipMove>
-                </ContentAdress>
+                </ContentAddress>
                 <ActionForm
                   values={values}
                   setShowModalOrder={setShowModalOrder}
@@ -83,7 +83,7 @@ const Business: React.FC = () => {
             </form>
             <Main>
               <Map setMap={setMap} values={values} />
-              <NewAdress
+              <NewAddress
                 show={values.addAdress || values.editing}
                 submit={deliveries =>
                   saveNewAddress(setFieldValue, deliveries, values, map)
