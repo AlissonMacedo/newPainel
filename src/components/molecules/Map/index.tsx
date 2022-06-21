@@ -22,7 +22,7 @@ import afinish from '../../../assets/afinish.png';
 
 const containerStyle = {
   width: '100%',
-  height: '600px',
+  height: '100%',
 };
 
 const MyComponent = ({ setMap, values }: any) => {
