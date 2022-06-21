@@ -15,7 +15,7 @@ import Address from '../../molecules/Address';
 import ModalOrderSuccess from '../../organisms/ModalOrderSuccess';
 import ValuesOrder from '../../organisms/ValuesOrder';
 
-import { closeNewAdress, saveNewAddress, initial } from './helpers';
+import { closeNewAddress, saveNewAddress, initial } from './helpers';
 import ConfigOrder from '../../molecules/ConfigOrder';
 
 const Business: React.FC = () => {
@@ -88,7 +88,7 @@ const Business: React.FC = () => {
                 submit={deliveries =>
                   saveNewAddress(setFieldValue, deliveries, values, map)
                 }
-                closeNewAdress={() => closeNewAdress(setFieldValue)}
+                closeNewAddress={() => closeNewAddress(setFieldValue)}
                 newValues={values}
                 newSetFieldValue={setFieldValue}
               />

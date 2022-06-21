@@ -1,4 +1,4 @@
-export function closeNewAdress(
+export function closeNewAddress(
   setFieldValue: (field: string, value: any) => void,
 ) {
   setFieldValue('addAdress', false);

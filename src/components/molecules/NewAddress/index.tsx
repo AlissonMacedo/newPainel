@@ -27,7 +27,7 @@ type AppProps = {
 
 type newAdressData = {
   submit: (value: AppProps) => void;
-  closeNewAdress: () => void;
+  closeNewAddress: () => void;
   newValues: any;
   newSetFieldValue: (field: string, value: any) => void;
   show: boolean;
@@ -35,7 +35,7 @@ type newAdressData = {
 
 const NewAddress: React.FC<newAdressData> = ({
   submit,
-  closeNewAdress,
+  closeNewAddress,
   newValues,
   newSetFieldValue,
   show,
@@ -118,7 +118,7 @@ const NewAddress: React.FC<newAdressData> = ({
           newSetFieldValue('editing', false);
           console.log('rodou')
           resetForm();
-          closeNewAdress();
+          closeNewAddress();
         };
 
         return (
