@@ -24,6 +24,9 @@ interface AuthState {
   providerAlias: string;
   city: string;
   state: string;
+  config: {
+    sideBar: boolean;
+  };
 }
 interface AuthContextData {
   user?: string;
@@ -35,6 +38,10 @@ interface AuthContextData {
   signIn(credentials: SignInCreadentials): Promise<void>;
   signOut(): void;
   updateUser(newData: AuthState): void;
+  config: {
+    sideBar: boolean;
+  };
+  openCloseSideBar(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -53,7 +60,16 @@ const AuthProvider: React.FC = ({ children }) => {
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
         SentrySetUser({ user, token });
         setUserAnalytics(user);
-        return { token, user, providerId, banks, providerAlias, city, state };
+        return {
+          token,
+          user,
+          providerId,
+          banks,
+          providerAlias,
+          city,
+          state,
+          config: { sideBar: false },
+        };
       }
     }
     return {} as AuthState;
@@ -82,7 +98,16 @@ const AuthProvider: React.FC = ({ children }) => {
 
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-    setData({ token, user, banks, providerId, providerAlias, city, state });
+    setData({
+      token,
+      user,
+      banks,
+      providerId,
+      providerAlias,
+      city,
+      state,
+      config: { sideBar: false },
+    });
     SentrySetUser({ user, token });
   }, []);
 
@@ -102,6 +127,20 @@ const AuthProvider: React.FC = ({ children }) => {
     // setData({ , user: newData.user, token: newData.token });
   }, []);
 
+  const openCloseSideBar = () => {
+    if (data.config.sideBar === false) {
+      setData({
+        ...data,
+        config: { sideBar: true },
+      });
+    } else {
+      setData({
+        ...data,
+        config: { sideBar: false },
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -114,6 +153,8 @@ const AuthProvider: React.FC = ({ children }) => {
         signIn,
         signOut,
         updateUser,
+        config: data?.config,
+        openCloseSideBar,
       }}
     >
       {children}

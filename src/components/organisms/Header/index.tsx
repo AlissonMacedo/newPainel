@@ -5,18 +5,18 @@ import { Container } from './styles';
 
 type HeaderData = {
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen: () => void;
 };
 
 export const Header: React.FC<HeaderData> = ({ isOpen, setIsOpen }) => {
   return (
     <Container>
       {isOpen ? (
-        <button type="button" onClick={() => setIsOpen(!isOpen)}>
+        <button type="button" onClick={() => setIsOpen()}>
           <FiChevronsLeft size={23} />
         </button>
       ) : (
-        <button type="button" onClick={() => setIsOpen(!isOpen)}>
+        <button type="button" onClick={() => setIsOpen()}>
           <FiAlignJustify size={23} />
         </button>
       )}

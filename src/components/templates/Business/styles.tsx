@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -34,14 +34,27 @@ export const ContentAddress = styled.div`
   overflow-y: auto;
 `;
 
-export const Main = styled.div`
+interface MainProps {
+  config: boolean;
+}
+
+export const Main = styled.div<MainProps>`
   position: absolute;
   right: 0;
   top: 48px;
 
   bottom: 0;
   overflow: hidden;
-  width: calc(100vw - 630px);
+  ${props =>
+    props.config
+      ? css`
+          width: calc(100vw - 450px);
+          transition: width 0.3s ease-in-out;
+        `
+      : css`
+          width: calc(100vw - 630px);
+          transition: width 0.3s ease-in-out;
+        `};
 
   display: flex;
   flex-direction: column;

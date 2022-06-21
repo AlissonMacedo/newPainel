@@ -2,23 +2,19 @@ import React from 'react';
 
 import { Authenticated, Main, NotAuthenticated } from './styles';
 import SideBar from '../../components/organisms/SideBar';
-import { Button, Header } from '../../components';
+import { Header } from '../../components';
 
 import { useAuth } from '../../hooks/auth';
 
 const Wrapper: React.FC = ({ children }) => {
-  const { user } = useAuth();
-
-  const [isOpen, setIsOpen] = React.useState(false);
-  const toggleDrawer = () => setIsOpen(!isOpen);
+  const { user, config, openCloseSideBar } = useAuth();
 
   if (user) {
     return (
       <Authenticated>
-        <SideBar isOpen={isOpen} />
+        <SideBar isOpen={config.sideBar} />
         <Main>
-          <Header isOpen={isOpen} setIsOpen={setIsOpen} />
-          {/* <Button onClick={toggleDrawer}>Abre/Fecha</Button> */}
+          <Header isOpen={config.sideBar} setIsOpen={openCloseSideBar} />
           {children}
         </Main>
       </Authenticated>

@@ -17,9 +17,11 @@ import ValuesOrder from '../../organisms/ValuesOrder';
 
 import { closeNewAddress, saveNewAddress, initial } from './helpers';
 import ConfigOrder from '../../molecules/ConfigOrder';
+import { useAuth } from '../../../hooks/auth';
 
 const Business: React.FC = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
+  const { config } = useAuth();
 
   const { createBusiness, modalOrderSuccess, setModalOrderSuccess } =
     useBusiness();
@@ -83,7 +85,7 @@ const Business: React.FC = () => {
                 />
               </Content>
             </form>
-            <Main>
+            <Main config={config.sideBar}>
               <Map setMap={setMap} values={values} />
               <ValuesOrder
                 values={values}
