@@ -98,7 +98,7 @@ const Business: React.FC = () => {
               />
               <ValuesOrder
                 values={values}
-                submiting={() => createBusiness(setFieldValue, values, map)}
+                submitting={() => createBusiness(setFieldValue, values, map)}
               />
               <ConfigOrder
                 show={showModalOrder}

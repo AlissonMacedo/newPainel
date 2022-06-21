@@ -8,19 +8,19 @@ type ValuesOrderButtonData = {
   values: any;
   loadCreateBusiness: boolean;
   loadFreight: boolean;
-  submiting: () => void;
+  submitting: () => void;
 };
 
 const ValuesOrderButton: React.FC<ValuesOrderButtonData> = ({
   values,
   loadCreateBusiness,
   loadFreight,
-  submiting,
+  submitting,
 }) => {
   if (loadFreight) {
     return (
       <Container>
-        <Button disabled={!values.calculed} onClick={() => submiting()}>
+        <Button disabled={!values.calculed} onClick={() => submitting()}>
           <Oval color="#fff" height={15} width={15} />
         </Button>
       </Container>
@@ -29,7 +29,7 @@ const ValuesOrderButton: React.FC<ValuesOrderButtonData> = ({
 
   return (
     <Container>
-      <Button disabled={!values.calculed} onClick={() => submiting()}>
+      <Button disabled={!values.calculed} onClick={() => submitting()}>
         {loadCreateBusiness && <Oval color="#fff" height={15} width={15} />}
         Concluir Solicitação
       </Button>
