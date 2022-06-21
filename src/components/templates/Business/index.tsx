@@ -54,6 +54,10 @@ const Business: React.FC = () => {
         setFieldValue,
         /* and other goodies */
       }) => {
+        const removeItem = (itemId: number) => {
+          const newList = values.deliveries.filter(item => item.id !== itemId);
+          setFieldValue('deliveries', newList);
+        };
         return (
           <Container>
             <form onSubmit={handleSubmit}>
@@ -62,7 +66,12 @@ const Business: React.FC = () => {
                 <ContentAdress className="scroll">
                   <FlipMove>
                     {values.deliveries.map((item, index) => (
-                      <Address key={item.id} index={index} item={item} />
+                      <Address
+                        key={item.id}
+                        index={index}
+                        item={item}
+                        removeItem={removeItem}
+                      />
                     ))}
                   </FlipMove>
                 </ContentAdress>

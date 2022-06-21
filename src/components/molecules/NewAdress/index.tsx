@@ -2,7 +2,6 @@
 import React, { useRef } from 'react';
 import { Formik, FormikProps } from 'formik';
 
-import { object } from 'yup/lib/locale';
 import { AutoComplete } from '../AutoComplete';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
@@ -56,6 +55,7 @@ const NewAdress: React.FC<newAdressData> = ({
     if (response) {
       const newDelivery = {
         ...delivery,
+        id: Math.random(),
         latitude: response.lat,
         longitude: response.lng,
       };
@@ -72,14 +72,12 @@ const NewAdress: React.FC<newAdressData> = ({
 
         return
       }
-
       submit(newDelivery);
       formRef.current?.resetForm();
+    } else {
+      alert('Não foi possível localizar o endereço')
     }
   };
-
-
-  console.log('newValues', newValues);
 
   return (
     <Formik
@@ -123,8 +121,6 @@ const NewAdress: React.FC<newAdressData> = ({
           closeNewAdress();
         };
 
-        console.log('teste hide', `${!show && 'hide'}`)
-
         return (
           <Container show={show}>
             <div className="inputs">
@@ -134,7 +130,6 @@ const NewAdress: React.FC<newAdressData> = ({
                   Fechar
                 </button>
               </div>
-
               <div className="column.Row">
                 <AutoComplete
                   label="Endereço"
@@ -147,7 +142,6 @@ const NewAdress: React.FC<newAdressData> = ({
                   <Input label="Número" name="delivery.number" type="number" />
                 </div>
               </div>
-
               <div>
                 <div style={{ width: '50%', marginRight: 8 }}>
                   <Input label="Complemento" name="delivery.complement" />
@@ -157,14 +151,12 @@ const NewAdress: React.FC<newAdressData> = ({
                 </div>
               </div>
             </div>
-
             <div className="divButton">
               <Button
                 typeStyle="secondary"
                 type="button"
                 onClick={() => {
                   handleSubmit()
-
                 }}
               >
                 {
@@ -173,7 +165,6 @@ const NewAdress: React.FC<newAdressData> = ({
                 }
               </Button>
             </div>
-
           </Container>
         );
       }}

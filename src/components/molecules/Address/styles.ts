@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Tooltip } from '../../atoms/Tooltip';
 
 export const Container = styled.div`
   > div {
@@ -54,5 +55,11 @@ export const Container = styled.div`
       background: none;
       border: none;
     }
+  }
+`;
+
+export const TooltipMessage = styled(Tooltip)`
+  span {
+    width: 60px;
   }
 `;
