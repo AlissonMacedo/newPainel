@@ -19,6 +19,7 @@ import pind from '../../../assets/pind.png';
 import pinfim from '../../../assets/pinfim.png';
 import motocycle from '../../../assets/motocycle.png';
 import afinish from '../../../assets/afinish.png';
+import { Container } from './styles'
 
 const containerStyle = {
   width: '100%',
@@ -166,7 +167,7 @@ const MyComponent = ({ setMap, values }: any) => {
   }
 
   return isLoaded ? (
-    <>
+    <Container>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -220,7 +221,7 @@ const MyComponent = ({ setMap, values }: any) => {
           />
         )}
       </GoogleMap>
-    </>
+    </Container>
   ) : (
     <></>
   );

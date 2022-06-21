@@ -25,9 +25,8 @@ export const Content = styled.div`
 `;
 
 export const ContentAddress = styled.div`
-  position: relative;
   width: 400px;
-  height: calc(100vh - 325px);
+  height: calc(100vh - 315px);
   padding: 0px 32px;
 
   display: flex;

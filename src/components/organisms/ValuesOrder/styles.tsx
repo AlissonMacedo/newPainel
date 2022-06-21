@@ -31,20 +31,15 @@ const appearFromLEft2 = keyframes`
 `;
 
 export const Container = styled.div<ContainerData>`
-  /* position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0); */
-
-  height: 265px;
+  height: 225px;
   min-width: 500px;
-  /* width: calc(100vw - 770px); */
   width: 100%;
-  background: ${props => props.theme.colors.white};
-  padding: 40px 20px;
 
+  padding: 40px 20px;
   border-top: 1px solid #ccc;
-  /* border-radius: 4px; */
   bottom: 26px;
+
+  background: ${props => props.theme.colors.white};
 
   /* visibility: ${props => (!props.show ? 'hidden' : 'visible')};
   animation: ${props => (!props.show ? appearFromLEft2 : appearFromLEft)} 0.5s

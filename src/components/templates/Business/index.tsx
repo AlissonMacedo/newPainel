@@ -83,6 +83,10 @@ const Business: React.FC = () => {
             </form>
             <Main>
               <Map setMap={setMap} values={values} />
+              <ValuesOrder
+                values={values}
+                submitting={() => createBusiness(setFieldValue, values, map)}
+              />
               <NewAddress
                 show={values.addAdress || values.editing}
                 submit={deliveries =>
@@ -95,10 +99,6 @@ const Business: React.FC = () => {
               <ModalOrderSuccess
                 show={modalOrderSuccess}
                 close={setModalOrderSuccess}
-              />
-              <ValuesOrder
-                values={values}
-                submitting={() => createBusiness(setFieldValue, values, map)}
               />
               <ConfigOrder
                 show={showModalOrder}
