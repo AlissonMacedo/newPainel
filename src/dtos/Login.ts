@@ -19,6 +19,7 @@ export default function dtoLogin({ data: { data } }: ReturnPostLoginObj) {
     providerAlias: name,
     city: nameCity,
     state: nameState,
+    type: data.user.type,
   };
   return newObj;
 }

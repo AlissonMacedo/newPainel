@@ -20,6 +20,7 @@ const loginDataObject: ReturnPostLoginObj = {
             stateob: { name: 'mancio lima' },
           },
         ],
+        type: 1,
       },
       banks: [],
       token: 'token teste',

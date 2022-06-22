@@ -214,6 +214,7 @@ export type ReturnPostLoginObj = {
             stateob: { name: string };
           },
         ];
+        type: number;
       };
       banks: [];
       token: string;
@@ -230,4 +231,5 @@ export type returnTranslateProvider = {
   providerAlias: string;
   city: string;
   state: string;
+  type: number;
 };

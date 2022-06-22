@@ -76,11 +76,15 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const { token, user, providerId, banks, providerAlias, city, state } =
+    const { token, user, providerId, banks, providerAlias, city, state, type } =
       await Login.postLogin({
         email,
         password,
       });
+    console.log('type', type);
+    if (type === 2) {
+      throw new Error('Error in login');
+    }
 
     localStorage.setItem('@PainelAlfred:token', token);
     localStorage.setItem(

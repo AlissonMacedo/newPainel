@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { FiHome, FiTruck, FiPackage } from 'react-icons/fi';
+import { IoMdExit } from 'react-icons/io';
 import { useLocation } from 'react-router-dom';
 import { Container } from './styles';
 import { useAuth } from '../../../hooks/auth';
@@ -43,6 +44,10 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
               <li className={menus === 3 ? 'active' : ''}>
                 <FiPackage />
                 <a href="/business">Orders</a>
+              </li>
+              <li className={menus === 3 ? 'active' : ''}>
+                <IoMdExit />
+                <a href="/business">Sair</a>
               </li>
             </ul>
           </div>
