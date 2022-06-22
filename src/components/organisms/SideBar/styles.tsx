@@ -72,6 +72,7 @@ export const Container = styled.div`
       padding-left: 12px;
       transition: padding-left 0.3s ease-in-out;
       background-color: #999;
+      transition: background-color 0.3s ease-in-out;
     }
   }
 `;

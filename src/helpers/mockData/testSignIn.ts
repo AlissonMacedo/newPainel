@@ -5,6 +5,7 @@ const loginDataObject: ReturnPostLoginObj = {
     data: {
       user: {
         data: {
+          name: 'Name Teste',
           email: 'email@teste.com',
           provider: [
             {

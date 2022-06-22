@@ -200,6 +200,7 @@ export type ReturnPostLoginObj = {
       user: {
         data: {
           email: string;
+          name: string;
           provider: [
             {
               id: number;
@@ -224,6 +225,7 @@ export type returnTranslateProvider = {
   banks: Array<banks>;
   token: string;
   user: string;
+  email: string;
   providerId: number;
   providerAlias: string;
   city: string;

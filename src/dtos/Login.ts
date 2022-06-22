@@ -13,7 +13,8 @@ export default function dtoLogin({ data: { data } }: ReturnPostLoginObj) {
   const newObj: returnTranslateProvider = {
     banks: data.banks,
     token: data.token,
-    user: data.user.data.email,
+    user: data.user.data.name,
+    email: data.user.data.email,
     providerId: id,
     providerAlias: name,
     city: nameCity,

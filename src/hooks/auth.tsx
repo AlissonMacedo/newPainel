@@ -88,6 +88,7 @@ const AuthProvider: React.FC = ({ children }) => {
       JSON.stringify({
         token,
         user,
+        email,
         providerId,
         banks,
         providerAlias,
