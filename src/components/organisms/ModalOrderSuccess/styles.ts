@@ -8,34 +8,40 @@ interface ContainerData {
 const appearFromLEft = keyframes`
   from {
     opacity: 0;
-    transform: translateY(300px);
+    transform: translate(-50%, 300px);
+    left: 50%;
   }
   to {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translate(-50%, 0px);
+    left: 50%;
   }
 `;
 
 const appearFromLEft2 = keyframes`
   from {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translate(-50%, 0px);
+    left: 50%;
   }
   to {
     opacity: 0;
-    transform: translateY(300px);
+    transform: translate(-50%, 300px);
+    left: 50%;
   }
 `;
 
 export const Container = styled.div<ContainerData>`
   position: absolute;
-  right: calc(100vw - 1300px);
+  left: 50%;
+  transform: translate(-50%, 0);
   bottom: calc(100vh - 600px);
   z-index: 999;
   background: #fff;
-  min-width: 300px;
+  min-width: 400px;
 
   width: calc(100vw - 870px);
+  max-width: 600px;
   padding: 20px;
 
   border-radius: 4px;
