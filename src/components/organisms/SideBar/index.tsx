@@ -5,9 +5,11 @@ import { IoMdExit } from 'react-icons/io';
 import { useLocation } from 'react-router-dom';
 import { Container } from './styles';
 import { useAuth } from '../../../hooks/auth';
+import { useTheme } from '../../../hooks/theme';
 
 const SideBar = ({ isOpen }: { isOpen: boolean }) => {
-  const { user, providerAlias } = useAuth();
+  const { user, providerAlias, signOut } = useAuth();
+  const { theme } = useTheme();
   const { pathname } = useLocation();
 
   const [menus, setMenus] = useState(1);
@@ -34,20 +36,42 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
           <div>
             <ul>
               <li className={menus === 1 ? 'active' : ''}>
-                <FiHome />
+                <FiHome
+                  size={18}
+                  color={
+                    menus === 1 ? theme.colors.cyan500 : theme.text.gray600
+                  }
+                />
                 <a href="/">Home</a>
               </li>
               <li className={menus === 2 ? 'active' : ''}>
-                <FiTruck />
+                <FiTruck
+                  size={18}
+                  color={
+                    menus === 2 ? theme.colors.cyan500 : theme.text.gray600
+                  }
+                />
                 <a href="/business">Business</a>
               </li>
               <li className={menus === 3 ? 'active' : ''}>
-                <FiPackage />
+                <FiPackage
+                  size={18}
+                  color={
+                    menus === 3 ? theme.colors.cyan500 : theme.text.gray600
+                  }
+                />
                 <a href="/business">Orders</a>
               </li>
-              <li className={menus === 3 ? 'active' : ''}>
-                <IoMdExit />
-                <a href="/business">Sair</a>
+              <li className={menus === 4 ? 'active' : ''}>
+                <button type="button" onClick={signOut}>
+                  <IoMdExit
+                    size={18}
+                    color={
+                      menus === 4 ? theme.colors.cyan500 : theme.text.gray600
+                    }
+                  />
+                  <a href="/business">Sair</a>
+                </button>
               </li>
             </ul>
           </div>

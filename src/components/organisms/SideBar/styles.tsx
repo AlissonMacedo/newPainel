@@ -60,19 +60,62 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       padding-left: 10px;
-      color: #666;
 
       a {
-        margin-left: 10px;
+        margin-left: 6px;
+        font-family: 'Roboto-medium', sans-serif;
+        color: ${props => props.theme.text.gray600};
       }
     }
 
     li.active {
-      border-left: 2px solid #7159c1;
-      padding-left: 12px;
-      transition: padding-left 0.3s ease-in-out;
-      background-color: #999;
-      transition: background-color 0.3s ease-in-out;
+      border-left: 3px solid ${props => props.theme.colors.cyan500};
+      padding-left: 20px;
+      transition: padding-left 0.5s ease-in-out;
+
+      a {
+        margin-left: 6px;
+        color: ${props => props.theme.colors.cyan500};
+        font-weight: 600;
+        font-family: 'Roboto-medium', sans-serif;
+      }
+    }
+
+    button {
+      border: 0px;
+      background: none;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      li {
+      width: 100%;
+      padding: 10px 0px;
+
+      margin: 1px 0;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+
+      a {
+        margin-left: 6px;
+        font-family: 'Roboto-medium', sans-serif;
+        color: ${props => props.theme.text.gray600};
+      }
+    }
+
+    li.active {
+      border-left: 3px solid ${props => props.theme.colors.cyan500};
+      padding-left: 20px;
+      transition: padding-left 0.5s ease-in-out;
+
+      a {
+        margin-left: 6px;
+        color: ${props => props.theme.colors.cyan500};
+        font-weight: 600;
+        font-family: 'Roboto-medium', sans-serif;
+      }
     }
   }
 `;
