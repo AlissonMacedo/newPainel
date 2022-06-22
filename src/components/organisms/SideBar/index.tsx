@@ -42,7 +42,7 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
                     menus === 1 ? theme.colors.cyan500 : theme.text.gray600
                   }
                 />
-                <a href="/">Home</a>
+                <a href="/">Início</a>
               </li>
               <li className={menus === 2 ? 'active' : ''}>
                 <FiTruck
@@ -51,7 +51,7 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
                     menus === 2 ? theme.colors.cyan500 : theme.text.gray600
                   }
                 />
-                <a href="/business">Business</a>
+                <a href="/business">Logística</a>
               </li>
               <li className={menus === 3 ? 'active' : ''}>
                 <FiPackage
@@ -60,7 +60,7 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
                     menus === 3 ? theme.colors.cyan500 : theme.text.gray600
                   }
                 />
-                <a href="/business">Orders</a>
+                <a href="/business">Pedidos</a>
               </li>
               <li className={menus === 4 ? 'active' : ''}>
                 <button type="button" onClick={signOut}>
