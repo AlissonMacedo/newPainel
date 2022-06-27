@@ -8,11 +8,12 @@ export const Button: React.FC<ButtonProps> = ({
   name,
   text,
   typeStyle,
+  disabled = false,
   ...rest
 }) => {
   return (
-    <Container typeStyle={typeStyle}>
-      <button name={name} type="button" {...rest}>
+    <Container typeStyle={typeStyle} disabled={disabled}>
+      <button name={name} type="button" disabled={disabled} {...rest}>
         <div>
           {children}
           {text && <strong>{text}</strong>}

@@ -3,9 +3,10 @@ import { shade } from 'polished';
 
 interface ButtonProps {
   typeStyle?: 'primary' | 'secondary' | 'info' | 'error';
+  disabled?: boolean;
 }
 
-const buttonTypeVariantions = {
+const buttonTypeVariations = {
   primary: css`
     background: ${props => props.theme.colors.cyan800};
     color: ${props => props.theme.colors.white};
@@ -50,8 +51,18 @@ export const Container = styled.div<ButtonProps>`
     margin-top: 16px;
     transition: background-color 0.2s;
 
-    ${props => buttonTypeVariantions[props.typeStyle || 'primary']}
+    ${props => buttonTypeVariations[props.typeStyle || 'primary']}
   }
+
+  ${props =>
+    props.disabled &&
+    css`
+      button {
+        background: ${props.theme.colors.white};
+        border: solid 1px #ccc;
+        color: #ccc;
+      }
+    `}
 
   div {
     display: flex;

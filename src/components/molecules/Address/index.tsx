@@ -3,6 +3,7 @@ import { useFormikContext } from 'formik';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
 import { Container, TooltipMessage } from './styles';
+import { incrementAlfabet } from '../../../helpers/utils';
 
 type AddressData = {
   index: number;
@@ -54,18 +55,29 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
 
   return (
     <Container ref={ref}>
-      <div className="destiny">
-        <div className="title">
-          <h4>{`Destino ${props.index + 1}`}</h4>
-          {renderButtonRemove(props.index)}
-        </div>
+      <div className="lyrics">
+        <div className="trackerLine" />
+        <span>{incrementAlfabet(props.index)}</span>
+        <div className="trackerLine" />
       </div>
-      <div>
-        <h4>{`${props.item.street}, ${props.item.number}`}</h4>
-        <span>{`${props.item.city}, ${props.item.state} - Brasil`}</span>
-        <button type="button" onClick={() => editDelivery(props.item)}>
-          <strong>Editar</strong>
-        </button>
+      <div className="body-Address">
+        <div className="destiny">
+          <div className="title">
+            <h4>{`Destino ${props.index + 1}`}</h4>
+            {renderButtonRemove(props.index)}
+          </div>
+        </div>
+        <div>
+          <h4>{`${props.item.street}, ${props.item.number}`}</h4>
+          <span>{`${props.item.city}, ${props.item.state} - Brasil`}</span>
+          <button
+            className="btn-edit"
+            type="button"
+            onClick={() => editDelivery(props.item)}
+          >
+            <strong>Editar</strong>
+          </button>
+        </div>
       </div>
     </Container>
   );

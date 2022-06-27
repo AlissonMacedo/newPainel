@@ -21,7 +21,7 @@ const ActionForm: React.FC<actionFormData> = ({
 
   const formik: any = useFormikContext();
 
-  const addAddres = () => {
+  const addAddress = () => {
     formik.setFieldValue('addAdress', true);
   };
 
@@ -32,13 +32,23 @@ const ActionForm: React.FC<actionFormData> = ({
   };
   // enable/disable the button of return
 
+  const disableButtonCalcRoute = (): boolean => {
+    if (values.deliveryReturn) {
+      if (values.deliveries.length === 2) return true;
+      return false;
+    }
+    if (values.deliveries.length === 1) return true;
+    return false;
+  };
+
   return (
     <Container>
       <OptionsForm values={values} optimizeOnoff={optimizeOnoff} />
-      <Button typeStyle="primary" type="button" onClick={() => addAddres()}>
+      <Button typeStyle="primary" type="button" onClick={() => addAddress()}>
         Adicionar um endereço
       </Button>
       <Button
+        disabled={disableButtonCalcRoute()}
         typeStyle="info"
         type="button"
         // onClick={() => calcFreight(map, formik, values)}

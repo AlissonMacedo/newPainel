@@ -52,4 +52,43 @@ const formatAmount = (val: number) => {
   });
 };
 
-export { cpfMask, cnpjMask, auxFormatPhone, formatPhone, formatAmount };
+export default function incrementAlfabet(number: number): string {
+  const alfabet = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+  return alfabet[number];
+}
+
+export {
+  cpfMask,
+  cnpjMask,
+  auxFormatPhone,
+  formatPhone,
+  formatAmount,
+  incrementAlfabet,
+};

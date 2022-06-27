@@ -2,10 +2,38 @@ import styled from 'styled-components';
 import { Tooltip } from '../../atoms/Tooltip';
 
 export const Container = styled.div`
-  > div {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+
+  div.lyrics {
+    width: 30px;
+    height: 85px;
+
     display: flex;
     flex-direction: column;
-    padding: 0;
+    align-items: center;
+    justify-content: flex-end;
+
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      font-family: 'inter';
+      color: ${props => props.theme.text.cyan950};
+    }
+
+    div.trackerLine {
+      width: 2px;
+      height: 40px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  div.body-Address {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
 
     h4 {
       font-weight: 500;
@@ -23,7 +51,7 @@ export const Container = styled.div`
       color: ${props => props.theme.text.gray350};
     }
 
-    > button {
+    button.btn-edit {
       border: none;
       background-color: inherit;
       padding: 5px 0;
@@ -41,7 +69,7 @@ export const Container = styled.div`
   }
 
   div.destiny {
-    margin-top: 10px;
+    margin-top: 0px;
   }
 
   .title {
