@@ -17,17 +17,21 @@ export const Content = styled.div`
   align-items: flex-start;
   border-right: #dcddde solid 1px;
 
-  h3 {
-    color: #333;
-    margin-left: 30px;
-    margin-top: 20px;
+  > div.div-box {
+    border-bottom: 0.5px solid #ccc;
+    width: 90%;
+    align-self: center;
+
+    h3 {
+      color: #333;
+      margin: 10px 20px 5px;
+    }
   }
 `;
 
 export const ContentAddress = styled.div`
   width: 400px;
   height: calc(100vh - 315px);
-  padding: 0px 32px 0px 0px;
 
   display: flex;
   flex-direction: column;

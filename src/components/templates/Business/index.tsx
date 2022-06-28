@@ -59,12 +59,15 @@ const Business: React.FC = () => {
         const removeItem = (itemId: number) => {
           const newList = values.deliveries.filter(item => item.id !== itemId);
           setFieldValue('deliveries', newList);
+          setFieldValue('calculed', false);
         };
         return (
           <Container>
             <form onSubmit={handleSubmit}>
               <Content>
-                <h3>Rota de entrega:</h3>
+                <div className="div-box">
+                  <h3>Rota de entrega:</h3>
+                </div>
                 <ContentAddress className="scroll">
                   <FlipMove>
                     {values.deliveries.map((item, index) => (

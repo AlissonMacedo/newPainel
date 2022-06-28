@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormikContext } from 'formik';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
-import { Container, TooltipMessage } from './styles';
+import { Container, TooltipMessage, DivBar, LyricsAlfabet } from './styles';
 import { incrementAlfabet } from '../../../helpers/utils';
 
 type AddressData = {
@@ -36,7 +36,7 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
       return (
         <TooltipMessage title="Excluir">
           <button type="button" onClick={() => props.removeItem(props.item.id)}>
-            <AiFillCloseCircle color="#777" size={18} />
+            <AiFillCloseCircle color="#ddee" size={18} />
           </button>
         </TooltipMessage>
       );
@@ -45,7 +45,7 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
       return (
         <TooltipMessage title="Excluir">
           <button type="button" onClick={() => props.removeItem(props.item.id)}>
-            <AiFillCloseCircle color="#777" size={18} />
+            <AiFillCloseCircle color="#ddee" size={18} />
           </button>
         </TooltipMessage>
       );
@@ -56,9 +56,11 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
   return (
     <Container ref={ref}>
       <div className="lyrics">
-        <div className="trackerLine" />
-        <span>{incrementAlfabet(props.index)}</span>
-        <div className="trackerLine" />
+        <DivBar first={props.index >= 1} />
+        <LyricsAlfabet>
+          <span>{incrementAlfabet(props.index)}</span>
+        </LyricsAlfabet>
+        <DivBar last={props.index !== props.deliveries.length - 1} />
       </div>
       <div className="body-Address">
         <div className="destiny">
