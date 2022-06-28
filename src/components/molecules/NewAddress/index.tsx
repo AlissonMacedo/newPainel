@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useRef } from 'react';
 import { Formik, FormikProps } from 'formik';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 import { AutoComplete } from '../AutoComplete';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 
 import { Container } from './styles';
-
+import { initial } from './initial'
 import latLng from '../../../services/Locations';
 
 type AppProps = {
@@ -83,22 +84,8 @@ const NewAddress: React.FC<newAdressData> = ({
     <Formik
       // eslint-disable-next-line no-return-assign
       innerRef={formRef}
-      initialValues={newValues.editing ? { delivery: newValues.delivery } : {
-        delivery: {
-          id: Math.random(),
-          street: '',
-          number: '',
-          complement: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          longitude: 0,
-          latitude: 0,
-          obs: '',
-          address: '',
-          payment: 0,
-        }
-      }}
+      initialValues={newValues.editing ? { delivery: newValues.delivery } :
+        initial}
       onSubmit={values => onSubmit(values.delivery)}
     >
       {({
@@ -126,8 +113,8 @@ const NewAddress: React.FC<newAdressData> = ({
             <div className="inputs">
               <div className="titleform">
                 <h4 style={{ color: '#444' }}>Adicionando um novo endereço:</h4>
-                <button type="button" onClick={() => closeForm()}>
-                  Fechar
+                <button type="button" className="btn-close" onClick={() => closeForm()}>
+                  <AiFillCloseCircle color="#ddee" size={18} />
                 </button>
               </div>
               <div className="column.Row">
@@ -153,7 +140,7 @@ const NewAddress: React.FC<newAdressData> = ({
             </div>
             <div className="divButton">
               <Button
-                typeStyle="secondary"
+                typeStyle="primary"
                 type="button"
                 onClick={() => {
                   handleSubmit()

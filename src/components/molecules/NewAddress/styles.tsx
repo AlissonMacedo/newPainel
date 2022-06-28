@@ -62,4 +62,9 @@ export const Container = styled.div<ContainerData>`
       justify-content: space-between;
     }
   }
+
+  button.btn-close {
+    border: 0px;
+    background: transparent;
+  }
 `;

@@ -3,12 +3,15 @@ import { darken } from 'polished';
 import backgroundImage from '../../../assets/background-login.png';
 
 export const Container = styled.div`
+
   .Drawer__Container {
     height: 100vh;
     background-color: ${props => props.theme.colors.sideBar};
     transition: width 0.3s ease-in-out;
     width: 230px;
     padding: 10px 0;
+
+    border-right: 1px solid #ddd;
   }
   .Drawer__Container--isOpen {
     transition: width 0.3s ease-in-out;
