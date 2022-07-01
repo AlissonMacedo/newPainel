@@ -50,7 +50,7 @@ const LoginProvider: React.FC = ({ children }) => {
         title: 'success',
       });
 
-      history.push('/home');
+      history.push('/business');
     } catch (err: any) {
       Sentry.captureException(err);
       addToast({
