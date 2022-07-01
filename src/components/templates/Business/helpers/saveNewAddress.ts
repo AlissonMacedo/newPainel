@@ -1,8 +1,8 @@
-import { AppProps } from '../../../../helpers/types/business';
+import { deliveryType } from '../../../../helpers/types/business';
 
 export function saveNewAddress(
   setFieldValue: (field: string, value: any) => void,
-  deliveries: AppProps,
+  deliveries: deliveryType,
   values: any,
   map: any,
 ) {

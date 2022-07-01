@@ -4,6 +4,8 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 
 import { Container, TooltipMessage, DivBar, LyricsAlfabet } from './styles';
 import { incrementAlfabet } from '../../../helpers/utils';
+import { removeItem } from '../../templates/Business/helpers';
+import { deliveriesType } from '../../../helpers/types/business';
 
 type AddressData = {
   index: number;
@@ -14,8 +16,7 @@ type AddressData = {
     city: string;
     street: string;
   };
-  removeItem: (item: number) => void;
-  deliveries: Array<any>;
+  deliveries: deliveriesType;
   deliveryReturn: boolean;
 };
 
@@ -27,6 +28,11 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
     formik.setFieldValue('delivery', props.item);
   };
 
+  const {
+    item: { id },
+    deliveries,
+  } = props;
+
   const renderButtonRemove = (index: number) => {
     if (
       props.deliveryReturn &&
@@ -35,7 +41,10 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
     ) {
       return (
         <TooltipMessage title="Excluir">
-          <button type="button" onClick={() => props.removeItem(props.item.id)}>
+          <button
+            type="button"
+            onClick={() => removeItem(id, deliveries, formik)}
+          >
             <AiFillCloseCircle color="#ddee" size={18} />
           </button>
         </TooltipMessage>
@@ -44,7 +53,10 @@ const Address = React.forwardRef<any, AddressData>((props, ref) => {
     if (props.index > 0 && !props.deliveryReturn) {
       return (
         <TooltipMessage title="Excluir">
-          <button type="button" onClick={() => props.removeItem(props.item.id)}>
+          <button
+            type="button"
+            onClick={() => removeItem(id, deliveries, formik)}
+          >
             <AiFillCloseCircle color="#ddee" size={18} />
           </button>
         </TooltipMessage>

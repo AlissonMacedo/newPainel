@@ -16,7 +16,7 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   boxShadow: `0 2px 10px ${blackA.blackA7}`,
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
   '&:focus': { boxShadow: `0 0 0 2px black` },
-  '&[data-state="checked"]': { backgroundColor: 'black' },
+  '&[data-state="checked"]': { backgroundColor: '#273c64' },
 });
 
 const StyledThumb = styled(SwitchPrimitive.Thumb, {
@@ -39,7 +39,7 @@ export const SwitchThumb = StyledThumb;
 // Your app...
 const Flex = styled('div', { display: 'flex' });
 const Label = styled('label', {
-  color: '#444',
+  color: '#4c4b52',
   fontSize: 15,
   lineHeight: 1,
   userSelect: 'none',

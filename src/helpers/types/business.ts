@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 export type GetFreightObj = {
   city: string;
   cityId: number;
@@ -36,7 +38,7 @@ export type returnFreightObj = {
   newReturn: { deliveryTax?: number; returnTax?: number };
 };
 
-export type AppProps = {
+export type deliveryType = {
   id: number;
   street: string;
   number: string;
@@ -49,4 +51,29 @@ export type AppProps = {
   obs: string;
   address: string;
   payment: number;
+};
+
+type dataToDeliveryType = {
+  totaToPay: number;
+  timeDelivery: number;
+  distanceTotal: number;
+  deliveriesTotal: number;
+};
+
+export type deliveriesType = Array<deliveryType>;
+
+export type initialFormType = {
+  editing: boolean;
+  calculed: boolean;
+  route: any;
+  addAdress: boolean;
+  deliveryRetorn: boolean;
+  travelMode: string;
+  optimizeWaypoints: boolean;
+  vehicleType: number;
+  serviceType: 1 | 2 | 0;
+  dataToDelivery: dataToDeliveryType;
+  address: string;
+  delivery: deliveryType;
+  deliveries: deliveriesType;
 };
