@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import FlipMove from 'react-flip-move';
 
@@ -56,11 +56,6 @@ const Business: React.FC = () => {
         setFieldValue,
         /* and other goodies */
       }) => {
-        const removeItem = (itemId: number) => {
-          const newList = values.deliveries.filter(item => item.id !== itemId);
-          setFieldValue('deliveries', newList);
-          setFieldValue('calculed', false);
-        };
         return (
           <Container>
             <form onSubmit={handleSubmit}>
@@ -75,7 +70,6 @@ const Business: React.FC = () => {
                         key={item.id}
                         index={index}
                         item={item}
-                        removeItem={removeItem}
                         deliveries={values.deliveries}
                         deliveryReturn={values.deliveryRetorn}
                       />

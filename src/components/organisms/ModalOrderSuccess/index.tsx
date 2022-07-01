@@ -31,7 +31,7 @@ const ModalOrderSuccess = ({ close, show }: ModalOrderSuccessData) => {
           </div>
         </div>
       </div>
-      <Button>Novo pedido</Button>
+      <Button onClick={() => close(!show)}>Novo pedido</Button>
     </Container>
   );
 };

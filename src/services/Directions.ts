@@ -37,7 +37,7 @@ export default class Directions {
     // type of vehicle for delivery
     const { travelMode, optimizeWaypoints } = values
 
-    const teste: getDirectionsData = {
+    const directionData: getDirectionsData = {
       origin,
       waypoints,
       destination,
@@ -45,7 +45,7 @@ export default class Directions {
       optimizeWaypoints
     };
 
-    const response = await directionsService.route(teste);
+    const response = await directionsService.route(directionData);
 
     return response;
   };

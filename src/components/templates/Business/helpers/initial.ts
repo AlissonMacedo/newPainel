@@ -1,4 +1,6 @@
-export const initial = {
+import { initialFormType } from '../../../../helpers/types/business';
+
+export const initial: initialFormType = {
   editing: false,
   calculed: false,
   route: null,
@@ -18,7 +20,7 @@ export const initial = {
   delivery: {
     id: Math.random(),
     street: '',
-    number: 0,
+    number: '',
     complement: '',
     neighborhood: '',
     city: '',
@@ -42,6 +44,7 @@ export const initial = {
       latitude: -7.61368,
       obs: '',
       address: 'Rua Alberto Gadelha,80, Mâncio Lima - Acre',
+      payment: 0,
     },
   ],
 };
