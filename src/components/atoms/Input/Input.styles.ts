@@ -62,9 +62,9 @@ export const Container = styled.div<inputProps>`
     background-color: transparent;
     border: 0px;
 
-    color: ${props => props.theme.text.gray350};
+    color: ${props => props.theme.text.gray600};
     &::placeholder {
-      color: ${props => props.theme.text.cyan950};
+      color: ${props => props.theme.text.gray350};
     }
   }
 

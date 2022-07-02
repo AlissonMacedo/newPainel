@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styled, { css } from 'styled-components';
 import { Tooltip } from '../../atoms/Tooltip';
 
@@ -24,7 +25,6 @@ export const Container = styled.div<inputProps>`
   ${props =>
     props.isFocus &&
     css`
-      color: ${props.theme.colors.cyan300};
       border-color: ${props.theme.colors.cyan300};
     `}
 
@@ -44,11 +44,13 @@ export const Container = styled.div<inputProps>`
   div {
     margin-top: 0px !important;
   }
+
   > div.label {
     width: 100%;
 
     strong {
-      color: '#777';
+      color: ${props =>
+    props.isFocus ? props.theme.colors.cyan300 : props.theme.text.gray350};
       font-family: 'Roboto', sans-serif;
       font-weight: 400;
       font-size: 10px;
@@ -62,9 +64,9 @@ export const Container = styled.div<inputProps>`
     width: 100%;
     border: 0px;
 
-    color: ${props => props.theme.text.gray350};
+    color: ${props => props.theme.text.gray600};
     &::placeholder {
-      color: ${props => props.theme.text.cyan950};
+      color: ${props => props.theme.text.gray350};
     }
   }
 
@@ -77,10 +79,9 @@ export const Container = styled.div<inputProps>`
   }
 
   span {
-    color: #777;
+    color: ${props => props.theme.text.gray600};
     font-family: 'Roboto-medium', sans-serif;
     font-size: 16px;
-    color: #777;
     margin: 15px 5px;
   }
 

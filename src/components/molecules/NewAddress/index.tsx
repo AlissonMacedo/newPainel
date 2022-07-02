@@ -112,7 +112,7 @@ const NewAddress: React.FC<newAdressData> = ({
           <Container show={show}>
             <div className="inputs">
               <div className="titleform">
-                <h4 style={{ color: '#444' }}>Adicionando um novo endereço:</h4>
+                <h4>Adicionar um novo endereço:</h4>
                 <button type="button" className="btn-close" onClick={() => closeForm()}>
                   <AiFillCloseCircle color="#ddee" size={18} />
                 </button>

@@ -6,6 +6,7 @@ import ReactGooglePlacesSuggest from 'react-google-places-suggest';
 
 import { useFormikContext } from 'formik';
 import { Container } from './styles';
+import { handleSelectSuggest } from './helpers';
 
 interface testeData {
   name: string;
@@ -35,92 +36,6 @@ export const AutoComplete = ({
     });
     setFieldValue(`${name}.address`, e.target.value); // endereco completo
     setFieldValue(`${name}.street`, e.target.value); // endereco completo
-  };
-
-  const handleSelectSuggest = (
-    geocodedPrediction: google.maps.GeocoderResult,
-  ) => {
-    const location = {
-      lat: geocodedPrediction?.geometry?.location?.lat() || 0,
-      lng: geocodedPrediction?.geometry?.location?.lng() || 0,
-    };
-
-    for (
-      let adc = 0;
-      adc < geocodedPrediction.address_components.length;
-      adc += 1
-    ) {
-      if (geocodedPrediction.address_components[adc].types.includes('route')) {
-        setFieldValue(
-          `${name}.street`,
-          geocodedPrediction.address_components[adc].long_name,
-        );
-      }
-      if (
-        geocodedPrediction.address_components[adc].types.includes(
-          'street_number',
-        )
-      ) {
-        setFieldValue(
-          `${name}.number`,
-          Number(geocodedPrediction.address_components[adc].long_name),
-        );
-      }
-      if (
-        geocodedPrediction.address_components[adc].types.includes(
-          'sublocality_level_1',
-        )
-      ) {
-        setFieldValue(
-          `${name}.neighborhood`,
-          geocodedPrediction.address_components[adc].long_name,
-        );
-      }
-      if (
-        geocodedPrediction.address_components[adc].types.includes(
-          'administrative_area_level_2',
-        )
-      ) {
-        setFieldValue(
-          `${name}.city`,
-          geocodedPrediction.address_components[adc].long_name,
-        );
-      }
-      if (
-        geocodedPrediction.address_components[adc].types.includes(
-          'administrative_area_level_1',
-        )
-      ) {
-        setFieldValue(
-          `${name}.state`,
-          geocodedPrediction.address_components[adc].long_name,
-        );
-      }
-      if (
-        geocodedPrediction.address_components[adc].types.includes('country')
-      ) {
-        setFieldValue(
-          `${name}.state`,
-          geocodedPrediction.address_components[adc].long_name,
-        );
-      }
-      if (
-        geocodedPrediction.address_components[adc].types.includes('postal_code')
-      ) {
-        setFieldValue(
-          `${name}.postal_code`,
-          geocodedPrediction.address_components[adc].long_name,
-        );
-      }
-      setFieldValue(`${name}.longitude`, location.lng); // lng
-      setFieldValue(`${name}.latitude`, location.lat); // lat
-      setFieldValue(`${name}.address`, geocodedPrediction.formatted_address); // endereco completo
-    }
-
-    setState({
-      search: '',
-      value: geocodedPrediction.formatted_address,
-    });
   };
 
   const handleInputFocus = useCallback(() => {
@@ -156,7 +71,14 @@ export const AutoComplete = ({
               autocompletionRequest={{
                 input: state.search,
               }}
-              onSelectSuggest={handleSelectSuggest}
+              onSelectSuggest={geocodedPrediction =>
+                handleSelectSuggest(
+                  name,
+                  setFieldValue,
+                  geocodedPrediction,
+                  setState,
+                )
+              }
               textNoResults="Não encontramos o endereço" // null or "" if you want to disable the no results item
             >
               <input

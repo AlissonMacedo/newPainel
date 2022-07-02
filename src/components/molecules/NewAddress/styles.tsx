@@ -60,6 +60,12 @@ export const Container = styled.div<ContainerData>`
 
     div.titleform {
       justify-content: space-between;
+
+      h4 {
+        color: ${props => props.theme.text.gray600};
+        font-family: 'Roboto-medium', sans-serif;
+        font-size: 16px;
+      }
     }
   }
 
