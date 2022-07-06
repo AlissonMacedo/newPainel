@@ -11,6 +11,8 @@ import { Container } from './styles';
 import { initial } from './initial'
 import latLng from '../../../services/Locations';
 
+import { useBusiness } from '../../../pages/Business/Context'
+
 type AppProps = {
   id: number;
   street: string;
@@ -41,6 +43,7 @@ const NewAddress: React.FC<newAdressData> = ({
   newSetFieldValue,
   show,
 }) => {
+  const { addCacheAddress } = useBusiness();
   const formRef = useRef<FormikProps<any>>(null);
   const onSubmit = async (delivery: AppProps) => {
     // if the user is not select adress in autoComplete when
@@ -74,6 +77,7 @@ const NewAddress: React.FC<newAdressData> = ({
         return
       }
       submit(newDelivery);
+      addCacheAddress(newDelivery);
       formRef.current?.resetForm();
     } else {
       alert('Não foi possível localizar o endereço')

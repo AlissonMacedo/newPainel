@@ -94,3 +94,42 @@ export const Container = styled.div<inputProps>`
     z-index: 999;
   }
 `;
+
+
+
+export const DivHistorySuggest = styled.div`
+  position: relative;
+  top: 0;
+  width: 100%;
+
+  div {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+
+  div {
+    position: relative;
+    top: 0;
+
+      button {
+        padding: 10px 15px;
+        background-color: #fff;
+        border: 0px;
+        color: #666;
+        margin: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      button:hover {
+        cursor: pointer;
+        background-color: #f5f5f5;
+      }
+    }
+  }
+`;
