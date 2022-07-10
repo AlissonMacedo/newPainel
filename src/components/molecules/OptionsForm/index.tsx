@@ -72,6 +72,12 @@ const SwitchDemo = ({ values, optimizeOnoff }: switchData) => {
     formik.setFieldValue('route', null);
     formik.setFieldValue('deliveryRetorn', !values.deliveryRetorn);
   };
+
+  const actionReturnFalse = () => {
+    optimizeOnoff();
+    formik.setFieldValue('optimizeWaypoints', !values.optimizeWaypoints);
+  };
+
   return (
     <Container>
       <Flex css={{ alignItems: 'center' }}>
@@ -82,13 +88,7 @@ const SwitchDemo = ({ values, optimizeOnoff }: switchData) => {
           defaultChecked={values.optimizeWaypoints}
           value={values.optimizeWaypoints}
           id="s1"
-          onCheckedChange={e => {
-            optimizeOnoff();
-            formik.setFieldValue(
-              'optimizeWaypoints',
-              !values.optimizeWaypoints,
-            );
-          }}
+          onCheckedChange={actionReturnFalse}
         >
           <SwitchThumb />
         </Switch>

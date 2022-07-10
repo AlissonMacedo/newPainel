@@ -17,7 +17,7 @@ const ActionForm: React.FC<actionFormData> = ({
   values,
   setShowModalOrder,
 }) => {
-  const { loadFreight } = useBusiness();
+  const { loadFreight, deliveriesOriginal, deliveriesOtimized } = useBusiness();
 
   const formik: any = useFormikContext();
 
@@ -29,6 +29,15 @@ const ActionForm: React.FC<actionFormData> = ({
   const optimizeOnoff = () => {
     formik.setFieldValue('calculed', false);
     formik.setFieldValue('route', null);
+
+    if (values.optimizeWaypoints && deliveriesOriginal.length > 0) {
+      return formik.setFieldValue('deliveries', deliveriesOriginal);
+    }
+
+    if (!values.optimizeWaypoints && deliveriesOtimized.length > 0) {
+      return formik.setFieldValue('deliveries', deliveriesOtimized);
+    }
+    return null;
   };
   // enable/disable the button of return
 

@@ -4,6 +4,8 @@ import {
   GetFreightObj,
   returnFreightObj,
   deliveryType,
+  deliveriesType,
+  initialFormType,
 } from '../../helpers/types/business';
 import Business from '../../services/Business';
 import Directions from '../../services/Directions';
@@ -33,7 +35,10 @@ interface BusinessContextData {
   setModalOrderSuccess: (value: boolean) => void;
   addCacheAddress: (address: deliveryType) => void;
   cacheAddress: deliveryType[];
+  deliveriesOriginal: deliveriesType;
+  deliveriesOtimized: deliveriesType;
 }
+
 // value: objectBusiness
 const BusinessContext = createContext<BusinessContextData>(
   {} as BusinessContextData,
@@ -48,6 +53,10 @@ const BusinessProvider: React.FC = ({ children }) => {
   const [loadFreight, setLoadFreight] = React.useState(false);
   const [loadCreateBusiness, setLoadCreateBusiness] = React.useState(false);
 
+  const [deliveriesOriginal, setDeliveriesOriginal] =
+    React.useState<deliveriesType>([]);
+  const [deliveriesOtimized, setDeliveriesOtimized] =
+    React.useState<deliveriesType>([]);
   // control the modal and values of frete
   const [modalValuesOrder, setModalValuesOrder] = React.useState(false);
 
@@ -93,7 +102,14 @@ const BusinessProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function calcFreight(map: any, setFieldValue: any, values: any) {
+  async function calcFreight(
+    map: any,
+    setFieldValue: any,
+    values: initialFormType,
+  ) {
+    if (!values.optimizeWaypoints) {
+      setDeliveriesOriginal(values.deliveries);
+    }
     // controle load
     setLoadFreight(true);
     setModalValuesOrder(true);
@@ -116,7 +132,7 @@ const BusinessProvider: React.FC = ({ children }) => {
           ...newArr,
           values.deliveries[values.deliveries.length - 1],
         ];
-
+        setDeliveriesOtimized(deliveries);
         setFieldValue('deliveries', deliveries);
       }
 
@@ -211,7 +227,8 @@ const BusinessProvider: React.FC = ({ children }) => {
     setCacheAddress(newAddress);
   };
 
-  console.log('cacheAddress', cacheAddress);
+  console.log('deliveriesOriginal', deliveriesOriginal);
+  console.log('deliveriesOtimized', deliveriesOtimized);
 
   return (
     <BusinessContext.Provider
@@ -225,6 +242,8 @@ const BusinessProvider: React.FC = ({ children }) => {
         setModalOrderSuccess,
         addCacheAddress,
         cacheAddress,
+        deliveriesOriginal,
+        deliveriesOtimized,
       }}
     >
       {children}
