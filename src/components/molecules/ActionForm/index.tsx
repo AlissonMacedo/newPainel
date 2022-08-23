@@ -28,7 +28,7 @@ const ActionForm: React.FC<actionFormData> = ({
   // enable/disable the button of optimization
   const optimizeOnoff = () => {
     formik.setFieldValue('calculed', false);
-    formik.setFieldValue('route', null);
+    // formik.setFieldValue('route', null);
 
     if (values.optimizeWaypoints && deliveriesOriginal.length > 0) {
       return formik.setFieldValue('deliveries', deliveriesOriginal);

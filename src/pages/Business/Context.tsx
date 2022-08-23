@@ -107,9 +107,8 @@ const BusinessProvider: React.FC = ({ children }) => {
     setFieldValue: any,
     values: initialFormType,
   ) {
-    if (!values.optimizeWaypoints) {
-      setDeliveriesOriginal(values.deliveries);
-    }
+    console.log('deliveriesOriginal', deliveriesOriginal);
+    console.log('deliveriesOtimized', deliveriesOtimized);
     // controle load
     setLoadFreight(true);
     setModalValuesOrder(true);
@@ -123,16 +122,19 @@ const BusinessProvider: React.FC = ({ children }) => {
       // verifica se tem mais de um ponto de entrega e
       // verifica se o usuário quer que otimize
       // otimiza a rota
+
+      const newArr = route.routes[0].waypoint_order.map(
+        (item: any) => values.deliveries[item + 1],
+      );
+      deliveries = [
+        values.deliveries[0],
+        ...newArr,
+        values.deliveries[values.deliveries.length - 1],
+      ];
+      setDeliveriesOtimized(deliveries);
+      setDeliveriesOriginal(values.deliveries);
+
       if (values.deliveries.length > 3 && values.optimizeWaypoints) {
-        const newArr = route.routes[0].waypoint_order.map(
-          (item: any) => values.deliveries[item + 1],
-        );
-        deliveries = [
-          values.deliveries[0],
-          ...newArr,
-          values.deliveries[values.deliveries.length - 1],
-        ];
-        setDeliveriesOtimized(deliveries);
         setFieldValue('deliveries', deliveries);
       }
 

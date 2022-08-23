@@ -35,14 +35,14 @@ export default class Directions {
     const destination = waypoints.pop()?.location;
 
     // type of vehicle for delivery
-    const { travelMode, optimizeWaypoints } = values
+    const { travelMode } = values
 
     const directionData: getDirectionsData = {
       origin,
       waypoints,
       destination,
       travelMode,
-      optimizeWaypoints
+      optimizeWaypoints: true
     };
 
     const response = await directionsService.route(directionData);
