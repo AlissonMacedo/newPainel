@@ -31,6 +31,9 @@ export type objectBusiness = {
   state: string | undefined;
   deliveries: delivery[];
   vehicle: number;
+  qntPoints: number;
+  schedule: Date | null;
+  serviceType: number;
 };
 
 export type returnFreightObj = {

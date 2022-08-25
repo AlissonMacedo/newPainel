@@ -73,6 +73,9 @@ const BusinessProvider: React.FC = ({ children }) => {
       state,
       deliveries: values.deliveries,
       vehicle: 0,
+      qntPoints: values.deliveries.length - 1,
+      schedule: null,
+      serviceType: 0,
     };
 
     try {
